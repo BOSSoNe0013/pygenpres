@@ -9,6 +9,8 @@ from app.domain.model.presentation import Presentation
 async def edit_presentation(path: str, id: Union[str, None] = None) -> str:
     if id is None:
         presentation = Presentation()
+        with open(os.path.join(path, f'{presentation.id}.json'), 'w+') as f:
+            f.write(presentation.to_json())
     else:
         with open(os.path.join(path, f'{id}.json'), 'r') as f:
             presentation = Presentation.from_json(f.read())

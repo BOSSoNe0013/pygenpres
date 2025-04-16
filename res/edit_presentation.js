@@ -5,11 +5,14 @@ const presId = '$presentation_id';
 const presTitle = '$presentation_title';
 const presFooter = '$presentation_footer';
 let slides = [
-    $slide_items,
+    $slide_items
 ];
 let sbNodes = [];
 function genSbNodes() {
-    sbNodes = [...slides];
+    console.log('genSbNodes', slides);
+    if (slides.length > 0) {
+        sbNodes = [...slides];
+    }
     sbNodes.push({
         id: 'plus',
         text: 'Add slide',
@@ -192,14 +195,18 @@ let slideForm = new w2form({
 });
 function renderSlideForm(data) {
     console.log('renderSlideForm', data);
+    if (typeof data.detail === 'string') {
+        return;
+    }
     w2ui.slide_form.fields = [
         { field: 'id', type: 'text', hidden: 'hidden' },
         { field: 'title', type: 'text', html: { span: -1, label: 'Title' } },
         { field: 'description', type: 'textarea', html: { span: -1, label: 'Description' } },
         { field: 'background_color', type: 'color', html: { span: -1, label: 'Background color' } },
         { field: 'background_image', type: 'file', options: { max: 1, maxItemWidth: 160 }, html: { span: -1, label: 'Background image', style: 'height: 86px;' } },
-        { field: 'transition', type: 'list', options: { url: '/tr',  minLength: 0 }, html: { span: -1, label: 'Transition' } },
-        { field: 'template', type: 'list', options: { url: '/t',  minLength: 0 }, html: { span: -1, label: 'Template', group: 'Template' } },
+        { field: 'transition', type: 'list', options: { url: '/tr',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Transition' } },
+        { field: 'duration', type: 'float', options: { min: 0, max: 2, step: 0.1, suffix: 's', keyboard: false }, html: { span: -1, label: 'Duration' } },
+        { field: 'template', type: 'list', options: { url: '/t',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Template' } },
     ];
     w2ui.slide_form.record = {
         id: data.id,
@@ -208,6 +215,7 @@ function renderSlideForm(data) {
         background_color: data.background_color.replace('#', '').toUpperCase(),
         background_image: data.background_image,
         transition: { id: data.transition.name.toLowerCase().replaceAll(' ', '_'), text: data.transition.name },
+        duration: data.transition.duration,
         template: { id: data.template.name.toLowerCase().replaceAll(' ', '_'), text: data.template.name },
     };
     data.template.fields.forEach(field => {
@@ -260,11 +268,15 @@ function loadSlide(slideId) {
         .then(resp => resp.json())
         .then(data => {
             console.log('data', data);
+            if (typeof data.detail === 'string') {
+                return;
+            }
             renderSlideForm(data);
             w2ui.left.nodes[data.position].text = data.title;
             w2ui.left.refresh();
         });
 };
+console.log(sbNodes);
 let leftSidebar = new w2sidebar({
     name: 'left',
     reorder: true,

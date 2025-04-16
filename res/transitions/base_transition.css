@@ -1,0 +1,14 @@
+$target {
+    animation-duration: ${duration}s;
+    animation-timing-function: $timing_function;
+    animation-delay: ${delay}s;
+    animation-iteration-count: $iteration_count;
+    animation-direction: $direction;
+    animation-fill-mode: $fill_mode;
+    animation-name: ${name}-$id;
+    animation-timeline: $time_line;
+    animation-play-state: $play_state;
+}
+@keyframes ${name}-$id {
+    $keyframe
+}

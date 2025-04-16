@@ -1,5 +1,8 @@
+import os
 from dataclasses import dataclass, field
 from enum import Enum
+from pathlib import Path
+from string import Template
 from typing import Optional
 from uuid import uuid4
 
@@ -21,19 +24,30 @@ class Transition(ModelObject):
     fill_mode: str = "unset"
     time_line: str = ""
     iteration_count: int = 1
+    play_state: str = "running"
     keyframe: str = ""
+    target: str = "#slide_$position"
 
-    def get(self) -> str:
-        return f"""animation-duration: {self.duration}s;
-animation-timing-function: {self.timing_function};
-animation-delay: {self.delay}s;
-animation-iteration-count: {self.iteration_count};
-animation-direction: {self.direction};
-animation-fill-mode: {self.fill_mode};
-animation-name: {self.name}-{self.id};
-animation-timeline: {self.time_line};"""
+    def get(self, slide_position: int) -> str:
+        css_values = {
+            'id': self.id,
+            'name': self.name.lower().replace(' ', '_'),
+            'duration': self.duration,
+            'timing_function': self.timing_function,
+            'delay': self.delay,
+            'direction': self.direction,
+            'fill_mode': self.fill_mode,
+            'time_line': self.time_line,
+            'iteration_count': self.iteration_count,
+            'play_state': self.play_state,
+            'keyframe': self.keyframe,
+            'target': Template(self.target).safe_substitute({'position': slide_position}),
+            'position': slide_position
+        }
+        with open(os.path.join(self.templates_path, 'base_transition.css'), 'r') as css_file:
+            css_template = css_file.read()
+        return Template(css_template).safe_substitute(css_values)
 
-    def get_keyframe(self) -> str:
-        return f"""@keyframes {self.name}-{self.id} {{
-        {self.keyframe}
-}}"""
+    @property
+    def templates_path(self) -> str:
+        return os.path.join(Path.cwd(), 'res', 'transitions')

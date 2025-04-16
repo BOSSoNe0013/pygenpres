@@ -97,7 +97,7 @@ footer {{
     font-size: 0.7rem
 }}
 </style>
-{slide.get_html()}
+{slide.get_html(hidden=False)}
 <footer>{Template(presentation.get_footer()).safe_substitute({'slide_position': slide.position + 1})}</footer>"""
     return content
 
@@ -167,6 +167,11 @@ async def save(changes: dict):
                                 slide.background_color = value
                             case 'background_image':
                                 slide.background_image = field['value']
+                            case 'transition':
+                                transition = Transitions(field['value']["id"])
+                                slide.transition = transition.new_instance()
+                            case 'duration':
+                                slide.transition.duration = field['value']
                             case 'template':
                                 template = Templates(field['value']["id"])
                                 slide.template = template.new_instance()
@@ -176,7 +181,6 @@ async def save(changes: dict):
                                     if field['field'].endswith('image'):
                                         if isinstance(field['value'], dict):
                                             slide.template.fields[field_index].content = Image(**field['value'])
-                                            print(slide.template.fields[field_index].content.name)
                                         else:
                                             slide.template.fields[field_index].content = None
                                     elif field['field'].endswith('video'):

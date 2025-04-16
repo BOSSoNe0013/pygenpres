@@ -29,7 +29,7 @@ class Slide(ModelObject):
     @property
     def __html_template__(self) -> str:
         return """
-    <slide id="slide_$slide_position">
+    <slide id="slide_$slide_position" class="$class_list">
         <div class="parallax-layer bg-1"></div>
         <div class="parallax-layer bg-2"></div>
         <div class="content">
@@ -38,7 +38,7 @@ class Slide(ModelObject):
     </slide>
 """
 
-    def get_html(self) -> str:
+    def get_html(self, hidden: bool = True) -> str:
         values = {
             field.name: field.get_html() for field in self.template.fields
         }
@@ -46,7 +46,8 @@ class Slide(ModelObject):
         content = Template(self.template.content).safe_substitute(values)
         return Template(self.__html_template__).safe_substitute({
             'slide_position': self.position,
-            'slide_content': content
+            'slide_content': content,
+            'class_list': 'hidden' if self.position != 0 and hidden else ''
         })
 
     def get_script(self) -> str:
@@ -60,16 +61,16 @@ class Slide(ModelObject):
         style = f"""
 #slide_{self.position} {{
     background-color: {self.background_color};
+    z-index: {500 - self.position};
 }}
 #slide_{self.position} .bg-1 {{
     --i: {self.position};
     background-image: url('{self.background_image.data_url if self.background_image else ''}');
-    {self.transition.get()}
 }}
-slide_{self.position} thead {{
+#slide_{self.position} thead {{
     background-color: {self.background_color};
 }}
-{self.transition.get_keyframe()}
+{self.transition.get(self.position)}
 {Template(self.template.style).safe_substitute(values)}
 """
         return style

@@ -1,4 +1,38 @@
 let page = 0;
+function showSlide() {
+    document.querySelectorAll('slide').forEach(slide => {
+        if (slide.id === `slide_${page}`) {
+            slide.classList.remove('hidden');
+        }
+        else {
+            slide.classList.add('hidden');
+            if (page > 0 && slide.id === `slide_${page - 1}`) {
+                document.querySelector(`#slide_${page - 1} .content`).style.animationPlayState = 'running';
+                document.querySelector(`#slide_${page - 1} .bg-1`).style.animationPlayState = 'running';
+                document.querySelector(`#slide_${page - 1} .bg-2`).style.animationPlayState = 'running';
+                slide.style.animationPlayState = 'running';
+            }
+        }
+        /*if (page > 0) {
+            const isParallax = document.querySelector(`#slide_${page - 1} .bg-1`).style.animationTimeLine === "--slide";
+            if (isParallax) {
+                scrollToSlide();
+            }
+        }*/
+    });
+};
+function scrollToSlide() {
+    const targetSlide = document.querySelector(`#slide_${page}`);
+    targetSlide.scrollIntoView({
+        behavior: 'smooth'
+    });
+    document.querySelector('#current-page').innerHTML = page + 1;
+};
+document.addEventListener("animationend", (event) => {
+    console.log(event);
+    scrollToSlide();
+});
+document.scrollToSlide = scrollToSlide;
 document.addEventListener('DOMContentLoaded', function() {
     const total_pages = $total_pages_count;
     document.querySelector('#current-page').innerHTML = page + 1;
@@ -18,11 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 page = 0;
             }
         }
-        const targetSlide = document.querySelector(`#slide_${page}`);
-        targetSlide.scrollIntoView({
-            behavior: 'smooth'
-        });
-        document.querySelector('#current-page').innerHTML = page + 1;
+        showSlide();
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -46,11 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.target.href.endsWith("#last")) {
                 page = total_pages - 1;
             }
-            const targetSlide = document.querySelector(`#slide_${page}`);
-            targetSlide.scrollIntoView({
-                behavior: 'smooth'
-            });                
-            document.querySelector('#current-page').innerHTML = page + 1;
+            showSlide();
         });
     });
 });

@@ -4,15 +4,15 @@ from app import Transition
 
 
 @dataclass
-class Parallax(Transition):
+class ToRight(Transition):
 
     def __post_init__(self):
-        self.name = 'Parallax'
-        self.duration = 1.5
+        self.name = 'To right'
+        self.duration = 0.8
         self.fill_mode = 'both'
         self.time_line = 'auto'
         self.play_state = 'paused'
-        self.target = "#slide_${position}.hidden, #slide_${position}.hidden .content"
+        self.target = "#slide_${position}.hidden"
         self.keyframe = """
 0% {
     opacity: 1;
@@ -23,12 +23,12 @@ class Parallax(Transition):
     right: 0;
     opacity: 1;
 }
-50% {
-    opacity: 0.2;
+75% {
+    opacity: 1;
 }
 100% {
-    top: -100%;
-    left: 0;
-    right: 0;
+    top: 0;
+    left: 100%;
+    right: -100%;
     opacity: 0;
 }"""

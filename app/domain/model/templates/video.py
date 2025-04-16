@@ -46,7 +46,7 @@ class Video(SlideTemplate):
             'id': self.id,
             'autoplay': 'true' if self.autoplay else 'false'
         }
-        with open(os.path.join(self.templates_path, 'video.css'), 'r') as js_file:
+        with open(os.path.join(self.templates_path, 'video.js'), 'r') as js_file:
             js_template = js_file.read()
         return Template(js_template).safe_substitute(js_values)
 
