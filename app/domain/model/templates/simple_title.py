@@ -1,4 +1,7 @@
+import os
 from dataclasses import dataclass
+from string import Template
+
 from app.domain.model.templates import SlideTemplate, TemplateField, TemplateFieldType
 
 
@@ -19,27 +22,21 @@ class SimpleTitle(SlideTemplate):
 
     @property
     def content(self) -> str:
-        return f"""<h1 class="simple-title-{self.id}">$st_title</h1>
-<p class="simple-title-{self.id}">$st_subtitle</p>
-"""
+        html_values = {
+            'id': self.id
+        }
+        with open(os.path.join(self.templates_path, 'simple_title.html'), 'r') as html_file:
+            html_template = html_file.read()
+        return Template(html_template).safe_substitute(html_values)
 
     @property
     def style(self) -> str:
-        return f"""
-h1.simple-title-{self.id} {{
-    font-size: 5em;
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: $st_text_color;
-    text-shadow: 0 0 10px #000;
-}}
-p.simple-title-{self.id} {{
-    font-size: 2rem;
-    color: $st_text_color;
-    max-width: 800px;
-    margin: 0 auto;
-}}
-"""
+        css_values = {
+            'id': self.id
+        }
+        with open(os.path.join(self.templates_path, 'simple_title.css'), 'r') as css_file:
+            css_template = css_file.read()
+        return Template(css_template).safe_substitute(css_values)
 
     @property
     def script(self) -> str:

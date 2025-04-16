@@ -1,0 +1,13 @@
+h1.simple-title-$id {
+    font-size: 5em;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: $st_text_color;
+    text-shadow: 0 0 10px #000;
+}
+p.simple-title-$id {
+    font-size: 2rem;
+    color: $st_text_color;
+    max-width: 800px;
+    margin: 0 auto;
+}

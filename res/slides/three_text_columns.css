@@ -1,0 +1,33 @@
+h1.three-text-cols-$id {
+    font-size: 5em;
+    font-size: 3rem;
+    margin-bottom: 0.2rem;
+    color: $ttc_text_color;
+    text-shadow: 0 0 10px #000;
+}
+p.three-text-cols-$id {
+    font-size: 2rem;
+    color: $ttc_text_color;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+}
+div.three-text-cols-$id {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 20px;
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+div.three-text-cols-$id > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    color: $ttc_text_color;
+    background-color: $background_color;
+    border-radius: 4px;
+    opacity: 0.8;
+    padding: 1rem 2rem;
+}

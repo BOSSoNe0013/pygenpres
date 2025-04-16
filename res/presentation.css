@@ -1,36 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
 }
-.w2ui-field > label {
-    float: none !important;
-}
-.w2ui-sidebar>div {
-    max-width: 140px;
-}
-.w2ui-field-helper.w2ui-list {
-    height: 56px !important;
-    width: 200px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.w2ui-field-helper.w2ui-list .w2ui-enum-placeholder {
-    padding: 0px !important;
-    text-align: center;
-}
-#content {
-    position: absolute;
-    top: 0;
+footer {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    padding: 4px 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 0.7rem
+}
+.container {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 0;
 }
 slide {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.6;
-    height: 92vh;
-    height: -webkit-fill-available;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,7 +38,7 @@ slide {
     text-align: center;
     padding: 2rem 4rem;
 }
-slide ul, slide ol {
+ul, ol {
     list-style-position: inside;
     margin: 0.2rem 0;
 }
@@ -55,6 +55,9 @@ slide table {
 slide thead {
     font-weight: 900;
 }
+slide th {
+    padding: 6px 12px;
+}
 slide tbody tr {
     background: #f6f6f6;
 }
@@ -64,6 +67,29 @@ slide tbody tr:nth-of-type(odd) {
 slide td {
     color: #3b3b3b !important;
     padding: 6px 12px;
+}
+.navigation {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 999;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #00000055;
+    opacity: 0;
+    transition: opacity linear 1s
+}
+.navigation:hover {
+    opacity: 1;
+    transition: opacity linear 1s
+}
+.navigation a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
 }
 .parallax-layer {
     position: absolute;
@@ -83,7 +109,7 @@ slide td {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.2 !important;
+    opacity: 0.2;
 }
 .bg-2 {
     transform: translateZ(-10px);
@@ -96,14 +122,5 @@ slide td {
     z-index: 3;
     padding: 4px 8px;
 }
-#layout_main_panel_right > .w2ui-layout {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-#tb_right_bottom_item_delete {
-    width: 236px;
-    text-align: center;
-}
+$style
+$slides_style

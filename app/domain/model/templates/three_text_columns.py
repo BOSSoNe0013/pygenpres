@@ -1,4 +1,6 @@
+import os
 from dataclasses import dataclass
+from string import Template
 
 from app.domain.model.templates import SlideTemplate, TemplateField, TemplateFieldType
 
@@ -27,52 +29,21 @@ class ThreeTextColumns(SlideTemplate):
 
     @property
     def content(self) -> str:
-        return f"""<h1 class="three-text-cols-{self.id}">$ttc_title</h1>
-<p class="three-text-cols-{self.id}">$ttc_subtitle</p>
-<div class="three-text-cols-{self.id}">
-    <div>$ttc_text_1</div>
-    <div>$ttc_text_2</div>
-    <div>$ttc_text_3</div>
-</div>
-"""
+        html_values = {
+            'id': self.id
+        }
+        with open(os.path.join(self.templates_path, 'three_text_columns.html'), 'r') as html_file:
+            html_template = html_file.read()
+        return Template(html_template).safe_substitute(html_values)
 
     @property
     def style(self) -> str:
-        return f"""
-h1.three-text-cols-{self.id} {{
-    font-size: 5em;
-    font-size: 3rem;
-    margin-bottom: 0.2rem;
-    color: $ttc_text_color;
-    text-shadow: 0 0 10px #000;
-}}
-p.three-text-cols-{self.id} {{
-    font-size: 2rem;
-    color: $ttc_text_color;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-bottom: 3rem;
-}}
-div.three-text-cols-{self.id} {{
-    display: grid;
-    grid-template-columns: 30% 30% 30%;
-    gap: 20px;
-    font-size: 1.8rem;
-    font-weight: 300;
-}}
-div.three-text-cols-{self.id} > div {{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    color: $ttc_text_color;
-    background-color: $background_color;
-    border-radius: 4px;
-    opacity: 0.8;
-    padding: 1rem 2rem;
-}}
-"""
+        css_values = {
+            'id': self.id
+        }
+        with open(os.path.join(self.templates_path, 'three_text_columns.css'), 'r') as css_file:
+            css_template = css_file.read()
+        return Template(css_template).safe_substitute(css_values)
 
     @property
     def script(self) -> str:

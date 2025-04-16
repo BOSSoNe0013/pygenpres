@@ -1,6 +1,7 @@
-from abc import abstractmethod
+import os.path
 from dataclasses import dataclass, field
 from enum import Enum
+from pathlib import Path
 from typing import Optional, Union
 from uuid import uuid4
 
@@ -51,6 +52,10 @@ class SlideTemplate(ModelObject):
     name: str = ""
     description: str = ""
     fields: list[TemplateField] = field(default_factory=list)
+
+    @property
+    def templates_path(self) -> str:
+        return os.path.join(Path.cwd(), 'res', 'slides')
 
     @property
     def content(self) -> str:

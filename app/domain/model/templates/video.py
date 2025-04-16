@@ -1,4 +1,6 @@
+import os
 from dataclasses import dataclass
+from string import Template
 from typing import Optional
 
 from app.domain.model.file import Video
@@ -31,83 +33,30 @@ class Video(SlideTemplate):
 
     @property
     def style(self) -> str:
-        return f"""
-h1.video-{self.id} {{
-    font-size: 5em;
-    font-size: 3rem;
-    margin-bottom: 0.2rem;
-    color: $v_text_color;
-    text-shadow: 0 0 10px #000;
-}}
-p.video-{self.id} {{
-    font-size: 2rem;
-    color: $v_text_color;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-bottom: 3rem;
-}}
-div.video-{self.id} {{
-    border-radius: 4px;
-    padding: 2rem 0;
-    margin: 0 0 2vh;
-    background-color: #000000;
-}}
-div.video-{self.id} > video {{
-    width: 100%;
-    height: 60vh;
-}}
-"""
+        css_values = {
+            'id': self.id
+        }
+        with open(os.path.join(self.templates_path, 'video.css'), 'r') as css_file:
+            css_template = css_file.read()
+        return Template(css_template).safe_substitute(css_values)
 
     @property
     def script(self) -> str:
-        return f"""
-document.addEventListener('DOMContentLoaded', function() {{
-    document.addEventListener('keyup', function(e) {{
-        if (e.key == "Enter" ||
-            e.code == "Enter" ||      
-            e.keyCode == 13      
-        ) {{
-            e.preventDefault();
-            let video = document.querySelector(`#slide_${{page}} div.video-{self.id} video`);
-            if (!video) {{
-                return;
-            }}
-            if (video.paused) {{
-                console.log('Play video', '{self.id}')
-                video.play();
-            }} else {{
-                console.log('Pause video', '{self.id}')
-                video.pause();
-            }}
-        }}
-    }});
-    document.addEventListener('keyup', function(e) {{
-        if (e.key == " " ||
-            e.code == "Space" ||      
-            e.keyCode == 32      
-        ) {{
-            e.preventDefault();
-            let video = document.querySelector(`#slide_${{page}} div.video-{self.id} video`);
-            if (video && {'true' if self.autoplay else 'false'}) {{
-                console.log('Play video', '{self.id}')
-                video.play();
-                return;
-            }}
-            video = document.querySelector(`#slide_${{page - 1}} div.video-{self.id} video`);
-            if (!video) {{
-                return;
-            }}
-            console.log('Pause video', '{self.id}')
-            video.pause();
-         }}
-    }});
-}});"""
+        js_values = {
+            'id': self.id,
+            'autoplay': 'true' if self.autoplay else 'false'
+        }
+        with open(os.path.join(self.templates_path, 'video.css'), 'r') as js_file:
+            js_template = js_file.read()
+        return Template(js_template).safe_substitute(js_values)
 
     @property
     def content(self) -> str:
-        return f"""<h1 class="video-{self.id}">$v_title</h1>
-<p class="video-{self.id}">$v_subtitle</p>
-<div class="video-{self.id}">
-    <video src="$v_video"{" controls" if self.controls else ""}{" loop" if self.loop else ""}>The video tag is not supported by your browser</video>
-</div>
-"""
+        html_values = {
+            'id': self.id,
+            'controls': 'controls' if self.controls else '',
+            'loop': 'loop' if self.loop else '',
+        }
+        with open(os.path.join(self.templates_path, 'video.html'), 'r') as html_file:
+            html_template = html_file.read()
+        return Template(html_template).safe_substitute(html_values)
