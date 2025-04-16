@@ -1,0 +1,107 @@
+body {
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+}
+.w2ui-field > label {
+    float: none !important;
+}
+.w2ui-sidebar>div {
+    max-width: 140px;
+}
+.w2ui-field-helper.w2ui-list {
+    height: 56px !important;
+    width: 200px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.w2ui-field-helper.w2ui-list .w2ui-enum-placeholder {
+    padding: 0px !important;
+    text-align: center;
+}
+#content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+slide {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    height: 92vh;
+    height: -webkit-fill-available;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 4rem;
+}
+slide ul, slide ol {
+    list-style-position: inside;
+    margin: 0.2rem 0;
+}
+slide p {
+    margin: 0.2rem 0;
+}
+slide table {
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  text-align: left;
+  border-collapse: collapse;
+  border: 1px solid #ffffff;
+}
+slide thead {
+    font-weight: 900;
+}
+slide tbody tr {
+    background: #f6f6f6;
+}
+slide tbody tr:nth-of-type(odd) {
+    background: #e9e9e9;
+}
+slide td {
+    color: #3b3b3b !important;
+    padding: 6px 12px;
+}
+.parallax-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.bg-1, .bg-2 {
+    background-size: cover;
+    background-position: center;
+}
+.bg-1 {
+    transform: translateZ(-5px);
+    z-index: 1;
+    background-color: #ff000000;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.2 !important;
+}
+.bg-2 {
+    transform: translateZ(-10px);
+    z-index: 2;
+    background-color: #0000ff00;
+    animation-delay: 0.4s;
+}
+.content {
+    position: relative;
+    z-index: 3;
+    padding: 4px 8px;
+}
+#layout_main_panel_right > .w2ui-layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#tb_right_bottom_item_delete {
+    width: 236px;
+    text-align: center;
+}

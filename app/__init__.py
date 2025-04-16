@@ -30,7 +30,7 @@ from app.domain.model.transitions.parallax import Parallax
 
 
 app = FastAPI()
-app.mount("/res", StaticFiles(directory="res"), name="res")
+app.mount("/static", StaticFiles(directory="res/static"), name="static")
 home_dir = Path.home()
 config_dir = os.path.join(home_dir, '.config', 'pygenpres')
 if not os.path.exists(config_dir):
@@ -202,4 +202,4 @@ async def save(changes: dict):
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
-    return FileResponse("res/favicon.ico")
+    return FileResponse("res/static/favicon.ico")
