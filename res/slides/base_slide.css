@@ -1,0 +1,13 @@
+#slide_$slide_position {
+    background-color: $background_color;
+    z-index: $z_index;
+}
+#slide_$slide_position .bg-1 {
+    --i: $slide_position;
+    background-image: url('$background_image');
+}
+#slide_$slide_position thead {
+    background-color: $background_color;
+}
+$transition
+$template

@@ -12,3 +12,4 @@ $target {
 @keyframes ${name}-$id {
     $keyframe
 }
+$extra_css

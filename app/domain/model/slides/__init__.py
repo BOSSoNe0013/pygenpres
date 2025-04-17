@@ -1,4 +1,6 @@
+import os
 from dataclasses import dataclass, field
+from pathlib import Path
 from string import Template
 from typing import Optional
 from uuid import uuid4
@@ -27,16 +29,14 @@ class Slide(ModelObject):
     position: int = 0
 
     @property
+    def templates_path(self) -> str:
+        return os.path.join(Path.cwd(), 'res', 'slides')
+
+    @property
     def __html_template__(self) -> str:
-        return """
-    <slide id="slide_$slide_position" class="$class_list">
-        <div class="parallax-layer bg-1"></div>
-        <div class="parallax-layer bg-2"></div>
-        <div class="content">
-            $slide_content
-        </div>
-    </slide>
-"""
+        with open(os.path.join(self.templates_path, 'base_slide.html'), 'r') as html_file:
+            html_template = html_file.read()
+        return html_template
 
     def get_html(self, hidden: bool = True) -> str:
         values = {
@@ -54,25 +54,21 @@ class Slide(ModelObject):
         return self.template.script
 
     def get_style(self) -> str:
-        values = {
+        templates_values = {
             field.name: field.content for field in self.template.fields
         }
-        values['background_color'] = self.background_color
-        style = f"""
-#slide_{self.position} {{
-    background-color: {self.background_color};
-    z-index: {500 - self.position};
-}}
-#slide_{self.position} .bg-1 {{
-    --i: {self.position};
-    background-image: url('{self.background_image.data_url if self.background_image else ''}');
-}}
-#slide_{self.position} thead {{
-    background-color: {self.background_color};
-}}
-{self.transition.get(self.position)}
-{Template(self.template.style).safe_substitute(values)}
-"""
+        templates_values['background_color'] = self.background_color
+        values = {
+            'background_color': self.background_color,
+            'background_image': self.background_image.data_url if self.background_image else '',
+            'slide_position': self.position,
+            'transition': self.transition.get(self.position),
+            'template': Template(self.template.style).safe_substitute(templates_values),
+            'z_index': 500 - self.position
+        }
+        with open(os.path.join(self.templates_path, 'base_slide.css'), 'r') as css_file:
+            css_template = css_file.read()
+        style = Template(css_template).safe_substitute(values)
         return style
 
     @classmethod

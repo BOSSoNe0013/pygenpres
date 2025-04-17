@@ -1,6 +1,5 @@
 import os
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
 from string import Template
 from typing import Optional
@@ -27,6 +26,7 @@ class Transition(ModelObject):
     play_state: str = "running"
     keyframe: str = ""
     target: str = "#slide_$position"
+    extra_css: str = ""
 
     def get(self, slide_position: int) -> str:
         css_values = {
@@ -42,7 +42,8 @@ class Transition(ModelObject):
             'play_state': self.play_state,
             'keyframe': self.keyframe,
             'target': Template(self.target).safe_substitute({'position': slide_position}),
-            'position': slide_position
+            'position': slide_position,
+            'extra_css': self.extra_css
         }
         with open(os.path.join(self.templates_path, 'base_transition.css'), 'r') as css_file:
             css_template = css_file.read()
