@@ -16,13 +16,16 @@
     box-sizing: border-box;
 }
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: '$font_family', sans-serif;
     line-height: 1.6;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
     color: #000000;
     background-color: #ffffff;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0.2rem 0;
 }
 footer {
     position: fixed;
@@ -141,6 +144,7 @@ slide td {
     animation-delay: 0.4s !important;
 }
 .content {
+    max-height: 95vh;
     position: relative;
     z-index: 3;
     padding: 4px 8px;

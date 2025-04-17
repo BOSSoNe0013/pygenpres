@@ -20,6 +20,7 @@ class Presentation(ModelObject):
         default_factory=lambda: PresentationId(str(uuid4())))
     title: str = ""
     footer: str = ""
+    font_family: str = "Roboto"
     style: list[str] = field(default_factory=list)
     scripts: list[str] = field(default_factory=list)
 
@@ -88,7 +89,8 @@ class Presentation(ModelObject):
     def _load_style(self) -> str:
         css_values = {
             'style': ''.join(self.style),
-            'slides_style': ''.join([slide.get_style() for slide in self._slides])
+            'slides_style': Template(''.join([slide.get_style() for slide in self._slides])).safe_substitute({'font_family': self.font_family}),
+            'font_family': self.font_family
         }
         with open(os.path.join(self._templates_path, 'presentation.css'), 'r') as css_file:
             css_template = css_file.read()
@@ -115,6 +117,7 @@ class Presentation(ModelObject):
             'script': self._load_scripts(),
             'slides': ''.join([slide.get_html() for slide in self._slides]),
             'title': self.title,
+            'font_family': self.font_family.replace(' ', '+'),
             'footer': self.get_footer()
         })
         return "".join([s for s in html.strip().splitlines(True) if s.strip()])

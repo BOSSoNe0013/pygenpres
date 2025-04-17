@@ -1,6 +1,7 @@
 h1.text-image-$id {
     font-size: 5em;
     font-size: 3rem;
+    text-align: $header_alignment;
     margin-bottom: 0.2rem;
     color: $ti_text_color;
     text-shadow: 0 0 10px #000;
@@ -8,8 +9,8 @@ h1.text-image-$id {
 p.text-image-$id {
     font-size: 2rem;
     color: $ti_text_color;
-    max-width: 800px;
-    margin: 0 auto;
+    text-align: $header_alignment;
+    margin: 0;
     margin-bottom: 3rem;
 }
 div.text-image-$id * {
@@ -19,8 +20,10 @@ div.text-image-$id {
     display: grid;
     grid-template-columns: 60% auto;
     gap: 20px;
-    font-size: 1.8rem;
+    font-size: clamp(0.5rem, 0.5rem + 1.5vh, 1.8rem);
     font-weight: 300;
+    justify-content: center;
+    align-items: center;
 }
 div.text-image-$id > div {
     display: flex;

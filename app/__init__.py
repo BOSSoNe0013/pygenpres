@@ -80,7 +80,7 @@ async def slide(id: str, sid: str):
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     slide = [s for s in presentation.slides if s.id == sid][0]
-    content = f"""<style>{slide.get_style()}
+    content = f"""<style>{Template(slide.get_style()).safe_substitute({'font_family': presentation.font_family})}
 footer {{
     position: absolute;
     z-index: 10;
@@ -151,6 +151,8 @@ async def save(changes: dict):
                     presentation.title = change['value']
                 case 'footer':
                     presentation.footer = change['value']
+                case 'font_family':
+                    presentation.font_family = change['value']
                 case 'slide':
                     slide_id = change['id']
                     slide = [s for s in presentation.slides if s.id == slide_id][0]
@@ -162,6 +164,11 @@ async def save(changes: dict):
                                 slide.title = field['value']
                             case 'description':
                                 slide.description = field['value']
+                            case 'font_family':
+                                presentation.font_family = field['value']['id']
+                                slide.font_family = field['value']['id']
+                            case 'header_alignment':
+                                slide.header_alignment = field['value']['id']
                             case 'background_color':
                                 value: str = field['value']
                                 if not value.startswith('#'):

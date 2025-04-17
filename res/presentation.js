@@ -1,5 +1,6 @@
 let page = 0;
 function showSlide() {
+    document.querySelector('#current-page').innerHTML = page + 1;
     document.querySelectorAll('slide').forEach(slide => {
         if (slide.id === `slide_${page}`) {
             slide.classList.remove('hidden');
@@ -13,12 +14,6 @@ function showSlide() {
                 slide.style.animationPlayState = 'running';
             }
         }
-        /*if (page > 0) {
-            const isParallax = document.querySelector(`#slide_${page - 1} .bg-1`).style.animationTimeLine === "--slide";
-            if (isParallax) {
-                scrollToSlide();
-            }
-        }*/
     });
 };
 function scrollToSlide() {
@@ -26,7 +21,6 @@ function scrollToSlide() {
     targetSlide.scrollIntoView({
         behavior: 'smooth'
     });
-    document.querySelector('#current-page').innerHTML = page + 1;
 };
 document.addEventListener("animationend", (event) => {
     console.log(event);

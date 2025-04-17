@@ -1,6 +1,7 @@
 h1.simple-title-$id {
     font-size: 5em;
     font-size: 3rem;
+    text-align: $header_alignment;
     margin-bottom: 1rem;
     color: $st_text_color;
     text-shadow: 0 0 10px #000;
@@ -8,6 +9,6 @@ h1.simple-title-$id {
 p.simple-title-$id {
     font-size: 2rem;
     color: $st_text_color;
-    max-width: 800px;
+    text-align: $header_alignment;
     margin: 0 auto;
 }

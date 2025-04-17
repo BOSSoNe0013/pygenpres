@@ -7,6 +7,7 @@ from app.domain.model.presentation import Presentation
 
 
 async def edit_presentation(path: str, id: Union[str, None] = None) -> str:
+    presentation = None
     if id is None:
         presentation = Presentation()
         with open(os.path.join(path, f'{presentation.id}.json'), 'w+') as f:
@@ -14,6 +15,8 @@ async def edit_presentation(path: str, id: Union[str, None] = None) -> str:
     else:
         with open(os.path.join(path, f'{id}.json'), 'r') as f:
             presentation = Presentation.from_json(f.read())
+    if presentation is None:
+        raise AssertionError('Presentation not found')
     slides = [f"{{id: '{slide.id}', text: '{slide.title}', order: {slide.position}, icon: 'fa fa-rectangle-list'}}" for slide in presentation.slides]
     first_slide_id = presentation.slides.pop(0).id if presentation.slides else ''
     templates_path = os.path.join(Path.cwd(), 'res')
@@ -26,7 +29,7 @@ async def edit_presentation(path: str, id: Union[str, None] = None) -> str:
         'presentation_title': presentation.title,
         'presentation_footer': presentation.footer,
         'slide_items': ',\n    '.join(slides),
-        'first_slide_id': first_slide_id
+        'first_slide_id': first_slide_id,
     }
     with open(os.path.join(templates_path, 'edit_presentation.js'), 'r') as js_file:
         js_template = js_file.read()

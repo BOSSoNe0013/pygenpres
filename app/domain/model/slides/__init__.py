@@ -24,6 +24,8 @@ class Slide(ModelObject):
     description: str = ""
     background_image: Optional[Image] = None
     background_color: str = "#ffffff"
+    font_family: str = "Roboto"
+    header_alignment: str = "center"
     id: Optional[SlideId] = field(
         default_factory=lambda: SlideId(str(uuid4())))
     position: int = 0
@@ -58,13 +60,14 @@ class Slide(ModelObject):
             field.name: field.content for field in self.template.fields
         }
         templates_values['background_color'] = self.background_color
+        templates_values['header_alignment'] = self.header_alignment
         values = {
             'background_color': self.background_color,
             'background_image': self.background_image.data_url if self.background_image else '',
             'slide_position': self.position,
             'transition': self.transition.get(self.position),
             'template': Template(self.template.style).safe_substitute(templates_values),
-            'z_index': 500 - self.position
+            'z_index': 500 - self.position,
         }
         with open(os.path.join(self.templates_path, 'base_slide.css'), 'r') as css_file:
             css_template = css_file.read()
