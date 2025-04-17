@@ -98,6 +98,19 @@ let toolbar = new w2toolbar({
             value: presFooter,
             input: { style: 'width: 25vw;min-width: 320px;' },
         },
+        {
+            type: 'spacer',
+        },
+        {
+            type: 'menu',
+            id: 'menu',
+            text: 'Download',
+            icon: 'fa fa-download',
+            items: [
+                { id: 'dl-html', text: 'HTML', icon: 'fa fa-file-code' },
+                { id: 'dl-pdf', text: 'PDF', icon: 'fa fa-file-pdf' }
+            ],
+        }
     ],
 });
 function updatePresentation(data, callback) {
@@ -122,8 +135,25 @@ function updatePresentation(data, callback) {
         });
 };
 toolbar.on('click', event => {
+    console.log('Toolbar click', event);
     if (event.target === 'home') {
         window.location.replace(`/`);
+    }
+    else if (event.target === 'menu:dl-html') {
+        fetch(`/p/${presId}.html`)
+            .then(response => response.blob())
+            .then(blob => {
+                let url = URL.createObjectURL(blob);
+                const tmp1 = document.createElement("a");
+                tmp1.href = url;
+                tmp1.download = `${presTitle}.html`;
+                tmp1.click();
+                URL.revokeObjectURL(url);
+                tmp1.remove();
+            });
+    }
+    else if (event.target === 'menu:dl-pdf') {
+        window.open(`/p/${presId}.html`, 'Print', 'width=1280, height=720').print();
     }
 });
 toolbar.on('change', event => {

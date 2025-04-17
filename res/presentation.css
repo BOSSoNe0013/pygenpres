@@ -1,3 +1,15 @@
+@media print {
+    slide:not(:last-child) {
+        break-after: page;
+
+    }
+    slide {
+        position: initial !important;
+    }
+    video {
+        display: none;
+    }
+}
 * {
     margin: 0;
     padding: 0;
@@ -9,10 +21,12 @@ body {
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
+    color: #000000;
+    background-color: #ffffff;
 }
 footer {
     position: fixed;
-    z-index: 10;
+    z-index: 900;
     bottom: 0;
     left: 0;
     right: 0;
@@ -21,7 +35,8 @@ footer {
     flex-direction: row;
     justify-content: space-between;
     color: #fff;
-    font-size: 0.7rem
+    font-size: 0.7rem;
+    text-shadow: 0 0 2px #000;
 }
 .container {
     width: 100%;
@@ -80,21 +95,23 @@ slide td {
     transform: translateX(-50%);
     display: flex;
     gap: 20px;
+    align-items: center;
+    justify-content: center;
     z-index: 999;
     padding: 4px 8px;
     border-radius: 4px;
     background-color: #00000055;
     opacity: 0;
-    transition: opacity linear 1s
+    transition: opacity linear 1s;
 }
 .navigation:hover {
     opacity: 1;
-    transition: opacity linear 1s
+    transition: opacity linear 1s;
 }
 .navigation a {
     color: #fff;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
 }
 .parallax-layer {
     position: absolute;

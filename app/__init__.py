@@ -1,12 +1,11 @@
 import os.path
+from pathlib import Path
 from string import Template
 from typing import Union
 
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from pathlib import Path
-
 from starlette.responses import FileResponse
 
 from app.domain.api.edit_presentation import edit_presentation
@@ -19,15 +18,14 @@ from app.domain.model.file import Image, Video
 from app.domain.model.presentation import Presentation
 from app.domain.model.slides import Slide
 from app.domain.model.templates import TemplateFieldType
-from app.domain.model.templates.templates import Templates
 from app.domain.model.templates.image_text import ImageText
 from app.domain.model.templates.simple_title import SimpleTitle
+from app.domain.model.templates.templates import Templates
 from app.domain.model.templates.text_image import TextImage
 from app.domain.model.templates.three_text_columns import ThreeTextColumns
-from app.domain.model.transitions.transitions import Transitions
 from app.domain.model.transitions import Transition
 from app.domain.model.transitions.parallax import Parallax
-
+from app.domain.model.transitions.transitions import Transitions
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="res/static"), name="static")
@@ -141,8 +139,12 @@ async def edit(id: Union[str, None] = None):
 async def save(changes: dict):
     try:
         pres_id = changes['id']
-        with open(os.path.join(presentations_dir, f'{pres_id}.json'), 'r') as file:
-            presentation = Presentation.from_json(file.read())
+        file_path = os.path.join(presentations_dir, f'{pres_id}.json')
+        if os.path.exists(file_path):
+            with open(os.path.join(presentations_dir, f'{pres_id}.json'), 'r') as file:
+                presentation = Presentation.from_json(file.read())
+        else:
+            presentation = Presentation()
         for change in changes['changes']:
             match change['field']:
                 case 'title':
