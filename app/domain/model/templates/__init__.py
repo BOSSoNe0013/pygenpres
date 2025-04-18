@@ -60,7 +60,7 @@ class TemplateField(ModelObject):
         if self.content is None:
             return ''
         if self.type is TemplateFieldType.MARKDOWN:
-            return markdown(self.content, extensions=['tables', 'extra', 'fenced_code', 'codehilite', 'nl2br'])
+            return markdown(self.content, extensions=['tables', 'extra', 'fenced_code', 'codehilite', 'nl2br', 'sane_lists'])
         if self.type is TemplateFieldType.IMAGE:
             if not isinstance(self.content, str):
                 return self.content.data_url
