@@ -1,13 +1,12 @@
 h1.simple-title-$id {
-    font-size: 5em;
-    font-size: 3rem;
+    font-size: clamp(3rem, 2.8rem + 1.5vh, 5rem);
     text-align: $header_alignment;
     margin-bottom: 1rem;
     color: $st_text_color;
     text-shadow: 0 0 10px #000;
 }
 p.simple-title-$id {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 1.3rem + 1.5vh, 2.5rem);
     color: $st_text_color;
     text-align: $header_alignment;
     margin: 0 auto;

@@ -1,12 +1,11 @@
 h1.video-$id {
-    font-size: 5em;
-    font-size: 3rem;
+    font-size: clamp(2rem, 1.8rem + 1.5vh, 3rem);
     margin-bottom: 0.2rem;
     color: $v_text_color;
     text-shadow: 0 0 10px #000;
 }
 p.video-$id {
-    font-size: 2rem;
+    font-size: clamp(1rem, 0.8rem + 1.5vh, 2rem);
     color: $v_text_color;
     max-width: 800px;
     margin: 0 auto;

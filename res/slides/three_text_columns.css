@@ -1,13 +1,13 @@
 h1.three-text-cols-$id {
     font-size: 5em;
-    font-size: 3rem;
+    font-size: clamp(2rem, 1.8rem + 1.5vh, 3rem);
     text-align: $header_alignment;
     margin-bottom: 0.2rem;
     color: $ttc_text_color;
     text-shadow: 0 0 10px #000;
 }
 p.three-text-cols-$id {
-    font-size: 2rem;
+    font-size: clamp(1rem, 0.8rem + 1.5vh, 2rem);
     color: $ttc_text_color;
     text-align: $header_alignment;
     margin: 0;
@@ -17,7 +17,7 @@ div.three-text-cols-$id {
     display: grid;
     grid-template-columns: 30% 30% 30%;
     gap: 20px;
-    font-size: clamp(0.5rem, 0.5rem + 1.5vh, 1.8rem);
+    font-size: clamp(0.5rem, 0.2rem + 1.5vh, 1.8rem);
     font-weight: 300;
 }
 div.three-text-cols-$id > div {
