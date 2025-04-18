@@ -57,6 +57,9 @@ slide table {
 slide thead {
     font-weight: 900;
 }
+slide th {
+    padding: 6px 12px;
+}
 slide tbody tr {
     background: #f6f6f6;
 }
