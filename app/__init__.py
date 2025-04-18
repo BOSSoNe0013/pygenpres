@@ -9,9 +9,10 @@ from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
 from app.domain.api.edit_presentation import edit_presentation
+from app.domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
 from app.domain.api.presentations import get_presentations
 from app.domain.api.root import get_root
-from app.domain.api.store_presentation import store_presentation
+from app.domain.api.store_presentation import store_presentation, save_presentation_changes
 from app.domain.api.templates import get_templates
 from app.domain.api.transitions import get_transitions
 from app.domain.model.file import Image, Video
@@ -82,8 +83,8 @@ async def run(id: str):
     Args:
         id: The ID of the presentation.
     """
-    with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
-        presentation = Presentation.from_json(file.read())
+    presentation = await get_presentation(id, presentations_dir)
+
     return presentation.get_html()
 
 @app.get("/p/{id}.json")
@@ -94,8 +95,8 @@ async def dump(id: str):
     Args:
         id: The ID of the presentation.
     """
-    with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
-        presentation = Presentation.from_json(file.read())
+    presentation = await get_presentation(id, presentations_dir)
+
     return presentation.to_dict()
 
 @app.get("/new", response_class=HTMLResponse)
@@ -111,8 +112,8 @@ async def slide(id: str, sid: str):
         id: The ID of the presentation.
         sid: The ID of the slide.
     """
-    with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
-        presentation = Presentation.from_json(file.read())
+    presentation = await get_presentation(id, presentations_dir)
+
     slide = [s for s in presentation.slides if s.id == sid][0]
     content = f"""<style>{Template(slide.get_style()).safe_substitute({'font_family': presentation.font_family})}
 footer {{
@@ -142,8 +143,8 @@ async def slide(id: str, sid: str):
         id: The ID of the presentation.
         sid: The ID of the slide.
     """
-    with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
-        presentation = Presentation.from_json(file.read())
+    presentation = await get_presentation(id, presentations_dir)
+
     slide = [s for s in presentation.slides if s.id == sid][0]
     return slide.to_dict()
 
@@ -156,13 +157,10 @@ async def add_slide(id: str, position: Union[int, None] = None):
         id: The ID of the presentation.
         position: The position where to insert the new slide.
     """
-    with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
-        presentation = Presentation.from_json(file.read())
-    if position is None:
-        position = len(presentation.slides)
-    slide = Slide(template=Templates.default(), transition=Transitions.default(), position=position)
-    presentation.add_slide(slide, position=position)
-    result = await store_presentation(presentation, path=presentations_dir)
+    presentation = await get_presentation(id, presentations_dir)
+
+    result = await add_slide_to_presentation(presentation, position, presentations_dir)
+
     if result:
         return presentation.to_dict()
     else:
@@ -177,10 +175,10 @@ async def remove_slide(id: str, sid: str):
         id: The ID of the presentation.
         sid: The ID of the slide to remove.
     """
-    with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
-        presentation = Presentation.from_json(file.read())
-    presentation.remove_slide(sid)
-    result = await store_presentation(presentation, path=presentations_dir)
+    presentation = await get_presentation(id, presentations_dir)
+
+    result = await remove_slide_from_presentation(presentation, sid, presentations_dir)
+
     if result:
         return presentation.to_dict()
     else:
@@ -202,73 +200,8 @@ async def save(changes: dict):
     Saves changes made to a presentation.
     """
     try:
-        pres_id = changes['id']
-        file_path = os.path.join(presentations_dir, f'{pres_id}.json')
-        if os.path.exists(file_path):
-            with open(os.path.join(presentations_dir, f'{pres_id}.json'), 'r') as file:
-                presentation = Presentation.from_json(file.read())
-        else:
-            presentation = Presentation()
-        for change in changes['changes']:
-            match change['field']:
-                case 'title':
-                    presentation.title = change['value']
-                case 'footer':
-                    presentation.footer = change['value']
-                case 'font_family':
-                    presentation.font_family = change['value']
-                case 'slide':
-                    slide_id = change['id']
-                    slide = [s for s in presentation.slides if s.id == slide_id][0]
-                    for field in change['value']:
-                        match field['field']:
-                            case 'position':
-                                presentation = presentation.move_slide(slide_id, field['value'])
-                            case 'title':
-                                slide.title = field['value']
-                            case 'description':
-                                slide.description = field['value']
-                            case 'font_family':
-                                presentation.font_family = field['value']['id']
-                                slide.font_family = field['value']['id']
-                            case 'header_alignment':
-                                slide.header_alignment = field['value']['id']
-                            case 'background_color':
-                                value: str = field['value']
-                                if not value.startswith('#'):
-                                    value = f'#{value}'
-                                slide.background_color = value
-                            case 'background_image':
-                                slide.background_image = field['value']
-                            case 'transition':
-                                transition = Transitions(field['value']["id"])
-                                slide.transition = transition.new_instance()
-                            case 'duration':
-                                slide.transition.duration = field['value']
-                            case 'template':
-                                template = Templates(field['value']["id"])
-                                slide.template = template.new_instance()
-                            case _:
-                                if field['field'] in [f.name for f in slide.template.fields]:
-                                    field_index = [f.name for f in slide.template.fields].index(field['field'])
-                                    if field['field'].endswith('image'):
-                                        if isinstance(field['value'], dict):
-                                            slide.template.fields[field_index].content = Image(**field['value'])
-                                        else:
-                                            slide.template.fields[field_index].content = None
-                                    elif field['field'].endswith('video'):
-                                        if isinstance(field['value'], dict):
-                                            slide.template.fields[field_index].content = Video(**field['value'])
-                                        else:
-                                            slide.template.fields[field_index].content = None
-                                    else:
-                                        slide.template.fields[field_index].content = field['value']
-                                else:
-                                    raise ValueError(f'Unknown field: {field["field"]}')
-                    presentation.update_slide(slide)
-                case _:
-                    raise ValueError(f'Unknown field: {change["field"]}')
-        result = await store_presentation(presentation, path=presentations_dir)
+        presentation = await save_presentation_changes(changes, presentations_dir)
+        result = await store_presentation(presentation, presentations_dir=presentations_dir)
         if result:
             return presentation.to_dict()
         else:
