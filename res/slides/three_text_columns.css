@@ -17,6 +17,7 @@ div.three-text-cols-$id {
     display: grid;
     grid-template-columns: 30% 30% 30%;
     gap: 20px;
+    justify-content: center;
     font-size: clamp(0.5rem, 0.2rem + 1.5vh, 1.8rem);
     font-weight: 300;
 }

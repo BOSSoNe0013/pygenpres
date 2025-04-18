@@ -11,6 +11,7 @@ class Templates(str, Enum):
     TEXT_IMAGE = 'text_image'
     THREE_TEXT_COLUMNS = 'three_text_columns'
     VIDEO = 'video'
+    IFRAME = 'iframe'
 
     def new_instance(self, **kwargs):
         """
@@ -38,6 +39,9 @@ class Templates(str, Enum):
             case Templates.VIDEO:
                 from app.domain.model.templates.video import Video
                 return Video(**kwargs)
+            case Templates.IFRAME:
+                from app.domain.model.templates.iframe import Iframe
+                return Iframe(**kwargs)
             case _:
                 raise ValueError(f'Unknown template: {self}')
 
