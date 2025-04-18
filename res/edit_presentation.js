@@ -129,6 +129,10 @@ function updatePresentation(data, callback) {
                 callback();
             }
             w2utils.unlock('body');
+            if (window.location.href.endsWith('/new')) {
+                const id = json['id'];
+                window.location.href = `/edit/${id}`;
+            }
         }).catch(error => {
             console.log(error);
             w2utils.unlock('body');
@@ -318,8 +322,15 @@ function renderSlideForm(data) {
 };
 function loadSlide(slideId) {
     console.log('Load slide', slideId);
+    if (typeof slideId === 'undefined' || slideId === null || slideId.length === 0) {
+        layout['load']('main' , '/static/no_slide_template.html');
+        right_layout['load']('main' , '/static/no_slide_template.html');
+        right_bottom_toolbar.disable('delete');
+        return;
+    }
     layout['load']('main' , `/s/${presId}/${slideId}.html`);
-    w2ui.right_bottom.items[0].slide_id = slideId;
+    right_bottom_toolbar.items[0].slide_id = slideId;
+    right_bottom_toolbar.enable('delete');
     const url = `/s/${presId}/${slideId}.json`;
     const options = {
         method: 'GET',
