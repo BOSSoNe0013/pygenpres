@@ -13,11 +13,23 @@ from app.domain.model.transitions import Transition
 
 
 class SlideId(str):
+    """
+    Represents a unique identifier for a slide.
+    """
     pass
 
 
 @dataclass
 class Slide(ModelObject):
+    """
+    Represents a single slide in a presentation.
+
+    Attributes:
+        template (SlideTemplate): The template used to render the slide.
+        transition (Transition): The transition effect to apply when moving to this slide.
+        title (str): The title of the slide.
+        description (str): A brief description of the slide's content.
+    """
     template: SlideTemplate
     transition: Transition
     title: str = "New slide"
@@ -32,11 +44,19 @@ class Slide(ModelObject):
 
     @property
     def templates_path(self) -> str:
+        """
+        Returns the path to the directory containing slide templates.
+        """
         return os.path.join(Path.cwd(), 'res', 'slides')
 
     @property
     def __html_template__(self) -> str:
-        with open(os.path.join(self.templates_path, 'base_slide.html'), 'r') as html_file:
+        """
+        Reads and returns the base HTML template for a slide.
+        """
+        with open(
+            os.path.join(self.templates_path, 'base_slide.html'), 'r'
+        ) as html_file:
             html_template = html_file.read()
         return html_template
 
@@ -53,10 +73,16 @@ class Slide(ModelObject):
         })
 
     def get_script(self) -> str:
+        """
+        Returns the JavaScript script associated with the slide's template.
+        """
         return self.template.script
 
     def get_style(self) -> str:
-        templates_values = {
+        """
+        Generates and returns the CSS style for the slide.
+        """
+        templates_values: dict = {
             field.name: field.content for field in self.template.fields
         }
         templates_values['background_color'] = self.background_color
@@ -69,13 +95,27 @@ class Slide(ModelObject):
             'template': Template(self.template.style).safe_substitute(templates_values),
             'z_index': 500 - self.position,
         }
-        with open(os.path.join(self.templates_path, 'base_slide.css'), 'r') as css_file:
+        with open(
+            os.path.join(self.templates_path, 'base_slide.css'), 'r'
+        ) as css_file:
             css_template = css_file.read()
         style = Template(css_template).safe_substitute(values)
         return style
 
     @classmethod
     def from_dict(cls, d: dict, infer_missing=False):
+        """
+        Creates a Slide instance from a dictionary.
+
+        Args:
+            :param d: The dictionary containing the slide data.
+            :type d: dict
+            :param infer_missing:
+            :type infer_missing: bool
+
+        Returns:
+            Slide: The created Slide instance.
+        """
         t_name = d.get('template').get('name').lower().replace(' ', '_')
         fields = d.get('template').get('fields')
         f = {}

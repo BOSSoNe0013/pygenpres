@@ -27,6 +27,9 @@ from app.domain.model.transitions import Transition
 from app.domain.model.transitions.parallax import Parallax
 from app.domain.model.transitions.transitions import Transitions
 
+"""
+This module defines the FastAPI application for the PyGenPres project.
+"""
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="res/static"), name="static")
 home_dir = Path.home()
@@ -45,28 +48,52 @@ if not os.path.exists(presentations_dir):
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
+    """
+    Returns the root HTML page.
+    """
     return await get_root()
 
 @app.get("/p")
 async def presentations():
+    """
+    Returns a list of available presentations.
+    """
     return await get_presentations(presentations_dir)
 
 @app.get("/t")
 async def templates():
+    """
+    Returns a list of available templates.
+    """
     return await get_templates()
 
 @app.get("/tr")
 async def transitions():
+    """
+    Returns a list of available transitions.
+    """
     return await get_transitions()
 
 @app.get("/p/{id}.html", response_class=HTMLResponse)
 async def run(id: str):
+    """
+    Returns the HTML representation of a presentation.
+
+    Args:
+        id: The ID of the presentation.
+    """
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     return presentation.get_html()
 
 @app.get("/p/{id}.json")
 async def dump(id: str):
+    """
+    Returns the JSON representation of a presentation.
+
+    Args:
+        id: The ID of the presentation.
+    """
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     return presentation.to_dict()
@@ -77,6 +104,13 @@ async def new():
 
 @app.get("/s/{id}/{sid}.html", response_class=HTMLResponse)
 async def slide(id: str, sid: str):
+    """
+    Returns the HTML representation of a specific slide.
+
+    Args:
+        id: The ID of the presentation.
+        sid: The ID of the slide.
+    """
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     slide = [s for s in presentation.slides if s.id == sid][0]
@@ -101,6 +135,13 @@ footer {{
 
 @app.get("/s/{id}/{sid}.json")
 async def slide(id: str, sid: str):
+    """
+    Returns the JSON representation of a specific slide.
+
+    Args:
+        id: The ID of the presentation.
+        sid: The ID of the slide.
+    """
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     slide = [s for s in presentation.slides if s.id == sid][0]
@@ -108,6 +149,13 @@ async def slide(id: str, sid: str):
 
 @app.get("/s/{id}/add")
 async def add_slide(id: str, position: Union[int, None] = None):
+    """
+    Adds a new slide to a presentation.
+
+    Args:
+        id: The ID of the presentation.
+        position: The position where to insert the new slide.
+    """
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     if position is None:
@@ -122,6 +170,13 @@ async def add_slide(id: str, position: Union[int, None] = None):
 
 @app.delete("/s/{id}/{sid}.json")
 async def remove_slide(id: str, sid: str):
+    """
+    Removes a slide from a presentation.
+
+    Args:
+        id: The ID of the presentation.
+        sid: The ID of the slide to remove.
+    """
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     presentation.remove_slide(sid)
@@ -133,10 +188,19 @@ async def remove_slide(id: str, sid: str):
 
 @app.get("/edit/{id}", response_class=HTMLResponse)
 async def edit(id: Union[str, None] = None):
+    """
+    Returns the HTML page for editing a presentation.
+
+    Args:
+        id: The ID of the presentation to edit.
+    """
     return await edit_presentation(id=id, path=presentations_dir)
 
 @app.post("/save")
 async def save(changes: dict):
+    """
+    Saves changes made to a presentation.
+    """
     try:
         pres_id = changes['id']
         file_path = os.path.join(presentations_dir, f'{pres_id}.json')
@@ -215,4 +279,7 @@ async def save(changes: dict):
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
+    """
+    Returns the favicon.
+    """
     return FileResponse("res/static/favicon.ico")

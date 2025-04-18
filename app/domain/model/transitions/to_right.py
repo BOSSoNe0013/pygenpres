@@ -5,6 +5,10 @@ from app import Transition
 
 @dataclass
 class ToRight(Transition):
+    """
+    Represents a transition that moves an element to the right.
+    The element starts visible and moves off-screen to the right, becoming hidden.
+    """
 
     def __post_init__(self):
         self.name = 'To right'

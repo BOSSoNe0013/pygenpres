@@ -7,6 +7,20 @@ from app.domain.model.presentation import Presentation
 
 
 async def edit_presentation(path: str, id: Union[str, None] = None) -> str:
+    """
+    Generates the HTML content for editing a presentation.
+
+    Args:
+        path: The directory path where presentation data is stored.
+        id: The ID of the presentation to edit. If None, a new presentation is created.
+
+    Returns:
+        The HTML content for the edit presentation page.
+
+    Raises:
+        AssertionError: If the presentation is not found.
+
+    """
     presentation = None
     if id is None:
         presentation = Presentation()

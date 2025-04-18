@@ -5,6 +5,10 @@ from app import Transition
 
 @dataclass
 class Fadeout(Transition):
+    """
+    Represents a fade-out transition effect.
+    This transition gradually reduces the opacity of an element to 0 and moves it out of view.
+    """
 
     def __post_init__(self):
         self.name = 'Fadeout'

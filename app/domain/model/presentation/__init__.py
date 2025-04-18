@@ -11,11 +11,25 @@ from app.domain.model.slides import Slide
 
 
 class PresentationId(str):
+    """
+    Represents the unique identifier for a Presentation.
+    """
     pass
 
 
 @dataclass
 class Presentation(ModelObject):
+    """
+    Represents a presentation object containing slides, style, and scripts.
+
+    Attributes:
+        id (Optional[PresentationId]): The unique identifier of the presentation.
+        title (str): The title of the presentation.
+        footer (str): The footer content of the presentation.
+        font_family (str): The font family used in the presentation.
+        style (list[str]): A list of CSS styles for the presentation.
+        scripts (list[str]): A list of JavaScript scripts for the presentation.
+    """
     id: Optional[PresentationId] = field(
         default_factory=lambda: PresentationId(str(uuid4())))
     title: str = ""
@@ -30,11 +44,25 @@ class Presentation(ModelObject):
 
     @property
     def slides(self) -> list[Slide]:
+        """
+        Gets the list of slides in the presentation.
+
+        Returns:
+            list[Slide]: The list of slides.
+        """
         return self._slides
 
     def add_slide(self, slide: Slide, position: Optional[int] = None):
+        """
+        Adds a slide to the presentation.
+
+        Args:
+            slide (Slide): The slide to add.
+            position (Optional[int]): The position to insert the slide. If None, appends to the end.
+        """
         if position is not None:
             self._slides.insert(position, slide)
+            #update position
             for i, slide in enumerate(self._slides):
                 slide.position = i
             return
@@ -42,6 +70,16 @@ class Presentation(ModelObject):
         self._slides.append(slide)
 
     def move_slide(self, id: str, position: int) -> Self:
+        """
+        Moves a slide to a new position within the presentation.
+
+        Args:
+            id (str): The ID of the slide to move.
+            position (int): The new position for the slide.
+
+        Returns:
+            Self: The updated Presentation object.
+        """
         slide = [s for s in self._slides if s.id == id][0]
         self._slides.remove(slide)
         self._slides.insert(position, slide)
@@ -50,6 +88,14 @@ class Presentation(ModelObject):
         return self
 
     def remove_slide(self, id: str):
+        """
+        Removes a slide from the presentation.
+
+        Args:
+            id (str): The ID of the slide to remove.
+        Returns:
+            Self: The updated Presentation object.
+        """
         slide = [s for s in self._slides if s.id == id][0]
         self._slides.remove(slide)
         for i, slide in enumerate(self._slides):
@@ -57,11 +103,27 @@ class Presentation(ModelObject):
         return self
 
     def update_slide(self, slide: Slide):
+        """
+        Updates a slide in the presentation.
+
+        Args:
+            slide (Slide): The updated slide object.
+        """
         if len(self._slides) > slide.position:
             self._slides[slide.position] = slide
 
     def to_dict(self, encode_json=False):
+        """
+        Converts the presentation object to a dictionary.
+
+        Args:
+            encode_json (bool): Whether to encode the dictionary to JSON.
+
+        Returns:
+            dict: The dictionary representation of the presentation.
+        """
         d = super().to_dict(encode_json=encode_json)
+        #convert slides to dict
         d['slides'] = [slide.to_dict(encode_json=encode_json) for slide in self._slides]
         return d
 
@@ -77,6 +139,13 @@ class Presentation(ModelObject):
         return cls.from_dict(o, infer_missing=infer_missing)
 
     def _load_scripts(self) -> str:
+        """
+        Loads and formats the JavaScript scripts for the presentation.
+
+        Returns:
+            str: The formatted JavaScript code.
+        """
+        #load js template
         js_values = {
             'total_pages_count': len(self._slides),
             'scripts': ''.join(self.scripts),
@@ -87,6 +156,13 @@ class Presentation(ModelObject):
         return Template(js_template).safe_substitute(js_values)
 
     def _load_style(self) -> str:
+        """
+        Loads and formats the CSS styles for the presentation.
+
+        Returns:
+            str: The formatted CSS code.
+        """
+        #load css template
         css_values = {
             'style': ''.join(self.style),
             'slides_style': Template(''.join([slide.get_style() for slide in self._slides])).safe_substitute({'font_family': self.font_family}),
@@ -98,11 +174,24 @@ class Presentation(ModelObject):
 
     @property
     def __html_template__(self) -> str:
+        """
+        Loads the HTML template for the presentation.
+
+        Returns:
+            str: The HTML template.
+        """
         with open(os.path.join(self._templates_path, 'presentation.html'), 'r') as html_file:
             html_template = html_file.read()
         return html_template
 
     def get_footer(self) -> str:
+        """
+        Loads and formats the footer content for the presentation.
+
+        Returns:
+            str: The formatted footer HTML.
+        """
+        #load footer template
         footer_values = {
             'footer': self.footer,
             'total_pages_count': len(self._slides)
@@ -112,6 +201,13 @@ class Presentation(ModelObject):
         return Template(footer_template).safe_substitute(footer_values)
 
     def get_html(self) -> str:
+        """
+        Generates the complete HTML for the presentation.
+
+        Returns:
+            str: The complete HTML code for the presentation.
+        """
+        #load all templates and generate html
         html = Template(self.__html_template__).safe_substitute({
             'style': self._load_style(),
             'script': self._load_scripts(),

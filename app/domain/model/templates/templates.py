@@ -2,6 +2,10 @@ from enum import Enum
 
 
 class Templates(str, Enum):
+    """
+    Enumeration of available slide templates.
+    Each template has a corresponding class that handles its specific structure and content.
+    """
     SIMPLE_TITLE = 'simple_title'
     IMAGE_TEXT = 'image_text'
     TEXT_IMAGE = 'text_image'
@@ -9,6 +13,15 @@ class Templates(str, Enum):
     VIDEO = 'video'
 
     def new_instance(self, **kwargs):
+        """
+        Creates a new instance of the corresponding template class.
+
+        Args:
+            **kwargs: Keyword arguments to be passed to the template class constructor.
+
+        Returns:
+            An instance of the corresponding template class.
+        """
         match self:
             case Templates.SIMPLE_TITLE:
                 from app.domain.model.templates.simple_title import SimpleTitle
@@ -30,4 +43,10 @@ class Templates(str, Enum):
 
     @classmethod
     def default(cls):
+        """
+        Returns a default template instance.
+
+        Returns:
+            An instance of the default template (SIMPLE_TITLE).
+        """
         return cls.SIMPLE_TITLE.new_instance()

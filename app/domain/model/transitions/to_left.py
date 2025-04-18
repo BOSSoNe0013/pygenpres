@@ -5,6 +5,10 @@ from app import Transition
 
 @dataclass
 class ToLeft(Transition):
+    """
+    Represents a transition that moves an element to the left.
+    The element will slide out of view to the left.
+    """
 
     def __post_init__(self):
         self.name = 'To left'

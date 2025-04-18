@@ -7,6 +7,10 @@ from app.domain.model.templates import SlideTemplate, TemplateField, TemplateFie
 
 @dataclass
 class SimpleTitle(SlideTemplate):
+    """
+    Represents a simple title slide template.
+    It includes a title, a subtitle, and a text color.
+    """
     title: str = "Simple Title"
     subtitle: str = "Subtitle"
     text_color: str = "#fff"
@@ -22,6 +26,11 @@ class SimpleTitle(SlideTemplate):
 
     @property
     def content(self) -> str:
+        """
+        Generates the HTML content for the simple title slide.
+
+        :return: The HTML content as a string.
+        """
         html_values = {
             'id': self.id
         }
@@ -31,6 +40,11 @@ class SimpleTitle(SlideTemplate):
 
     @property
     def style(self) -> str:
+        """
+        Generates the CSS style for the simple title slide.
+
+        :return: The CSS style as a string.
+        """
         css_values = {
             'id': self.id
         }
@@ -40,4 +54,9 @@ class SimpleTitle(SlideTemplate):
 
     @property
     def script(self) -> str:
+        """
+        Generates the JavaScript script for the simple title slide.
+        Currently, there is no script for this template.
+        :return: An empty string.
+        """
         return ""

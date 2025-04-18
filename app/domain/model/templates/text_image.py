@@ -9,6 +9,10 @@ from app.domain.model.templates import SlideTemplate, TemplateField, TemplateFie
 
 @dataclass
 class TextImage(SlideTemplate):
+    """
+    Represents a slide template with a block of text and an optional image.
+    It allows customization of the title, subtitle, text content, text color, and image.
+    """
     title: str = "Text Image"
     subtitle: str = "Subtitle"
     text: str = "This is some text"
@@ -28,6 +32,11 @@ class TextImage(SlideTemplate):
 
     @property
     def content(self) -> str:
+        """
+        Generates the HTML content for the text image slide.
+
+        Returns: The HTML content as a string.
+        """
         html_values = {
             'id': self.id
         }
@@ -37,6 +46,11 @@ class TextImage(SlideTemplate):
 
     @property
     def style(self) -> str:
+        """
+        Generates the CSS style for the text image slide.
+
+        Returns: The CSS style as a string.
+        """
         css_values = {
             'id': self.id
         }
@@ -46,4 +60,9 @@ class TextImage(SlideTemplate):
 
     @property
     def script(self) -> str:
+        """
+        Generates the JavaScript script for the text image slide.
+
+        Returns: The JavaScript script as a string (empty in this case).
+        """
         return ""

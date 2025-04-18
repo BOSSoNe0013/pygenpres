@@ -1,4 +1,11 @@
+"""
+This module defines the root endpoint for the API.
+"""
+
 async def get_root() -> str:
+    """
+    Returns the HTML content for the root page.
+    """
     return """<html>
     <head>
         <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.css" />

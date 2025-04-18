@@ -9,6 +9,9 @@ from app.domain.model.templates import SlideTemplate, TemplateField, TemplateFie
 
 @dataclass
 class Video(SlideTemplate):
+    """
+    Represents a video slide template.
+    """
 
     title: str = "Video"
     subtitle: str = "Subtitle"
@@ -33,6 +36,10 @@ class Video(SlideTemplate):
 
     @property
     def style(self) -> str:
+        """
+        Generates the CSS style for the video slide.
+        :return: The CSS style as a string.
+        """
         css_values = {
             'id': self.id
         }
@@ -42,6 +49,10 @@ class Video(SlideTemplate):
 
     @property
     def script(self) -> str:
+        """
+        Generates the JavaScript script for the video slide.
+        :return: The JavaScript script as a string.
+        """
         js_values = {
             'id': self.id,
             'autoplay': 'true' if self.autoplay else 'false'
@@ -52,6 +63,10 @@ class Video(SlideTemplate):
 
     @property
     def content(self) -> str:
+        """
+        Generates the HTML content for the video slide.
+        :return: The HTML content as a string.
+        """
         html_values = {
             'id': self.id,
             'controls': 'controls' if self.controls else '',

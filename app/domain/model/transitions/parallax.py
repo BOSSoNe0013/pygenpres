@@ -5,6 +5,10 @@ from app import Transition
 
 @dataclass
 class Parallax(Transition):
+    """
+    Represents a Parallax transition effect.
+    This transition moves the target elements upwards while fading them out.
+    """
 
     def __post_init__(self):
         self.name = 'Parallax'

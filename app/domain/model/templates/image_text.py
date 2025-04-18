@@ -9,6 +9,19 @@ from app.domain.model.templates import SlideTemplate, TemplateField, TemplateFie
 
 @dataclass
 class ImageText(SlideTemplate):
+    """
+    Represents a slide template with an image and text.
+
+    Attributes:
+        title (str): The title of the slide.
+        subtitle (str): The subtitle of the slide.
+        text (str): The main text content of the slide.
+        text_color (str): The color of the text, in hex format (e.g., "#fff").
+        image (Optional[Image]): An optional image to display on the slide.
+        name (str): The name of the template.
+        description (str): A description of the template.
+        fields (list[TemplateField]): The fields of the template.
+    """
     title: str = "Image Text"
     subtitle: str = "Subtitle"
     text: str = "This is some text"
@@ -28,6 +41,15 @@ class ImageText(SlideTemplate):
 
     @property
     def content(self) -> str:
+        """
+        Generates the HTML content for the image text slide.
+
+        Reads the HTML template from 'image_text.html', substitutes
+        the 'id' value, and returns the resulting HTML string.
+
+        Returns:
+            str: The HTML content of the slide.
+        """
         html_values = {
             'id': self.id
         }
@@ -37,6 +59,15 @@ class ImageText(SlideTemplate):
 
     @property
     def style(self) -> str:
+        """
+        Generates the CSS style for the image text slide.
+
+        Reads the CSS template from 'image_text.css', substitutes
+        the 'id' value, and returns the resulting CSS string.
+
+        Returns:
+            str: The CSS style of the slide.
+        """
         css_values = {
             'id': self.id
         }
@@ -46,4 +77,12 @@ class ImageText(SlideTemplate):
 
     @property
     def script(self) -> str:
+        """
+        Generates the JavaScript script for the image text slide.
+
+        Currently, there is no JavaScript required for this template.
+
+        Returns:
+            str: An empty string, as no script is needed.
+        """
         return ""

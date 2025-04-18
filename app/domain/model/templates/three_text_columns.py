@@ -14,6 +14,10 @@ class ThreeTextColumns(SlideTemplate):
     text_3: str = "This is the third text"
     text_color: str = "#fff"
     image: str = ""
+    """
+    Represents a slide template with three text columns.
+    It allows to define a title, a subtitle, three text blocks, a text color and an image.
+    """
 
     def __post_init__(self):
         self.name = "Three text columns"
@@ -29,6 +33,11 @@ class ThreeTextColumns(SlideTemplate):
 
     @property
     def content(self) -> str:
+        """
+        Generate the HTML content for the three text columns slide.
+
+        :return: The HTML content as a string.
+        """
         html_values = {
             'id': self.id
         }
@@ -38,6 +47,12 @@ class ThreeTextColumns(SlideTemplate):
 
     @property
     def style(self) -> str:
+        """
+        Generate the CSS style for the three text columns slide.
+
+        :return: The CSS style as a string.
+        """
+
         css_values = {
             'id': self.id
         }
@@ -47,4 +62,9 @@ class ThreeTextColumns(SlideTemplate):
 
     @property
     def script(self) -> str:
+        """
+        Generates the JavaScript script for the three text columns slide.
+
+        :return: The JavaScript script as a string.
+        """
         return ""
