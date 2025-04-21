@@ -34,10 +34,11 @@ Create a directory to store your presentations and update the dockerfile :
     - {YOUR_STORAGE_DIRECTORY}:/root/.config/pygenpres
 ```
 
-Then build and run the app with this command :
+Build and run the app with this command :
 ``` bash
 docker-compose up --build
 ```
+Then open http://localhost:8000 in your browser.
 
 ## Contributing
 Contributions are welcome! Please feel free to submit pull requests or open issues.
