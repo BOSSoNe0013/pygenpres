@@ -15,18 +15,6 @@ from .domain.api.root import get_root
 from .domain.api.store_presentation import store_presentation, save_presentation_changes
 from .domain.api.templates import get_templates
 from .domain.api.transitions import get_transitions
-from .domain.model.file import Image, Video
-from .domain.model.presentation import Presentation
-from .domain.model.slides import Slide
-from .domain.model.templates import TemplateFieldType
-from .domain.model.templates.image_text import ImageText
-from .domain.model.templates.simple_title import SimpleTitle
-from .domain.model.templates.templates import Templates
-from .domain.model.templates.text_image import TextImage
-from .domain.model.templates.three_text_columns import ThreeTextColumns
-from .domain.model.transitions import Transition
-from .domain.model.transitions.parallax import Parallax
-from .domain.model.transitions.transitions import Transitions
 
 """
 This module defines the FastAPI application for the PyGenPres project.
