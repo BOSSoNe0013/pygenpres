@@ -134,6 +134,7 @@ button.w2ui-btn:hover {
 .w2ui-field-helper.w2ui-list .w2ui-multi-items .li-item {
     background-color: var(--button-color);
     color: var(--fg-color);
+    border-color: var(--accent-color);
 }
 .w2ui-field-helper.w2ui-list .w2ui-multi-items .li-item:hover {
     background-color: var(--button-color-hover);
@@ -148,6 +149,60 @@ button.w2ui-btn:hover {
 .w2ui-select.has-focus {
     background-color: var(--input-color) !important;
     outline: none;
+}
+.w2ui-overlay .w2ui-overlay-body.w2ui-white {
+    color: var(--fg-color);
+}
+.w2ui-colors {
+    color: var(--fg-color);
+    background-color: var(--bg-color);
+}
+.w2ui-colors .w2ui-tab-content.tab-2 .w2ui-color-picker,
+.w2ui-colors .w2ui-tab-content.tab-1 .w2ui-color-row .w2ui-color.w2ui-color-picker {
+    color: var(--fg-color);
+    background-color: var(--button-color);
+    border-color: var(--border-color);
+}
+.w2ui-colors .w2ui-tab-content.tab-1 .w2ui-color-row .w2ui-color.w2ui-color-picker {
+    height: 28px;
+}
+.w2ui-colors .w2ui-tab-content.tab-2 .w2ui-color-picker .w2ui-icon {
+    top: -2px;
+}
+.w2ui-colors .w2ui-tab-content.tab-2 .w2ui-color-picker:hover,
+.w2ui-colors .w2ui-tab-content.tab-1 .w2ui-color-row .w2ui-color.w2ui-color-picker:hover {
+    color: var(--fg-color);
+    background-color: var(--button-color-hover);
+    border-color: var(--border-color);
+    outline: none;
+}
+.w2ui-colors .w2ui-tab-content.tab-2 input.final,
+.w2ui-colors .w2ui-tab-content.tab-2 .color-info .color-part input {
+    background-color: var(--input-color);
+    color: var(--fg-color);
+    border-color: var(--border-color);
+    outline: none;
+}
+.w2ui-colors .w2ui-color-tabs {
+    background-color: var(--toolbar-color);
+    border-color: var(--border-color);
+}
+.w2ui-colors .w2ui-color-tabs .w2ui-color-tab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.w2ui-colors .w2ui-color-tabs .w2ui-color-tab .w2ui-icon {
+    margin-top: 0;
+    color: var(--fg-color);
+}
+.w2ui-colors .w2ui-color-tabs .w2ui-color-tab:hover {
+    background-color: var(--button-color-hover);
+}
+input[type=checkbox].w2ui-toggle:checked+div {
+    border: 1px solid color-mix(in srgb, var(--accent-color), #000 10% );
+    box-shadow: inset 0 0 0 12px var(--accent-color);
 }
 .w2ui-menu {
     color: var(--fg-color);

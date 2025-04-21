@@ -131,7 +131,7 @@ let toolbar = new w2toolbar({
             text(item) {return item.get(item.selected)?.text},
             selected: localStorage.getItem('theme') || 'system',
             items: [
-                { id: 'system', text: 'System', icon: 'fa fa-square'},
+                { id: 'system', text: 'System', icon: 'fa fa-circle-half-stroke'},
                 { id: 'light', text: 'Light', icon: 'fa fa-sun'},
                 { id: 'dark', text: 'Dark', icon: 'fa fa-moon'},
             ],
