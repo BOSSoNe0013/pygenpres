@@ -8,25 +8,25 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
-from app.domain.api.edit_presentation import edit_presentation
-from app.domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
-from app.domain.api.presentations import get_presentations
-from app.domain.api.root import get_root
-from app.domain.api.store_presentation import store_presentation, save_presentation_changes
-from app.domain.api.templates import get_templates
-from app.domain.api.transitions import get_transitions
-from app.domain.model.file import Image, Video
-from app.domain.model.presentation import Presentation
-from app.domain.model.slides import Slide
-from app.domain.model.templates import TemplateFieldType
-from app.domain.model.templates.image_text import ImageText
-from app.domain.model.templates.simple_title import SimpleTitle
-from app.domain.model.templates.templates import Templates
-from app.domain.model.templates.text_image import TextImage
-from app.domain.model.templates.three_text_columns import ThreeTextColumns
-from app.domain.model.transitions import Transition
-from app.domain.model.transitions.parallax import Parallax
-from app.domain.model.transitions.transitions import Transitions
+from .domain.api.edit_presentation import edit_presentation
+from .domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
+from .domain.api.presentations import get_presentations
+from .domain.api.root import get_root
+from .domain.api.store_presentation import store_presentation, save_presentation_changes
+from .domain.api.templates import get_templates
+from .domain.api.transitions import get_transitions
+from .domain.model.file import Image, Video
+from .domain.model.presentation import Presentation
+from .domain.model.slides import Slide
+from .domain.model.templates import TemplateFieldType
+from .domain.model.templates.image_text import ImageText
+from .domain.model.templates.simple_title import SimpleTitle
+from .domain.model.templates.templates import Templates
+from .domain.model.templates.text_image import TextImage
+from .domain.model.templates.three_text_columns import ThreeTextColumns
+from .domain.model.transitions import Transition
+from .domain.model.transitions.parallax import Parallax
+from .domain.model.transitions.transitions import Transitions
 
 """
 This module defines the FastAPI application for the PyGenPres project.
