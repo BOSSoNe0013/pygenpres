@@ -36,7 +36,7 @@ if not os.path.exists(presentations_dir):
 
 
 @app.get("/", response_class=HTMLResponse)
-async def get_root():
+async def root():
     """
     Returns the root HTML page.
     """
