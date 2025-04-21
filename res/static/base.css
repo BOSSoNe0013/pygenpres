@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
     color-scheme: light dark;
     --color-white: #ffffff;
@@ -15,6 +16,7 @@
     --color-dark-grey: #2a2a2a;
     --bg-color: var(--color-light-grey);
     --fg-color: hsl(from var(--color-light-grey) h s 50%);
+    --text-color-selected: var(--color-light-grey);
     --accent-color: var(--color-orange);
     --border-color: hsl(from var(--bg-color) h s 90%);
     --shadow-color: hsl(from var(--bg-color) h s 90%);
@@ -24,7 +26,11 @@
     --button-color-hover: hsl(from var(--bg-color) h s 92%);
     accent-color: var(--accent-color);
 }
+:root[data-theme="light"] {
+    color-scheme: light;
+}
 :root[data-theme="dark"] {
+    color-scheme: dark;
     --bg-color: var(--color-dark-grey);
     --fg-color: var(--color-light-grey);
     --border-color: hsl(from var(--bg-color) h s 30%);
@@ -34,10 +40,12 @@
     --button-color: hsl(from var(--bg-color) h s 25%);
     --button-color-hover: hsl(from var(--bg-color) h s 28%);
 }
-@media (prefers-color-scheme: dark) {
-}
 :focus-visible {
     outline: none;
+}
+::selection {
+    background-color: var(--accent-color);
+    color: var(--text-color-selected);
 }
 body {
     -webkit-font-smoothing: antialiased;
