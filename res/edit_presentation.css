@@ -1,33 +1,9 @@
-body {
-    -webkit-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-}
-.w2ui-field > label {
-    float: none !important;
-}
-.w2ui-sidebar>div {
-    max-width: 140px;
-}
-.w2ui-field-helper.w2ui-list {
-    height: 56px !important;
-    width: 200px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.w2ui-field-helper.w2ui-list .w2ui-enum-placeholder {
-    padding: 0px !important;
-    text-align: center;
-}
 #content {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-}
-h1, h2, h3, h4, h5, h6 {
-    margin: 0.2rem 0;
 }
 div.no_slide {
     display: flex;
@@ -55,7 +31,7 @@ slide {
 }
 slide hr {
     height: 0;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--color-white);
     width: 33%;
     opacity: 0.5;
 }
@@ -71,7 +47,7 @@ slide table {
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     text-align: left;
     border-collapse: collapse;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--color-white);
     margin: 0.5rem auto;
 }
 slide thead {

@@ -8,6 +8,19 @@ let slides = [
     $slide_items
 ];
 let sbNodes = [];
+function useSystemTheme() {
+    localStorage.removeItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = prefersDark ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+};
+function loadTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const systemTheme = prefersDark ? 'dark' : 'light';
+    const theme = localStorage.getItem('theme') || systemTheme;
+    document.documentElement.setAttribute('data-theme', theme);
+};
+loadTheme();
 function genSbNodes() {
     console.log('genSbNodes', slides);
     if (slides.length > 0) {
@@ -21,7 +34,7 @@ function genSbNodes() {
 };
 genSbNodes();
 
-let pstyle = 'border: 1px solid #efefef;overflow: hidden;';
+let pstyle = 'border: 1px solid var(--border-color);overflow: hidden;';
 let layout = new w2layout({
     name: 'main',
     box: '#content',
@@ -110,6 +123,18 @@ let toolbar = new w2toolbar({
                 { id: 'dl-html', text: 'HTML', icon: 'fa fa-file-code' },
                 { id: 'dl-pdf', text: 'PDF', icon: 'fa fa-file-pdf' }
             ],
+        },
+        {
+            type: 'menu-radio',
+            id: 'theme',
+            icon(item) {return item.get(item.selected)?.icon},
+            text(item) {return item.get(item.selected)?.text},
+            selected: localStorage.getItem('theme') || 'system',
+            items: [
+                { id: 'system', text: 'System', icon: 'fa fa-square'},
+                { id: 'light', text: 'Light', icon: 'fa fa-sun'},
+                { id: 'dark', text: 'Dark', icon: 'fa fa-moon'},
+            ],
         }
     ],
 });
@@ -158,6 +183,17 @@ toolbar.on('click', event => {
     }
     else if (event.target === 'menu:dl-pdf') {
         window.open(`/p/${presId}.html`, 'Print', 'width=1280, height=720').print();
+    }
+    else if (event.target === 'theme:light') {
+        localStorage.setItem('theme', 'light');
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+    else if (event.target === 'theme:dark') {
+        localStorage.setItem('theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    else if (event.target === 'theme:system') {
+        useSystemTheme();
     }
 });
 toolbar.on('change', event => {
