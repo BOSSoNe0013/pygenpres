@@ -36,28 +36,28 @@ if not os.path.exists(presentations_dir):
 
 
 @app.get("/", response_class=HTMLResponse)
-async def root():
+async def get_root():
     """
     Returns the root HTML page.
     """
     return await get_root()
 
 @app.get("/p")
-async def presentations():
+async def get_presentations():
     """
     Returns a list of available presentations.
     """
     return await get_presentations(presentations_dir)
 
 @app.get("/t")
-async def templates():
+async def get_templates():
     """
     Returns a list of available templates.
     """
     return await get_templates()
 
 @app.get("/tr")
-async def transitions():
+async def get_transitions():
     """
     Returns a list of available transitions.
     """
@@ -92,7 +92,7 @@ async def new():
     return await edit()
 
 @app.get("/s/{id}/{sid}.html", response_class=HTMLResponse)
-async def slide(id: str, sid: str):
+async def get_html_slide(id: str, sid: str):
     """
     Returns the HTML representation of a specific slide.
 
@@ -123,7 +123,7 @@ footer {{
     return content
 
 @app.get("/s/{id}/{sid}.json")
-async def slide(id: str, sid: str):
+async def get_json_slide(id: str, sid: str):
     """
     Returns the JSON representation of a specific slide.
 
