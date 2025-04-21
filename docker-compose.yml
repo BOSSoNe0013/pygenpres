@@ -1,0 +1,13 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./res:/app/res
+      - ~/.config/pygenpres:/root/.config/pygenpres
+    restart: always
+    command: uvicorn app:app --host 0.0.0.0 --port 8000
