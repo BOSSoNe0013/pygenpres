@@ -24,11 +24,27 @@ from pydantic import BaseModel
 
 
 class Record(BaseModel):
+    """
+    Represents a single record with an ID and text.
+
+    Attributes:
+        id (str): The unique identifier for the record.
+        text (str): The textual content of the record.
+    """
     id: str
     text: str
 
 
 class Records(BaseModel):
+    """
+    Represents a collection of records with status, type, and total count.
+
+    Attributes:
+        status (str): The status of the records.
+        type (str): The type of the records.
+        records (list[Record]): A list of Record objects.
+        total (int): The total number of records.
+    """
     status: str
     type: str
     records: list[Record]
@@ -36,14 +52,29 @@ class Records(BaseModel):
 
 
 class TemplateRecords(Records):
+    """
+    Represents a collection of template records.
+
+    This class inherits from `Records` and sets the `type` attribute to 'templates'.
+    """
     type: str = 'templates'
 
 
 class TransitionRecords(Records):
+    """
+    Represents a collection of transition records.
+
+    This class inherits from `Records` and sets the `type` attribute to 'transitions'.
+    """
     type: str = 'transitions'
 
 
 class PresentationRecords(Records):
+    """
+    Represents a collection of presentation records.
+
+    This class inherits from `Records` and sets the `type` attribute to 'presentations'.
+    """
     type: str = 'presentations'
 
 
@@ -106,7 +137,6 @@ class ModelObject(DataClassJsonMixin):
             return getattr(self, key)
         except AttributeError:
             raise KeyError(f"Key '{key}' not found")
-
 
     def __setitem__(self, key: str, value: Any):
         """
