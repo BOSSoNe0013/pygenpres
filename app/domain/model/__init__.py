@@ -20,6 +20,19 @@ from dataclasses_json import DataClassJsonMixin
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from pydantic import BaseModel
+
+
+class Record(BaseModel):
+    id: str
+    text: str
+
+
+class Records(BaseModel):
+    status: str
+    type: str
+    records: list[Record]
+    total: int
 
 
 class ModelObject(DataClassJsonMixin):

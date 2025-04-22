@@ -26,6 +26,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
+from .domain.model import Records
 from .domain.api.edit_presentation import edit_presentation
 from .domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
 from .domain.api.presentations import get_presentations
@@ -53,35 +54,35 @@ if not os.path.exists(presentations_dir):
 
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def root():
     """
     Returns the root HTML page.
     """
     return await get_root()
 
-@app.get("/p")
+@app.get("/p", response_model=Records)
 async def presentations():
     """
     Returns a list of available presentations.
     """
     return await get_presentations(presentations_dir)
 
-@app.get("/t")
+@app.get("/t", response_model=Records)
 async def templates():
     """
     Returns a list of available templates.
     """
     return await get_templates()
 
-@app.get("/tr")
+@app.get("/tr", response_model=Records)
 async def transitions():
     """
     Returns a list of available transitions.
     """
     return await get_transitions()
 
-@app.get("/p/{id}.html", response_class=HTMLResponse)
+@app.get("/p/{id}.html", response_class=HTMLResponse, include_in_schema=False)
 async def run(id: str):
     """
     Returns the HTML representation of a presentation.
@@ -94,7 +95,7 @@ async def run(id: str):
     return presentation.get_html()
 
 @app.get("/p/{id}.json")
-async def dump(id: str):
+async def get_json_presentation(id: str):
     """
     Returns the JSON representation of a presentation.
 
@@ -105,11 +106,11 @@ async def dump(id: str):
 
     return presentation.to_dict()
 
-@app.get("/new", response_class=HTMLResponse)
+@app.get("/new", response_class=HTMLResponse, include_in_schema=False)
 async def new():
     return await edit()
 
-@app.get("/s/{id}/{sid}.html", response_class=HTMLResponse)
+@app.get("/s/{id}/{sid}.html", response_class=HTMLResponse, include_in_schema=False)
 async def get_html_slide(id: str, sid: str):
     """
     Returns the HTML representation of a specific slide.
@@ -190,7 +191,7 @@ async def remove_slide(id: str, sid: str):
     else:
         return {'error': 'Could not delete slide'}
 
-@app.get("/edit/{id}", response_class=HTMLResponse)
+@app.get("/edit/{id}", response_class=HTMLResponse, include_in_schema=False)
 async def edit(id: Union[str, None] = None):
     """
     Returns the HTML page for editing a presentation.
@@ -201,7 +202,7 @@ async def edit(id: Union[str, None] = None):
     return await edit_presentation(id=id, path=presentations_dir)
 
 @app.post("/save")
-async def save(changes: dict):
+async def save_presentation(changes: dict):
     """
     Saves changes made to a presentation.
     """

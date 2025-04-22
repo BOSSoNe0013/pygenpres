@@ -16,12 +16,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-
+from app.domain.model import Record, Records
 from app.domain.model.transitions.transitions import Transitions
 
 
-async def get_transitions() -> dict:
+async def get_transitions() -> Records:
     """
     Retrieves a list of available transitions.
 
@@ -30,5 +29,5 @@ async def get_transitions() -> dict:
     """
     records = []
     for transition in Transitions.__members__.values():
-        records.append({'id': transition, 'text': ' '.join([word.capitalize() for word in transition.split('_')])})
-    return {'records':records}
+        records.append(Record(id=transition, text=' '.join([word.capitalize() for word in transition.split('_')])))
+    return Records(status='success', type='transitions', total=len(records),records=records)

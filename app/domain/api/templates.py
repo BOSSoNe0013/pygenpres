@@ -16,12 +16,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-
+from app.domain.model import Record, Records
 from app.domain.model.templates.templates import Templates
 
 
-async def get_templates() -> dict[str, list[dict[str, str]]]:
+async def get_templates() -> Records:
     """
     Retrieves a list of available templates.
 
@@ -31,5 +30,5 @@ async def get_templates() -> dict[str, list[dict[str, str]]]:
     """
     records = []
     for template in Templates.__members__.values():
-        records.append({'id': template, 'text': ' '.join([word.capitalize() for word in template.split('_')])})
-    return {'records':records}
+        records.append(Record(id=template, text=' '.join([word.capitalize() for word in template.split('_')])))
+    return Records(status='success', type='templates', total=len(records),records=records)

@@ -16,13 +16,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-
+from app.domain.model import Record, Records
 from app.domain.model.presentation import Presentation
 from app.utils.files import list_files
 
 
-async def get_presentations(path: str) -> dict:
+async def get_presentations(path: str) -> Records:
     """
     Retrieves a list of presentations from a specified directory.
 
@@ -37,5 +36,5 @@ async def get_presentations(path: str) -> dict:
     for file in files:
         with open(file, 'r') as f:
             presentation = Presentation.from_json(f.read())
-            records.append({'id': presentation.id, 'text': presentation.title})
-    return {'records':records}
+        records.append(Record(id=presentation.id, text=presentation.title))
+    return Records(status='success', type='presentations', total=len(files),records=records)
