@@ -61,21 +61,21 @@ async def root():
     return await get_root()
 
 @app.get("/p")
-async def get_presentations():
+async def presentations():
     """
     Returns a list of available presentations.
     """
     return await get_presentations(presentations_dir)
 
 @app.get("/t")
-async def get_templates():
+async def templates():
     """
     Returns a list of available templates.
     """
     return await get_templates()
 
 @app.get("/tr")
-async def get_transitions():
+async def transitions():
     """
     Returns a list of available transitions.
     """
