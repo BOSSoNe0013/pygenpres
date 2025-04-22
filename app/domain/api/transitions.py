@@ -16,18 +16,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from app.domain.model import Record, Records
+from app.domain.model import Record, TransitionRecords
 from app.domain.model.transitions.transitions import Transitions
 
 
-async def get_transitions() -> Records:
+async def get_transitions() -> TransitionRecords:
     """
     Retrieves a list of available transitions.
 
     Returns:
-        dict: A dictionary containing a list of transition records.
+        TransitionRecords: A dictionary containing a list of transition records.
     """
     records = []
     for transition in Transitions.__members__.values():
         records.append(Record(id=transition, text=' '.join([word.capitalize() for word in transition.split('_')])))
-    return Records(status='success', type='transitions', total=len(records),records=records)
+    return TransitionRecords(status='success', total=len(records),records=records)

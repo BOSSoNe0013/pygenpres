@@ -35,6 +35,18 @@ class Records(BaseModel):
     total: int
 
 
+class TemplateRecords(Records):
+    type: str = 'templates'
+
+
+class TransitionRecords(Records):
+    type: str = 'transitions'
+
+
+class PresentationRecords(Records):
+    type: str = 'presentations'
+
+
 class ModelObject(DataClassJsonMixin):
     """
     Base class for model objects, providing utility methods for attribute access and manipulation.

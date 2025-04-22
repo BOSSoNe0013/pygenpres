@@ -16,19 +16,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from app.domain.model import Record, Records
+from app.domain.model import Record, TemplateRecords
 from app.domain.model.templates.templates import Templates
 
 
-async def get_templates() -> Records:
+async def get_templates() -> TemplateRecords:
     """
     Retrieves a list of available templates.
 
     Returns:
-        dict: A dictionary containing a list of template records.
+        TemplateRecords: A dictionary containing a list of template records.
               Each record has 'id' and 'text' keys.
     """
     records = []
     for template in Templates.__members__.values():
         records.append(Record(id=template, text=' '.join([word.capitalize() for word in template.split('_')])))
-    return Records(status='success', type='templates', total=len(records),records=records)
+    return TemplateRecords(status='success', total=len(records),records=records)

@@ -26,7 +26,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
-from .domain.model import Records
+from .domain.model import TemplateRecords, TransitionRecords, PresentationRecords
 from .domain.api.edit_presentation import edit_presentation
 from .domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
 from .domain.api.presentations import get_presentations
@@ -61,21 +61,21 @@ async def root():
     """
     return await get_root()
 
-@app.get("/p", response_model=Records)
+@app.get("/p", response_model=PresentationRecords)
 async def presentations():
     """
     Returns a list of available presentations.
     """
     return await get_presentations(presentations_dir)
 
-@app.get("/t", response_model=Records)
+@app.get("/t", response_model=TemplateRecords)
 async def templates():
     """
     Returns a list of available templates.
     """
     return await get_templates()
 
-@app.get("/tr", response_model=Records)
+@app.get("/tr", response_model=TransitionRecords)
 async def transitions():
     """
     Returns a list of available transitions.
