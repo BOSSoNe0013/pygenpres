@@ -29,6 +29,7 @@ div.three-text-cols-$id > div {
     text-align: left;
     color: $ttc_text_color;
     background-color: $background_color;
+    box-shadow: 2px 2px 4px hsl(from $background_color h s 15%);
     border-radius: 4px;
     opacity: 0.8;
     padding: 1rem 2rem;
