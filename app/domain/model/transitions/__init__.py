@@ -5,6 +5,8 @@ from string import Template
 from typing import Optional
 from uuid import uuid4
 
+from pydantic import BaseModel
+
 """
     PyGenPres - A Python Presentation Generator
 
@@ -36,6 +38,23 @@ class TransitionId(str):
     are always strings.
     """
     pass
+
+
+class TransitionResponse(BaseModel):
+    id: str
+    name: str
+    duration: float = 0.0
+    timing_function: str = "linear"
+    delay: float = 0.0
+    direction: str = "normal"
+    fill_mode: str = "unset"
+    time_line: str = ""
+    iteration_count: int = 1
+    play_state: str = "running"
+    keyframe: str = ""
+    target: str = "#slide_$position"
+    extra_css: str = ""
+
 
 @dataclass
 class Transition(ModelObject):
@@ -105,3 +124,21 @@ class Transition(ModelObject):
             str: The path to the transition templates directory.
         """
         return os.path.join(Path.cwd(), 'res', 'transitions')
+
+    def to_response(self) -> TransitionResponse:
+        return TransitionResponse(
+            id=self.id,
+            name=self.name,
+            duration=self.duration,
+            timing_function=self.timing_function,
+            delay=self.delay,
+            direction=self.direction,
+            fill_mode=self.fill_mode,
+            time_line=self.time_line,
+            iteration_count=self.iteration_count,
+            play_state=self.play_state,
+            keyframe=self.keyframe,
+            target=self.target,
+            extra_css=self.extra_css
+        )
+

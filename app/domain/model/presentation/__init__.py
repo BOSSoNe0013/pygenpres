@@ -26,8 +26,10 @@ from typing import Optional, Self
 from uuid import uuid4
 import json
 
+from pydantic import BaseModel
+
 from app.domain.model import ModelObject
-from app.domain.model.slides import Slide
+from app.domain.model.slides import Slide, SlideResponse
 
 
 class PresentationId(str):
@@ -35,6 +37,16 @@ class PresentationId(str):
     Represents the unique identifier for a Presentation.
     """
     pass
+
+
+class PresentationResponse(BaseModel):
+    id: str
+    title: str
+    footer: str = ""
+    font_family: str = "Roboto"
+    style: list[str] = field(default_factory=list)
+    scripts: list[str] = field(default_factory=list)
+    slides: list[SlideResponse] = field(default_factory=list)
 
 
 @dataclass
@@ -237,3 +249,14 @@ class Presentation(ModelObject):
             'footer': self.get_footer()
         })
         return "".join([s for s in html.strip().splitlines(True) if s.strip()])
+
+    def to_response(self) -> PresentationResponse:
+        return PresentationResponse(
+            id=self.id,
+            title=self.title,
+            footer=self.footer,
+            font_family=self.font_family,
+            style=self.style,
+            scripts=self.scripts,
+            slides=[slide.to_response() for slide in self._slides]
+        )

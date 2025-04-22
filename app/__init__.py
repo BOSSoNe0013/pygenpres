@@ -21,12 +21,12 @@ from pathlib import Path
 from string import Template
 from typing import Union
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from starlette.responses import FileResponse
+from starlette.responses import FileResponse, JSONResponse
 
-from .domain.model import TemplateRecords, TransitionRecords, PresentationRecords
+from .domain.model import TemplateRecords, TransitionRecords, PresentationRecords, ErrorResponse
 from .domain.api.edit_presentation import edit_presentation
 from .domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
 from .domain.api.presentations import get_presentations
@@ -34,6 +34,8 @@ from .domain.api.root import get_root
 from .domain.api.store_presentation import store_presentation, save_presentation_changes
 from .domain.api.templates import get_templates
 from .domain.api.transitions import get_transitions
+from .domain.model.presentation import PresentationResponse
+from .domain.model.slides import SlideResponse
 
 """
 This module defines the FastAPI application for the PyGenPres project.
@@ -91,10 +93,12 @@ async def run(id: str):
         id: The ID of the presentation.
     """
     presentation = await get_presentation(id, presentations_dir)
+    if not presentation:
+        raise HTTPException(status_code=400, detail='Presentation not found')
 
     return presentation.get_html()
 
-@app.get("/p/{id}.json")
+@app.get("/p/{id}.json", response_model=PresentationResponse)
 async def get_json_presentation(id: str):
     """
     Returns the JSON representation of a presentation.
@@ -103,8 +107,10 @@ async def get_json_presentation(id: str):
         id: The ID of the presentation.
     """
     presentation = await get_presentation(id, presentations_dir)
+    if not presentation:
+        raise HTTPException(status_code=400, detail='Presentation not found')
 
-    return presentation.to_dict()
+    return presentation.to_response()
 
 @app.get("/new", response_class=HTMLResponse, include_in_schema=False)
 async def new():
@@ -120,6 +126,8 @@ async def get_html_slide(id: str, sid: str):
         sid: The ID of the slide.
     """
     presentation = await get_presentation(id, presentations_dir)
+    if not presentation:
+        raise HTTPException(status_code=400, detail='Presentation not found')
 
     slide = [s for s in presentation.slides if s.id == sid][0]
     content = f"""<style>{Template(slide.get_style()).safe_substitute({'font_family': presentation.font_family})}
@@ -141,7 +149,7 @@ footer {{
 <footer>{Template(presentation.get_footer()).safe_substitute({'slide_position': slide.position + 1})}</footer>"""
     return content
 
-@app.get("/s/{id}/{sid}.json")
+@app.get("/s/{id}/{sid}.json", response_model=SlideResponse)
 async def get_json_slide(id: str, sid: str):
     """
     Returns the JSON representation of a specific slide.
@@ -151,11 +159,22 @@ async def get_json_slide(id: str, sid: str):
         sid: The ID of the slide.
     """
     presentation = await get_presentation(id, presentations_dir)
+    if not presentation:
+        raise HTTPException(status_code=400, detail='Presentation not found')
 
-    slide = [s for s in presentation.slides if s.id == sid][0]
-    return slide.to_dict()
+    slides = [s for s in presentation.slides if s.id == sid]
+    if not slides:
+        raise HTTPException(status_code=400, detail='Slide not found')
 
-@app.get("/s/{id}/add")
+    slide = slides[0]
+    return slide.to_response()
+
+@app.get(
+    "/s/{id}/add",
+    response_model=PresentationResponse,
+    responses={400: {"model": ErrorResponse}},
+    status_code=201
+)
 async def add_slide(id: str, position: Union[int, None] = None):
     """
     Adds a new slide to a presentation.
@@ -165,15 +184,20 @@ async def add_slide(id: str, position: Union[int, None] = None):
         position: The position where to insert the new slide.
     """
     presentation = await get_presentation(id, presentations_dir)
-
+    if not presentation:
+        raise HTTPException(status_code=400, detail='Presentation not found')
     result = await add_slide_to_presentation(presentation, position, presentations_dir)
 
     if result:
-        return presentation.to_dict()
+        return presentation.to_response()
     else:
-        return {'error': 'Could not add slide'}
+        return JSONResponse(status_code=400, content={'message': 'Could not add slide'})
 
-@app.delete("/s/{id}/{sid}.json")
+@app.delete(
+    "/s/{id}/{sid}.json",
+    response_model=PresentationResponse,
+    responses={400: {"model": ErrorResponse}}
+)
 async def remove_slide(id: str, sid: str):
     """
     Removes a slide from a presentation.
@@ -183,13 +207,15 @@ async def remove_slide(id: str, sid: str):
         sid: The ID of the slide to remove.
     """
     presentation = await get_presentation(id, presentations_dir)
+    if not presentation:
+        raise HTTPException(status_code=400, detail='Presentation not found')
 
     result = await remove_slide_from_presentation(presentation, sid, presentations_dir)
 
     if result:
-        return presentation.to_dict()
+        return presentation.to_response()
     else:
-        return {'error': 'Could not delete slide'}
+        return JSONResponse(status_code=400, content={'message': 'Could not delete slide'})
 
 @app.get("/edit/{id}", response_class=HTMLResponse, include_in_schema=False)
 async def edit(id: Union[str, None] = None):
@@ -201,7 +227,7 @@ async def edit(id: Union[str, None] = None):
     """
     return await edit_presentation(id=id, path=presentations_dir)
 
-@app.post("/save")
+@app.post("/save", response_model=PresentationResponse, responses={400: {"model": ErrorResponse}})
 async def save_presentation(changes: dict):
     """
     Saves changes made to a presentation.
@@ -210,9 +236,9 @@ async def save_presentation(changes: dict):
         presentation = await save_presentation_changes(changes, presentations_dir)
         result = await store_presentation(presentation, presentations_dir=presentations_dir)
         if result:
-            return presentation.to_dict()
+            return presentation.to_response()
         else:
-            return {'error': 'Could not save presentation'}
+            return JSONResponse(status_code=400, content={'message': 'Could not save presentation'})
     except Exception as e:
         print(e)
         return {'error': f'{e}'}

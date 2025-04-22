@@ -28,10 +28,12 @@ from app.domain.model.transitions.transitions import Transitions
 from typing import Union
 
 
-async def get_presentation(id: str, presentations_dir: str) -> Presentation:
+async def get_presentation(id: str, presentations_dir: str) -> Union[Presentation, None]:
     """
     Retrieves a presentation from its JSON file.
     """
+    if not os.path.exists(os.path.join(presentations_dir, f'{id}.json')):
+        return None
     with open(os.path.join(presentations_dir, f'{id}.json'), 'r') as file:
         presentation = Presentation.from_json(file.read())
     return presentation

@@ -23,6 +23,16 @@ from dataclasses_json import DataClassJsonMixin
 from pydantic import BaseModel
 
 
+class ErrorResponse(BaseModel):
+    """
+    Represents an error response with a message.
+
+    Attributes:
+        message (str): The error message.
+    """
+    message: str
+
+
 class Record(BaseModel):
     """
     Represents a single record with an ID and text.

@@ -25,11 +25,13 @@ from string import Template
 from typing import Optional
 from uuid import uuid4
 
+from pydantic import BaseModel
+
 from app.domain.model.templates.templates import Templates
 from app.domain.model import ModelObject
 from app.domain.model.file import Image, Video
-from app.domain.model.templates import SlideTemplate
-from app.domain.model.transitions import Transition
+from app.domain.model.templates import SlideTemplate, SlideTemplateResponse
+from app.domain.model.transitions import Transition, TransitionResponse
 
 
 class SlideId(str):
@@ -37,6 +39,19 @@ class SlideId(str):
     Represents a unique identifier for a slide.
     """
     pass
+
+
+class SlideResponse(BaseModel):
+    id: str
+    title: str
+    template: SlideTemplateResponse
+    transition: TransitionResponse
+    description: str = ""
+    background_image: Optional[Image] = None
+    background_color: str = "#ffffff"
+    font_family: str = "Roboto"
+    header_alignment: str = "center"
+    position: int = 0
 
 
 @dataclass
@@ -159,3 +174,17 @@ class Slide(ModelObject):
         p = super().from_dict(d, infer_missing=infer_missing)
         p.template = t
         return p
+
+    def to_response(self) -> SlideResponse:
+        return SlideResponse(
+            id=self.id,
+            title=self.title,
+            description=self.description,
+            template=self.template.to_response(),
+            transition=self.transition.to_response(),
+            background_image=self.background_image,
+            background_color=self.background_color,
+            font_family=self.font_family,
+            header_alignment=self.header_alignment,
+            position=self.position
+        )

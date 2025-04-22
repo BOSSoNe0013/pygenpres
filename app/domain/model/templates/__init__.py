@@ -26,6 +26,7 @@ from typing import Optional, Union
 from uuid import uuid4
 
 from markdown import markdown
+from pydantic import BaseModel
 
 from app.domain.model.file import Image, Video
 from app.domain.model import ModelObject
@@ -49,6 +50,12 @@ class TemplateId(str):
     Represents the unique identifier for a slide template.
     """
     pass
+
+
+class TemplateFieldResponse(BaseModel):
+    type: TemplateFieldType
+    name: str
+    content: Optional[Union[str, Image, Video, bool]] = None
 
 
 @dataclass
@@ -89,6 +96,19 @@ class TemplateField(ModelObject):
                 return self.content.data_url
         return self.content
 
+    def to_response(self) -> TemplateFieldResponse:
+        return TemplateFieldResponse(
+            type=self.type,
+            name=self.name,
+            content=self.content
+        )
+
+
+class SlideTemplateResponse(BaseModel):
+    id: str
+    name: str
+    description: str = ""
+    fields: list[TemplateFieldResponse] = field(default_factory=list)
 
 
 @dataclass
@@ -128,3 +148,11 @@ class SlideTemplate(ModelObject):
     @property
     def script(self) -> str:
         return ""
+
+    def to_response(self) -> SlideTemplateResponse:
+        return SlideTemplateResponse(
+            id=self.id,
+            name=self.name,
+            description=self.description,
+            fields=[field.to_response() for field in self.fields]
+        )
