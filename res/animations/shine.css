@@ -30,6 +30,8 @@
 }
 .shine-border {
     position: relative;
+    box-shadow: none !important;
+    opacity: 1 !important;
 }
 .shine-border::after {
     border-radius: 4px;
@@ -41,6 +43,7 @@
         color(from hsl(from var(--slide-bg-color) h s 90%) srgb r g b / .75) var(--shine-position),
         var(--slide-bg-color) calc(var(--shine-position) + 50%) 110%
     );
+    box-shadow: 2px 2px 4px hsl(from var(--slide-bg-color) h s 15%);
     width: calc(100% + 8px);
     height: calc(100% + 8px);
     position: absolute;
