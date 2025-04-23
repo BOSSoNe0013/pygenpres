@@ -15,3 +15,6 @@ div.iframe-$id > iframe {
     height: 75vh;
     border: none;
 }
+.hidden div.iframe-$id > iframe {
+    display: none;
+}

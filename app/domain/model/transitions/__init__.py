@@ -1,4 +1,5 @@
 import os
+import sass
 from dataclasses import dataclass, field
 from pathlib import Path
 from string import Template
@@ -84,6 +85,11 @@ class Transition(ModelObject):
     target: str = "#slide_$position"
     extra_css: str = ""
 
+    def _gen_extra_css_(self, slide_position: int) -> str:
+        if self.extra_css == "":
+            return ""
+        return sass.compile(string=Template(self.extra_css).safe_substitute({'position': slide_position}))
+
     def get(self, slide_position: int) -> str:
         """
         Generates the CSS code for the transition.
@@ -109,7 +115,7 @@ class Transition(ModelObject):
             'keyframe': self.keyframe,
             'target': Template(self.target).safe_substitute({'position': slide_position}),
             'position': slide_position,
-            'extra_css': self.extra_css
+            'extra_css': self._gen_extra_css_(slide_position)
         }
         with open(os.path.join(self.templates_path, 'base_transition.css'), 'r') as css_file:
             css_template = css_file.read()

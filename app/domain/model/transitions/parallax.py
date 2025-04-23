@@ -36,23 +36,33 @@ class Parallax(Transition):
         self.fill_mode = 'both'
         self.time_line = 'auto'
         self.play_state = 'paused'
-        self.target = "#slide_${position}.hidden, #slide_${position}.hidden .content"
+        self.timing_function = 'ease-in-out'
+        self.target = "#slide_${position}.hidden, #slide_${position}.hidden .content, #slide_${position}.hidden .content > *, #slide_${position}.hidden .content div > div"
         self.keyframe = """
 0% {
-    opacity: 1;
-}
-0.1% {
-    top: 0;
-    left: 0;
-    right: 0;
+    transform: translateY(0);
     opacity: 1;
 }
 50% {
-    opacity: 0.2;
+    opacity: 0.4;
 }
 100% {
-    top: -100%;
-    left: 0;
-    right: 0;
+    transform: translateY(-400%);
     opacity: 0;
 }"""
+        self.extra_css = f"""
+#slide_${{position}}.hidden {{
+    animation-delay: {self.duration - 1.0}s;
+}}
+#slide_${{position}}.hidden .content {{
+    animation-delay: 350ms;
+}}
+@for $i from 1 through 3 {{
+    #slide_${{position}} .content > :nth-child(#{{$i}}) {{
+        animation-delay: 100ms * $i;
+    }}
+    #slide_${{position}} .content div > div:nth-child(#{{$i}}) {{
+        animation-delay: 50ms * $i;
+    }}
+}}
+"""

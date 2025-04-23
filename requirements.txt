@@ -3,3 +3,4 @@ dataclasses-json~=0.6.7
 fastapi[standard]~=0.115.12
 starlette~=0.46.1
 pydantic~=2.11.3
+libsass~=0.23.0
