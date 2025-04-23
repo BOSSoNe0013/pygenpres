@@ -1,0 +1,50 @@
+@property --shine-position {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: -75%;
+}
+@keyframes shine {
+    0% {
+        --shine-position: -75%;
+    }
+    40% {
+        --shine-position: -75%;
+    }
+    60% {
+        --shine-position: 175%;
+    }
+    100% {
+        --shine-position: 175%;
+    }
+}
+.shine {
+    animation: shine 4s steps(120) infinite;
+}
+.shine-bg {
+    background: linear-gradient(
+        45deg,
+        var(--slide-bg-color) 0% calc(var(--shine-position) - 50%),
+        color(from hsl(from var(--slide-bg-color) h s 90%) srgb r g b / .25) var(--shine-position),
+        var(--slide-bg-color) calc(var(--shine-position) + 50%) 110%
+    );
+}
+.shine-border {
+    position: relative;
+}
+.shine-border::after {
+    border-radius: 4px;
+    display: block;
+    content: '';
+    background: linear-gradient(
+        45deg,
+        var(--slide-bg-color) 0% calc(var(--shine-position) - 50%),
+        color(from hsl(from var(--slide-bg-color) h s 90%) srgb r g b / .75) var(--shine-position),
+        var(--slide-bg-color) calc(var(--shine-position) + 50%) 110%
+    );
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    position: absolute;
+    top: -4px;
+    z-index: -1;
+    left: -4px;
+}

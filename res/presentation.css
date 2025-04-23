@@ -69,12 +69,12 @@ footer {
 }
 .container {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100svh;
     overflow-x: hidden;
     padding: 0;
 }
 slide {
-    height: 100vh;
+    height: 100svh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,7 +171,7 @@ slide td {
     animation-delay: 0.4s !important;
 }
 .content {
-    max-height: 95vh;
+    max-height: 95svh;
     position: relative;
     z-index: 3;
     padding: 4px 8px;

@@ -23,8 +23,10 @@ function showSlide() {
     document.querySelectorAll('slide').forEach(slide => {
         if (slide.id === `slide_${page}`) {
             slide.classList.remove('hidden');
+            slide.classList.add('current');
         }
         else {
+            slide.classList.remove('current');
             slide.classList.add('hidden');
         }
     });
@@ -54,8 +56,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (page >= total_pages) {
                 page = 0;
             }
+            showSlide();
         }
-        showSlide();
+    });
+    var touch_moved = false;
+    document.addEventListener('touchstart', function(e) {
+        touch_moved = false;
+    });
+    document.addEventListener('touchmove', function(e) {
+        touch_moved = true;
+    });
+    document.addEventListener('touchend', function(e) {
+        if (!touch_moved) {
+            page += 1;
+            if (page >= total_pages) {
+                page = 0;
+            }
+            showSlide();
+        }
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -202,6 +202,11 @@ class Presentation(ModelObject):
         }
         with open(os.path.join(self._templates_path, 'presentation.css'), 'r') as css_file:
             css_template = css_file.read()
+        with open(os.path.join(self._templates_path, 'animations', 'rainbow.css'), 'r') as animations_file:
+            animation_css = animations_file.read()
+        with open(os.path.join(self._templates_path, 'animations', 'shine.css'), 'r') as animations_file:
+            animation_css += animations_file.read()
+        css_template += animation_css
         return Template(css_template).safe_substitute(css_values)
 
     @property

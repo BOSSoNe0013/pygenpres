@@ -1,0 +1,33 @@
+@property --rainbow-hue {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0deg;
+}
+@keyframes rainbow {
+    to {
+        --rainbow-hue: 360deg;
+    }
+}
+.rainbow {
+    --rainbow-color: hsl(from var(--slide-bg-color) var(--rainbow-hue) s l);
+    animation: rainbow 10s steps(360) infinite alternate;
+}
+.rainbow-bg {
+    background-color: var(--rainbow-color) !important;
+}
+.rainbow-border {
+    border: 2px solid var(--rainbow-color);
+    border-color: var(--rainbow-color) !important;
+}
+.rainbow-bg-gradient {
+    background: linear-gradient(0.25turn, hsl(from var(--rainbow-color) h s 10%), hsl(from var(--rainbow-color) h s 40%), hsl(from var(--rainbow-color) h s 10%)) !important;
+}
+.rainbow-text {
+    color: var(--rainbow-color) !important;
+}
+.rainbow-text-shadow {
+    text-shadow: 0 0 10px var(--rainbow-color) !important;
+}
+.rainbow-box-shadow {
+    box-shadow: 0 0 10px var(--rainbow-color) !important;
+}

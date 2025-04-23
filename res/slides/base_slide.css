@@ -1,6 +1,7 @@
 #slide_$slide_position {
+    --slide-bg-color: $background_color;
     font-family: '$font_family', sans-serif;
-    background-color: $background_color;
+    background-color: var(--slide-bg-color);
     z-index: $z_index;
 }
 #slide_$slide_position .bg-1 {
@@ -8,7 +9,7 @@
     background-image: url('$background_image');
 }
 #slide_$slide_position thead {
-    background-color: $background_color;
+    background-color: var(--slide-bg-color);
 }
 $transition
 $template
