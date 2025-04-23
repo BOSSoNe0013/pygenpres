@@ -42,6 +42,23 @@ class TransitionId(str):
 
 
 class TransitionResponse(BaseModel):
+    """
+    Represents a response object for a transition.
+
+    This class is used to serialize and deserialize transition data for API responses.
+
+    Attributes:
+        id (str): The unique identifier of the transition.
+        name (str): The name of the transition.
+        duration (float): The duration of the transition in seconds. Defaults to 0.0.
+        timing_function (str): The timing function of the transition. Defaults to "linear".
+        delay (float): The delay before the transition starts in seconds. Defaults to 0.0.
+        direction (str): The direction of the transition. Defaults to "normal".
+        fill_mode (str): The fill mode of the transition. Defaults to "unset".
+        time_line (str): The time line of the transition. Defaults to "".
+        iteration_count (int): The number of times the transition should repeat. Defaults to 1.
+        play_state (str): The play state of the transition. Defaults to "running".
+    """
     id: str
     name: str
     duration: float = 0.0
@@ -86,6 +103,17 @@ class Transition(ModelObject):
     extra_css: str = ""
 
     def _gen_extra_css_(self, slide_position: int) -> str:
+        """
+        Generates extra CSS code based on the provided extra_css template.
+
+        Args:
+            slide_position (int): The position of the slide.
+
+        Returns:
+            str: The compiled CSS code, or an empty string if extra_css is empty.
+
+        Raises:
+        """
         if self.extra_css == "":
             return ""
         return sass.compile(string=Template(self.extra_css).safe_substitute({'position': slide_position}))
@@ -132,6 +160,12 @@ class Transition(ModelObject):
         return os.path.join(Path.cwd(), 'res', 'transitions')
 
     def to_response(self) -> TransitionResponse:
+        """
+        Converts the Transition object to a TransitionResponse object.
+
+        Returns:
+            TransitionResponse: The TransitionResponse object.
+        """
         return TransitionResponse(
             id=self.id,
             name=self.name,
@@ -147,4 +181,3 @@ class Transition(ModelObject):
             target=self.target,
             extra_css=self.extra_css
         )
-
