@@ -1,0 +1,17 @@
+.white_cards {
+    background-color: hsl(from var(--slide-bg-color) h s 10%) !important;
+}
+.white_cards .content > div {
+    align-items: flex-start;
+}
+.white_cards .content > div > * {
+    --slide-text-color: #000000;
+    background-color: #ffffff;
+    border: none;
+    border-top: 24px solid var(--slide-bg-color);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 2px 2px 8px hsl(from var(--slide-bg-color) h s 10%);
+    padding: 1rem;
+    opacity: 1;
+}

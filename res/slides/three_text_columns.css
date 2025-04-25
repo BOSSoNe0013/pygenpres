@@ -1,15 +1,15 @@
 h1.three-text-cols-$id {
     font-size: 5em;
-    font-size: clamp(2rem, 1.8rem + 1.5vh, 3rem);
-    text-align: $header_alignment;
+    font-size: clamp(2rem, calc(1.8rem + 1.5vh), 3rem);
+    text-align: var(--header-alignment);
     margin-bottom: 0.2rem;
-    color: $ttc_text_color;
+    color: var(--slide-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.three-text-cols-$id {
-    font-size: clamp(1rem, 0.8rem + 1.5vh, 2rem);
-    color: $ttc_text_color;
-    text-align: $header_alignment;
+    font-size: clamp(1rem, calc(0.8rem + 1.5vh), 2rem);
+    color: var(--slide-text-color);
+    text-align: var(--header-alignment);
     margin: 0;
     margin-bottom: 3rem;
 }
@@ -18,19 +18,21 @@ div.three-text-cols-$id {
     grid-template-columns: 30% 30% 30%;
     gap: 20px;
     justify-content: center;
-    font-size: clamp(0.5rem, 0.2rem + 1.5vh, 1.8rem);
+    font-size: clamp(0.5rem, calc(0.2rem + 1.5vh), 1.8rem);
     font-weight: 300;
 }
 div.three-text-cols-$id > div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
+    justify-content: flex-start;
     text-align: left;
-    color: $ttc_text_color;
-    background-color: $background_color;
-    box-shadow: 2px 2px 4px hsl(from $background_color h s 15%);
+    color: var(--slide-text-color);
+    background-color: var(--slide-bg-color);
+    box-shadow: 2px 2px 4px hsl(from var(--slide-bg-color) h s 15%);
     border-radius: 4px;
     opacity: 0.8;
     padding: 1rem 2rem;
+    margin-bottom: 1rem;
+    height: calc(100% - 1rem);
 }

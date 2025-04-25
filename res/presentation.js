@@ -20,16 +20,21 @@
 let page = 0;
 function showSlide() {
     document.querySelector('#current-page').innerHTML = page + 1;
+    const current_slide = document.querySelector('slide.current');
     document.querySelectorAll('slide').forEach(slide => {
         if (slide.id === `slide_${page}`) {
+            slide.style.animationPlayState = 'running';
+            document.querySelectorAll(`#${slide.id} *`).forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
             slide.classList.remove('hidden');
             slide.classList.add('current');
         }
-        else {
-            slide.classList.remove('current');
-            slide.classList.add('hidden');
-        }
     });
+    if (!document.querySelector('#presentation-container').classList.contains('first-load')) {
+        current_slide.classList.remove('current');
+        current_slide.classList.add('hidden');
+    }
 };
 function scrollToSlide() {
     const targetSlide = document.querySelector(`#slide_${page}`);
@@ -40,6 +45,7 @@ function scrollToSlide() {
 };
 document.addEventListener("animationend", (event) => {
     console.log(event);
+    document.querySelector('#presentation-container').classList.remove('first-load');
     scrollToSlide();
 });
 document.scrollToSlide = scrollToSlide;

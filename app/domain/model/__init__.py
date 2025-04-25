@@ -88,6 +88,15 @@ class PresentationRecords(Records):
     type: str = 'presentations'
 
 
+class ThemeRecords(Records):
+    """
+    Represents a collection of theme records.
+
+    This class inherits from `Records` and sets the `type` attribute to 'themes'.
+    """
+    type: str = 'themes'
+
+
 class ModelObject(DataClassJsonMixin):
     """
     Base class for model objects, providing utility methods for attribute access and manipulation.

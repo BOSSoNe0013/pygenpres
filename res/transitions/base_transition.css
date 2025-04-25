@@ -9,10 +9,6 @@ $target {
     animation-timeline: $time_line;
     animation-play-state: $play_state;
 }
-.hidden,
-.hidden $target {
-    animation-play-state: running !important;
-}
 @keyframes ${name}-$id {
     $keyframe
 }

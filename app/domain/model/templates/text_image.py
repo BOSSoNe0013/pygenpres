@@ -36,7 +36,6 @@ class TextImage(SlideTemplate):
     title: str = "Text Image"
     subtitle: str = "Subtitle"
     text: str = "This is some text"
-    text_color: str = "#fff"
     image: Optional[Image] = None
 
     def __post_init__(self):
@@ -46,7 +45,7 @@ class TextImage(SlideTemplate):
             TemplateField(TemplateFieldType.TEXT, name=f"ti_title", content=self.title),
             TemplateField(TemplateFieldType.TEXT, name=f"ti_subtitle", content=self.subtitle),
             TemplateField(TemplateFieldType.MARKDOWN, name=f"ti_text", content=self.text),
-            TemplateField(TemplateFieldType.COLOR, name=f"ti_text_color", content=self.text_color),
+            TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
             TemplateField(TemplateFieldType.IMAGE, name=f"ti_image", content=self.image)
         ]
 

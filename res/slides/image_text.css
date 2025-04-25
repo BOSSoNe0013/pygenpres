@@ -1,25 +1,28 @@
+#slide_$slide_position {
+    --slide-image: url('$it_image');
+}
 h1.image-text-$id {
-    font-size: clamp(2rem, 1.8rem + 1.5vh, 3rem);
-    text-align: $header_alignment;
+    font-size: clamp(2rem, calc(1.8rem + 1.5vh), 3rem);
+    text-align: var(--header-alignment);
     margin-bottom: 0.2rem;
-    color: $it_text_color;
+    color: var(--slide-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.image-text-$id {
-    font-size: clamp(1rem, 0.8rem + 1.5vh, 2rem);
-    color: $it_text_color;
-    text-align: $header_alignment;
+    font-size: clamp(1rem, calc(0.8rem + 1.5vh), 2rem);
+    color: var(--slide-text-color);
+    text-align: var(--header-alignment);
     margin: 0;
     margin-bottom: 3rem;
 }
 div.text-image-$id {
-    color: $it_text_color;
+    color: var(--slide-text-color);
 }
 div.image-text-$id {
     display: grid;
     grid-template-columns: auto 60%;
     gap: 20px;
-    font-size: clamp(0.5rem, 0.2rem + 1.5vh, 1.8rem);
+    font-size: clamp(0.5rem, calc(0.2rem + 1.5vh), 1.8rem);
     font-weight: 300;
     justify-content: center;
     align-items: center;
@@ -30,8 +33,8 @@ div.image-text-$id > div {
     justify-content: center;
     align-items: flex-start;
     text-align: left;
-    color: $it_text_color;
-    background-color: $background_color;
+    color: var(--slide-text-color);
+    background-color: var(--slide-bg-color);
     border-radius: 4px;
     opacity: 0.8;
     padding: 1rem 2rem;

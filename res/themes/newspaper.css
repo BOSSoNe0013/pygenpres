@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+.newspaper {
+    font-family: "Roboto Serif", serif !important;
+    --slide-text-color: #2f2f2f !important;
+    --slide-bg-color: #f9f7f1 !important;
+}
+.newspaper .bg-1 {
+    filter: grayscale(100%) contrast(0.8) sepia(0.2);
+}
+.newspaper h1.title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: none
+}
+.newspaper p.subtitle {
+    font-family: "Roboto Serif", serif;
+    font-size: clamp(1rem, calc(0.5rem + 1.5vh), 1.5rem);
+    text-transform: uppercase;
+    border-bottom: 2px solid #2f2f2f;
+    border-top: 2px solid #2f2f2f;
+    padding: 12px 0 12px 0;
+}
+.newspaper .content {
+    flex-grow: 1;
+}
+.newspaper .content > div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+.newspaper .content > div > * {
+    font-family: "Roboto Serif", serif;
+    box-shadow: none;
+    border-radius: 0;
+    justify-content: flex-start
+}
+.newspaper .content > div > * + * {
+  border-left: 1px solid #2f2f2f;
+}
+.newspaper .content img {
+    max-width: 20vw;
+    filter: grayscale(100%) contrast(1.2) sepia(0.2);
+    display: block;
+}
+.newspaper .content img + em {
+    font-size: 12px;
+    font-style: italic;
+    position: relative;
+    top: -6px;
+}
+.newspaper h2 {
+    text-align: center;
+    line-height: normal;
+    font-family: 'Playfair Display', serif;
+    display: block;
+    margin: 0 auto;
+}
+.newspaper h3 {
+    font-weight: 700;
+    font-size: 12px;
+    box-sizing: border-box;
+    padding: 10px 0 10px 0;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.newspaper h3:before {
+    border-top: 1px solid #2f2f2f;
+    content: '';
+    width: 100px;
+    height: 7px;
+    display: block;
+    margin: 0 auto;
+}
+.newspaper h3:after {
+    border-bottom: 1px solid #2f2f2f;
+    content: '';
+    width: 100px;
+    height: 10px;
+    display: block;
+    margin: 0 auto;
+}

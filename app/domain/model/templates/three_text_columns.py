@@ -32,7 +32,6 @@ class ThreeTextColumns(SlideTemplate):
     text_1: str = "This is the first text"
     text_2: str = "This is the second text"
     text_3: str = "This is the third text"
-    text_color: str = "#fff"
     image: str = ""
     """
     Represents a slide template with three text columns.
@@ -48,7 +47,7 @@ class ThreeTextColumns(SlideTemplate):
             TemplateField(TemplateFieldType.MARKDOWN, name=f"ttc_text_1", content=self.text_1),
             TemplateField(TemplateFieldType.MARKDOWN, name=f"ttc_text_2", content=self.text_2),
             TemplateField(TemplateFieldType.MARKDOWN, name=f"ttc_text_3", content=self.text_3),
-            TemplateField(TemplateFieldType.COLOR, name=f"ttc_text_color", content=self.text_color),
+            TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
         ]
 
     @property

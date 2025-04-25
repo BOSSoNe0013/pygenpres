@@ -26,7 +26,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse, JSONResponse
 
-from .domain.model import TemplateRecords, TransitionRecords, PresentationRecords, ErrorResponse
+from .domain.model import TemplateRecords, TransitionRecords, PresentationRecords, ErrorResponse, ThemeRecords
 from .domain.api.edit_presentation import edit_presentation
 from .domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
 from .domain.api.presentations import get_presentations
@@ -36,6 +36,7 @@ from .domain.api.templates import get_templates
 from .domain.api.transitions import get_transitions
 from .domain.model.presentation import PresentationResponse
 from .domain.model.slides import SlideResponse
+from .features.themes import Themes
 
 """
 This module defines the FastAPI application for the PyGenPres project.
@@ -84,6 +85,13 @@ async def transitions():
     """
     return await get_transitions()
 
+@app.get("/th", response_model=ThemeRecords)
+async def themes():
+    """
+    Returns a list of available themes.
+    """
+    return await Themes.list_themes()
+
 @app.get("/p/{id}.html", response_class=HTMLResponse, include_in_schema=False)
 async def run(id: str):
     """
@@ -96,7 +104,7 @@ async def run(id: str):
     if not presentation:
         raise HTTPException(status_code=400, detail='Presentation not found')
 
-    return presentation.get_html()
+    return await presentation.get_html()
 
 @app.get("/p/{id}.json", response_model=PresentationResponse)
 async def get_json_presentation(id: str):
@@ -130,6 +138,7 @@ async def get_html_slide(id: str, sid: str):
         raise HTTPException(status_code=400, detail='Presentation not found')
 
     slide = [s for s in presentation.slides if s.id == sid][0]
+    theme = '' if not slide.theme else await Themes.get_theme(slide.theme)
     content = f"""<style>{Template(slide.get_style()).safe_substitute({'font_family': presentation.font_family})}
 footer {{
     position: absolute;
@@ -144,6 +153,7 @@ footer {{
     color: #fff;
     font-size: 0.7rem
 }}
+{theme}
 </style>
 {slide.get_html(hidden=False)}
 <footer>{Template(presentation.get_footer()).safe_substitute({'slide_position': slide.position + 1})}</footer>"""

@@ -322,9 +322,10 @@ function renderSlideForm(data) {
         },
         { field: 'background_color', type: 'color', html: { span: -1, label: 'Background color' } },
         { field: 'background_image', type: 'file', options: { max: 1, maxItemWidth: 160 }, html: { span: -1, label: 'Background image', style: 'height: 86px;' } },
-        { field: 'transition', type: 'list', options: { url: '/tr',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Transition' } },
+        { field: 'transition', type: 'list', options: { url: '/tr',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Transition', groupCollapsible: true } },
         { field: 'duration', type: 'float', options: { min: 0, max: 2, step: 0.1, suffix: 's', keyboard: false }, html: { span: -1, label: 'Duration' } },
-        { field: 'template', type: 'list', options: { url: '/t',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Template' } },
+        { field: 'template', type: 'list', options: { url: '/t',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Template', groupCollapsible: true } },
+        { field: 'theme', type: 'combo', options: { url: '/th',  minLength: 0 }, html: { span: -1, label: 'Theme' } },
     ];
     w2ui.slide_form.record = {
         id: data.id,
@@ -337,6 +338,7 @@ function renderSlideForm(data) {
         transition: { id: data.transition.name.toLowerCase().replaceAll(' ', '_'), text: data.transition.name },
         duration: data.transition.duration,
         template: { id: data.template.name.toLowerCase().replaceAll(' ', '_'), text: data.template.name },
+        theme: data.theme,
     };
     data.template.fields.forEach(field => {
         let type = 'text';
@@ -374,6 +376,8 @@ function renderSlideForm(data) {
     });
     w2ui.slide_form.formHTML = w2ui.slide_form.generateHTML();
     w2ui.slide_form.render('#layout_right_box_panel_main .w2ui-panel-content');
+    w2ui.slide_form.toggleGroup('Transition', false);
+    w2ui.slide_form.toggleGroup('Template', false);
 };
 function loadSlide(slideId) {
     console.log('Load slide', slideId);

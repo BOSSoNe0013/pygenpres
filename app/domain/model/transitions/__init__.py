@@ -97,7 +97,7 @@ class Transition(ModelObject):
     fill_mode: str = "unset"
     time_line: str = ""
     iteration_count: int = 1
-    play_state: str = "running"
+    play_state: str = "paused"
     keyframe: str = ""
     target: str = "#slide_$position"
     extra_css: str = ""

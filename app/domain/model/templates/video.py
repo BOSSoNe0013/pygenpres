@@ -35,7 +35,6 @@ class Video(SlideTemplate):
 
     title: str = "Video"
     subtitle: str = "Subtitle"
-    text_color: str = "#fff"
     video: Optional[Video] = None
     controls: bool = False
     loop: bool = True
@@ -47,7 +46,7 @@ class Video(SlideTemplate):
         self.fields = [
             TemplateField(TemplateFieldType.TEXT, name=f"v_title", content=self.title),
             TemplateField(TemplateFieldType.TEXT, name=f"v_subtitle", content=self.subtitle),
-            TemplateField(TemplateFieldType.COLOR, name=f"v_text_color", content=self.text_color),
+            TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
             TemplateField(TemplateFieldType.VIDEO, name=f"v_video", content=self.video),
             TemplateField(TemplateFieldType.BOOL, name=f"v_controls", content=self.controls),
             TemplateField(TemplateFieldType.BOOL, name=f"v_loop", content=self.loop),

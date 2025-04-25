@@ -80,6 +80,8 @@ async def save_presentation_changes(changes: dict, presentations_dir: str) -> Pr
                     slide.transition = Transitions(field_value["id"]).new_instance()
                 elif field_name == "duration":
                     slide.transition.duration = field_value
+                elif field_name == "theme":
+                    slide.theme = field_value
                 elif field_name == "template":
                     slide.template = Templates(field_value["id"]).new_instance()
                 elif field_name in (f.name for f in slide.template.fields):

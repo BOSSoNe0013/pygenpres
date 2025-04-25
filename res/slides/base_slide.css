@@ -1,12 +1,21 @@
 #slide_$slide_position {
     --slide-bg-color: $background_color;
+    --slide-bg-image: url("$background_image");
+    --slide-text-color: $text_color;
+    --header-alignment: $header_alignment;
     font-family: '$font_family', sans-serif;
     background-color: var(--slide-bg-color);
     z-index: $z_index;
 }
+#presentation-container #slide_$slide_position {
+    animation-play-state: paused;
+}
 #slide_$slide_position .bg-1 {
     --i: $slide_position;
-    background-image: url('$background_image');
+    background-image: var(--slide-bg-image);
+}
+#slide_$slide_position .content img {
+    width: 100%;
 }
 #slide_$slide_position thead {
     background-color: var(--slide-bg-color);

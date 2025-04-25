@@ -16,8 +16,6 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -28,6 +26,7 @@ import json
 
 from pydantic import BaseModel
 
+from app.features.themes import Themes
 from app.domain.model import ModelObject
 from app.domain.model.slides import Slide, SlideResponse
 
@@ -187,7 +186,7 @@ class Presentation(ModelObject):
             js_template = js_file.read()
         return Template(js_template).safe_substitute(js_values)
 
-    def _load_style(self) -> str:
+    async def _load_style(self) -> str:
         """
         Loads and formats the CSS styles for the presentation.
 
@@ -207,6 +206,9 @@ class Presentation(ModelObject):
         with open(os.path.join(self._templates_path, 'animations', 'shine.css'), 'r') as animations_file:
             animation_css += animations_file.read()
         css_template += animation_css
+        themes = {slide.theme for slide in self._slides if slide.theme}
+        for theme in themes:
+            css_template += await Themes.get_theme(theme)
         return Template(css_template).safe_substitute(css_values)
 
     @property
@@ -237,7 +239,7 @@ class Presentation(ModelObject):
             footer_template = footer_file.read()
         return Template(footer_template).safe_substitute(footer_values)
 
-    def get_html(self) -> str:
+    async def get_html(self) -> str:
         """
         Generates the complete HTML for the presentation.
 
@@ -245,8 +247,9 @@ class Presentation(ModelObject):
             str: The complete HTML code for the presentation.
         """
         #load all templates and generate html
+        style = await self._load_style()
         html = Template(self.__html_template__).safe_substitute({
-            'style': self._load_style(),
+            'style': style,
             'script': self._load_scripts(),
             'slides': ''.join([slide.get_html() for slide in self._slides]),
             'title': self.title,

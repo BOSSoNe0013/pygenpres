@@ -33,7 +33,6 @@ class SimpleTitle(SlideTemplate):
     """
     title: str = "Simple Title"
     subtitle: str = "Subtitle"
-    text_color: str = "#fff"
 
     def __post_init__(self):
         self.name = "Simple title"
@@ -41,7 +40,7 @@ class SimpleTitle(SlideTemplate):
         self.fields = [
             TemplateField(TemplateFieldType.TEXT, name=f"st_title", content=self.title),
             TemplateField(TemplateFieldType.TEXT, name=f"st_subtitle", content=self.subtitle),
-            TemplateField(TemplateFieldType.COLOR, name=f"st_text_color", content=self.text_color),
+            TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
         ]
 
     @property

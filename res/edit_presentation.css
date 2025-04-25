@@ -91,6 +91,10 @@ slide td {
     height: 100%;
     view-timeline-name: --slide;
     view-timeline-axis: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 .bg-1, .bg-2 {
     background-size: cover;
@@ -136,6 +140,7 @@ div.codehilite pre {
 }
 .codehilite code {
     background-color: #1e1f22;
+    color: #f8f8f2;
     display: block;
     padding: 0.5vh 0.5vw;
     border-radius: 4px;

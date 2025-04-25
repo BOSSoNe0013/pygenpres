@@ -30,7 +30,7 @@ from pydantic import BaseModel
 from app.domain.model.templates.templates import Templates
 from app.domain.model import ModelObject
 from app.domain.model.file import Image, Video
-from app.domain.model.templates import SlideTemplate, SlideTemplateResponse
+from app.domain.model.templates import SlideTemplate, SlideTemplateResponse, TemplateFieldType
 from app.domain.model.transitions import Transition, TransitionResponse
 
 
@@ -46,6 +46,7 @@ class SlideResponse(BaseModel):
     title: str
     template: SlideTemplateResponse
     transition: TransitionResponse
+    theme: str = ""
     description: str = ""
     background_image: Optional[Image] = None
     background_color: str = "#ffffff"
@@ -73,6 +74,7 @@ class Slide(ModelObject):
     background_color: str = "#ffffff"
     font_family: str = "Roboto"
     header_alignment: str = "center"
+    theme: str = ""
     id: Optional[SlideId] = field(
         default_factory=lambda: SlideId(str(uuid4())))
     position: int = 0
@@ -100,11 +102,18 @@ class Slide(ModelObject):
             field.name: field.get_html() for field in self.template.fields
         }
         values['title'] = self.title
+        class_list = [self.template.name.lower().replace(' ', '_')]
+        if self.theme:
+            class_list.append(self.theme)
+        if self.position != 0 and hidden:
+            class_list.append('hidden')
+        else:
+            class_list.append('current')
         content = Template(self.template.content).safe_substitute(values)
         return Template(self.__html_template__).safe_substitute({
             'slide_position': self.position,
             'slide_content': content,
-            'class_list': 'hidden' if self.position != 0 and hidden else ''
+            'class_list': ' '.join(class_list)
         })
 
     def get_script(self) -> str:
@@ -118,13 +127,17 @@ class Slide(ModelObject):
         Generates and returns the CSS style for the slide.
         """
         templates_values: dict = {
-            field.name: field.content for field in self.template.fields
+            field.name: field.get_html() if field.type is TemplateFieldType.IMAGE else field.content for field in self.template.fields
         }
         templates_values['background_color'] = self.background_color
         templates_values['header_alignment'] = self.header_alignment
+        templates_values['slide_position'] = self.position
         values = {
             'background_color': self.background_color,
             'background_image': self.background_image.data_url if self.background_image else '',
+            'text_color': templates_values['text_color'] if 'text_color' in templates_values else '#000000',
+            'font_family': self.font_family,
+            'header_alignment': self.header_alignment,
             'slide_position': self.position,
             'transition': self.transition.get(self.position),
             'template': Template(self.template.style).safe_substitute(templates_values),
@@ -155,9 +168,12 @@ class Slide(ModelObject):
         fields = d.get('template').get('fields')
         f = {}
         for field in fields:
-            n = field.get('name').split('_')
-            n.pop(0)
-            name = '_'.join(n)
+            if field.get('name') not in ['text_color']:
+                n = field.get('name').split('_')
+                n.pop(0)
+                name = '_'.join(n)
+            else:
+                name = field.get('name')
             if name.endswith('image'):
                 if isinstance(field.get('content'), dict):
                     f[name] = Image(**field.get('content'))
@@ -180,6 +196,7 @@ class Slide(ModelObject):
             id=self.id,
             title=self.title,
             description=self.description,
+            theme=self.theme,
             template=self.template.to_response(),
             transition=self.transition.to_response(),
             background_image=self.background_image,

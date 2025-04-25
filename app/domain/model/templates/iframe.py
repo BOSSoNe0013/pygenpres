@@ -23,7 +23,6 @@ from dataclasses import dataclass
 from string import Template
 from typing import Optional
 
-from app.domain.model.file import Video
 from app.domain.model.templates import SlideTemplate, TemplateField, TemplateFieldType
 
 
@@ -35,7 +34,6 @@ class Iframe(SlideTemplate):
 
     title: str = "Iframe"
     subtitle: str = "Subtitle"
-    text_color: str = "#fff"
     src: Optional[str] = None
 
     def __post_init__(self):
@@ -43,7 +41,7 @@ class Iframe(SlideTemplate):
         self.description = "An embedded web page slide"
         self.fields = [
             TemplateField(TemplateFieldType.TEXT, name=f"if_title", content=self.title),
-            TemplateField(TemplateFieldType.COLOR, name=f"if_text_color", content=self.text_color),
+            TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
             TemplateField(TemplateFieldType.TEXT, name=f"if_src", content=self.src),
         ]
 
