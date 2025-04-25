@@ -2,7 +2,7 @@ h1.simple-title-$id {
     font-size: clamp(3rem, calc(2.8rem + 1.5vh), 5rem);
     text-align: var(--header-alignment);
     margin-bottom: 1rem;
-    color: var(--slide-text-color);
+    color: var(--slide-title-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.simple-title-$id {

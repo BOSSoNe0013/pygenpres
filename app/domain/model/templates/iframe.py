@@ -40,9 +40,10 @@ class Iframe(SlideTemplate):
         self.name = "Iframe"
         self.description = "An embedded web page slide"
         self.fields = [
-            TemplateField(TemplateFieldType.TEXT, name=f"if_title", content=self.title),
+            TemplateField(TemplateFieldType.TEXT, name=f"title", content=self.title),
+            TemplateField(TemplateFieldType.COLOR, name=f"title_text_color", content=self.title_text_color),
             TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
-            TemplateField(TemplateFieldType.TEXT, name=f"if_src", content=self.src),
+            TemplateField(TemplateFieldType.TEXT, name=f"src", content=self.src),
         ]
 
     @property

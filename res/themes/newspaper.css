@@ -29,6 +29,9 @@
     justify-content: space-evenly;
     align-items: flex-start;
 }
+.newspaper .content > div > div {
+    background-color: transparent !important;
+}
 .newspaper .content > div > * {
     font-family: "Roboto Serif", serif;
     box-shadow: none;

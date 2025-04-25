@@ -38,8 +38,9 @@ class SimpleTitle(SlideTemplate):
         self.name = "Simple title"
         self.description = "A simple title slide"
         self.fields = [
-            TemplateField(TemplateFieldType.TEXT, name=f"st_title", content=self.title),
-            TemplateField(TemplateFieldType.TEXT, name=f"st_subtitle", content=self.subtitle),
+            TemplateField(TemplateFieldType.TEXT, name=f"title", content=self.title),
+            TemplateField(TemplateFieldType.TEXT, name=f"subtitle", content=self.subtitle),
+            TemplateField(TemplateFieldType.COLOR, name=f"title_text_color", content=self.title_text_color),
             TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
         ]
 

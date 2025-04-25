@@ -74,6 +74,8 @@ async def save_presentation_changes(changes: dict, presentations_dir: str) -> Pr
                     slide.header_alignment = field_value["id"]
                 elif field_name == "background_color":
                     slide.background_color = f"#{field_value}" if not field_value.startswith("#") else field_value
+                elif field_name == "background_color_alt":
+                    slide.background_color_alt = f"#{field_value}" if not field_value.startswith("#") else field_value
                 elif field_name == "background_image":
                     slide.background_image = field_value
                 elif field_name == "transition":

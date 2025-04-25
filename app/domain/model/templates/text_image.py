@@ -42,11 +42,12 @@ class TextImage(SlideTemplate):
         self.name = "Text Image"
         self.description = "A block of text with an image on the right"
         self.fields = [
-            TemplateField(TemplateFieldType.TEXT, name=f"ti_title", content=self.title),
-            TemplateField(TemplateFieldType.TEXT, name=f"ti_subtitle", content=self.subtitle),
-            TemplateField(TemplateFieldType.MARKDOWN, name=f"ti_text", content=self.text),
+            TemplateField(TemplateFieldType.TEXT, name=f"title", content=self.title),
+            TemplateField(TemplateFieldType.TEXT, name=f"subtitle", content=self.subtitle),
+            TemplateField(TemplateFieldType.MARKDOWN, name=f"text", content=self.text),
+            TemplateField(TemplateFieldType.COLOR, name=f"title_text_color", content=self.title_text_color),
             TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
-            TemplateField(TemplateFieldType.IMAGE, name=f"ti_image", content=self.image)
+            TemplateField(TemplateFieldType.IMAGE, name=f"image", content=self.image)
         ]
 
     @property

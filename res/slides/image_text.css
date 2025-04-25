@@ -1,11 +1,11 @@
 #slide_$slide_position {
-    --slide-image: url('$it_image');
+    --slide-image: url($image);
 }
 h1.image-text-$id {
     font-size: clamp(2rem, calc(1.8rem + 1.5vh), 3rem);
     text-align: var(--header-alignment);
     margin-bottom: 0.2rem;
-    color: var(--slide-text-color);
+    color: var(--slide-title-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.image-text-$id {

@@ -50,6 +50,7 @@ class SlideResponse(BaseModel):
     description: str = ""
     background_image: Optional[Image] = None
     background_color: str = "#ffffff"
+    background_color_alt: str = "#000000"
     font_family: str = "Roboto"
     header_alignment: str = "center"
     position: int = 0
@@ -72,6 +73,7 @@ class Slide(ModelObject):
     description: str = ""
     background_image: Optional[Image] = None
     background_color: str = "#ffffff"
+    background_color_alt: str = "#000000"
     font_family: str = "Roboto"
     header_alignment: str = "center"
     theme: str = ""
@@ -130,11 +132,14 @@ class Slide(ModelObject):
             field.name: field.get_html() if field.type is TemplateFieldType.IMAGE else field.content for field in self.template.fields
         }
         templates_values['background_color'] = self.background_color
+        templates_values['background_color_alt'] = self.background_color_alt
         templates_values['header_alignment'] = self.header_alignment
         templates_values['slide_position'] = self.position
         values = {
             'background_color': self.background_color,
+            'background_color_alt': self.background_color_alt,
             'background_image': self.background_image.data_url if self.background_image else '',
+            'title_text_color': templates_values['title_text_color'] if 'title_text_color' in templates_values else '#000000',
             'text_color': templates_values['text_color'] if 'text_color' in templates_values else '#000000',
             'font_family': self.font_family,
             'header_alignment': self.header_alignment,
@@ -168,12 +173,7 @@ class Slide(ModelObject):
         fields = d.get('template').get('fields')
         f = {}
         for field in fields:
-            if field.get('name') not in ['text_color']:
-                n = field.get('name').split('_')
-                n.pop(0)
-                name = '_'.join(n)
-            else:
-                name = field.get('name')
+            name = field.get('name')
             if name.endswith('image'):
                 if isinstance(field.get('content'), dict):
                     f[name] = Image(**field.get('content'))
@@ -201,6 +201,7 @@ class Slide(ModelObject):
             transition=self.transition.to_response(),
             background_image=self.background_image,
             background_color=self.background_color,
+            background_color_alt=self.background_color_alt,
             font_family=self.font_family,
             header_alignment=self.header_alignment,
             position=self.position

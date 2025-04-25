@@ -44,13 +44,14 @@ class Video(SlideTemplate):
         self.name = "Video"
         self.description = "A video slide"
         self.fields = [
-            TemplateField(TemplateFieldType.TEXT, name=f"v_title", content=self.title),
-            TemplateField(TemplateFieldType.TEXT, name=f"v_subtitle", content=self.subtitle),
+            TemplateField(TemplateFieldType.TEXT, name=f"title", content=self.title),
+            TemplateField(TemplateFieldType.TEXT, name=f"subtitle", content=self.subtitle),
+            TemplateField(TemplateFieldType.COLOR, name=f"title_text_color", content=self.title_text_color),
             TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
-            TemplateField(TemplateFieldType.VIDEO, name=f"v_video", content=self.video),
-            TemplateField(TemplateFieldType.BOOL, name=f"v_controls", content=self.controls),
-            TemplateField(TemplateFieldType.BOOL, name=f"v_loop", content=self.loop),
-            TemplateField(TemplateFieldType.BOOL, name=f"v_autoplay", content=self.autoplay),
+            TemplateField(TemplateFieldType.VIDEO, name=f"video", content=self.video),
+            TemplateField(TemplateFieldType.BOOL, name=f"controls", content=self.controls),
+            TemplateField(TemplateFieldType.BOOL, name=f"loop", content=self.loop),
+            TemplateField(TemplateFieldType.BOOL, name=f"autoplay", content=self.autoplay),
         ]
 
     @property

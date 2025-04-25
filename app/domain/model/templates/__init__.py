@@ -131,6 +131,7 @@ class SlideTemplate(ModelObject):
         default_factory=lambda: TemplateId(str(uuid4())))
     name: str = ""
     description: str = ""
+    title_text_color: str = "#000000"
     text_color: str = "#000000"
     fields: list[TemplateField] = field(default_factory=list)
 

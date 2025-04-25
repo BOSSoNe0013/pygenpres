@@ -321,6 +321,7 @@ function renderSlideForm(data) {
             html: { span: -1, label: 'Header alignment'}
         },
         { field: 'background_color', type: 'color', html: { span: -1, label: 'Background color' } },
+        { field: 'background_color_alt', type: 'color', html: { span: -1, label: 'Alternate background color' } },
         { field: 'background_image', type: 'file', options: { max: 1, maxItemWidth: 160 }, html: { span: -1, label: 'Background image', style: 'height: 86px;' } },
         { field: 'transition', type: 'list', options: { url: '/tr',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Transition', groupCollapsible: true } },
         { field: 'duration', type: 'float', options: { min: 0, max: 2, step: 0.1, suffix: 's', keyboard: false }, html: { span: -1, label: 'Duration' } },
@@ -334,6 +335,7 @@ function renderSlideForm(data) {
         font_family: data.font_family,
         header_alignment: data.header_alignment,
         background_color: data.background_color.replace('#', '').toUpperCase(),
+        background_color_alt: data.background_color_alt.replace('#', '').toUpperCase(),
         background_image: data.background_image,
         transition: { id: data.transition.name.toLowerCase().replaceAll(' ', '_'), text: data.transition.name },
         duration: data.transition.duration,
@@ -370,7 +372,7 @@ function renderSlideForm(data) {
             field: field.name,
             type: type,
             options: options,
-            html: { span: -1, label: field.name.split('_').slice(1).join(' '), style: style }
+            html: { span: -1, label: field.name.split('_').join(' '), style: style }
         });
         w2ui.slide_form.record[field.name] = value;
     });
