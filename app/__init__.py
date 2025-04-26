@@ -200,8 +200,7 @@ async def add_slide(id: str, position: Union[int, None] = None):
 
     if result:
         return presentation.to_response()
-    else:
-        return JSONResponse(status_code=400, content={'message': 'Could not add slide'})
+    return JSONResponse(status_code=400, content={'message': 'Could not add slide'})
 
 @app.delete(
     "/s/{id}/{sid}.json",
@@ -224,8 +223,7 @@ async def remove_slide(id: str, sid: str):
 
     if result:
         return presentation.to_response()
-    else:
-        return JSONResponse(status_code=400, content={'message': 'Could not delete slide'})
+    return JSONResponse(status_code=400, content={'message': 'Could not delete slide'})
 
 @app.get("/edit/{id}", response_class=HTMLResponse, include_in_schema=False)
 async def edit(id: Union[str, None] = None):
@@ -247,8 +245,7 @@ async def save_presentation(changes: dict):
         result = await store_presentation(presentation, presentations_dir=presentations_dir)
         if result:
             return presentation.to_response()
-        else:
-            return JSONResponse(status_code=400, content={'message': 'Could not save presentation'})
+        return JSONResponse(status_code=400, content={'message': 'Could not save presentation'})
     except Exception as e:
         print(e)
         return {'error': f'{e}'}
