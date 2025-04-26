@@ -114,6 +114,8 @@ button.w2ui-btn:hover {
 }
 .w2ui-sidebar .w2ui-sidebar-body .w2ui-node-data .w2ui-node-image>span,
 .w2ui-sidebar .w2ui-sidebar-body .w2ui-node .w2ui-node-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: var(--fg-color);
 }
 .w2ui-sidebar .w2ui-sidebar-body .w2ui-node {

@@ -1,6 +1,12 @@
+.gradient.video,
+.gradient.iframe,
+.gradient.three_text_columns,
 .gradient.simple_title {
     background:linear-gradient(0.25turn, var(--slide-bg-color) 0%, hsl(from var(--slide-bg-color-alt) h s 10%) 100%);
 }
+.gradient.video .bg-2,
+.gradient.iframe .bg-2,
+.gradient.three_text_columns .bg-2,
 .gradient.simple_title .bg-2 {
     background:linear-gradient(
         0.375turn,
@@ -10,6 +16,12 @@
 }
 .gradient.simple_title .bg-2::after,
 .gradient.simple_title .bg-2::before,
+.gradient.three_text_columns .bg-2::after,
+.gradient.three_text_columns .bg-2::before,
+.gradient.video .bg-2::after,
+.gradient.video .bg-2::before,
+.gradient.iframe .bg-2::after,
+.gradient.iframe .bg-2::before,
 .gradient.text_image .content::before,
 .gradient.image_text .content::after {
     content: var(--slide-accent-color-str);
@@ -37,6 +49,9 @@
     font-weight: 900;
     line-height: 1;
     margin: 0;
+}
+.gradient.iframe h1.title {
+    margin-bottom: 0.3rem;
 }
 .gradient.simple_title h1.title {
     font-size: clamp(6rem, calc(2.8rem + 1.5vh), 8rem);
@@ -102,6 +117,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    height: 100svh;
 }
 .gradient.text_image .content > div > img {
     right: 0;
