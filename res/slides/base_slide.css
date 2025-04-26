@@ -1,9 +1,14 @@
+img[src=""] {
+    display: none;
+}
 #slide_$slide_position {
     --slide-bg-color: $background_color;
     --slide-bg-color-alt: $background_color_alt;
     --slide-bg-image: url($background_image);
     --slide-text-color: $text_color;
     --slide-title-text-color: $title_text_color;
+    --slide-accent-color: $accent_color;
+    --slide-accent-color-str: '$accent_color';
     --header-alignment: $header_alignment;
     font-family: '$font_family', sans-serif;
     background-color: var(--slide-bg-color);

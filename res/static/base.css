@@ -116,10 +116,15 @@ button.w2ui-btn:hover {
 .w2ui-sidebar .w2ui-sidebar-body .w2ui-node .w2ui-node-text {
     color: var(--fg-color);
 }
+.w2ui-sidebar .w2ui-sidebar-body .w2ui-node {
+    border: 2px solid transparent;
+    margin: 0 3px 2px 3px;
+}
 .w2ui-sidebar .w2ui-sidebar-body .w2ui-node:hover,
 .w2ui-sidebar .w2ui-sidebar-body .w2ui-selected,
 .w2ui-sidebar .w2ui-sidebar-body .w2ui-selected:hover {
     background-color: var(--accent-color);
+    border: 2px solid transparent;
 }
 .w2ui-sidebar>div {
     max-width: 140px;
@@ -131,6 +136,7 @@ button.w2ui-btn:hover {
 .w2ui-field > label {
     float: none !important;
     color: var(--fg-color);
+    text-transform: capitalize;
 }
 .w2ui-group-title{
     color: var(--fg-color);

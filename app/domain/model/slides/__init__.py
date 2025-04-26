@@ -51,6 +51,7 @@ class SlideResponse(BaseModel):
     background_image: Optional[Image] = None
     background_color: str = "#ffffff"
     background_color_alt: str = "#000000"
+    accent_color: str = "#ff8f00"
     font_family: str = "Roboto"
     header_alignment: str = "center"
     position: int = 0
@@ -74,6 +75,7 @@ class Slide(ModelObject):
     background_image: Optional[Image] = None
     background_color: str = "#ffffff"
     background_color_alt: str = "#000000"
+    accent_color: str = "#ff8f00"
     font_family: str = "Roboto"
     header_alignment: str = "center"
     theme: str = ""
@@ -103,7 +105,8 @@ class Slide(ModelObject):
         values = {
             field.name: field.get_html() for field in self.template.fields
         }
-        values['title'] = self.title
+        if not values.get('title'):
+            values['title'] = self.title
         class_list = [self.template.name.lower().replace(' ', '_')]
         if self.theme:
             class_list.append(self.theme)
@@ -133,6 +136,7 @@ class Slide(ModelObject):
         }
         templates_values['background_color'] = self.background_color
         templates_values['background_color_alt'] = self.background_color_alt
+        templates_values['accent_color'] = self.accent_color
         templates_values['header_alignment'] = self.header_alignment
         templates_values['slide_position'] = self.position
         values = {
@@ -141,6 +145,7 @@ class Slide(ModelObject):
             'background_image': self.background_image.data_url if self.background_image else '',
             'title_text_color': templates_values['title_text_color'] if 'title_text_color' in templates_values else '#000000',
             'text_color': templates_values['text_color'] if 'text_color' in templates_values else '#000000',
+            'accent_color': self.accent_color,
             'font_family': self.font_family,
             'header_alignment': self.header_alignment,
             'slide_position': self.position,
@@ -202,6 +207,7 @@ class Slide(ModelObject):
             background_image=self.background_image,
             background_color=self.background_color,
             background_color_alt=self.background_color_alt,
+            accent_color=self.accent_color,
             font_family=self.font_family,
             header_alignment=self.header_alignment,
             position=self.position

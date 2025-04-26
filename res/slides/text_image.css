@@ -28,6 +28,7 @@ div.text-image-$id {
     align-items: center;
 }
 div.text-image-$id > div {
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;

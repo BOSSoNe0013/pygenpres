@@ -101,6 +101,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 page = 0;
             }
             if (e.target.href.endsWith("#last")) {
+                if (page < total_pages - 2) {
+                    const s = total_pages - 1 - page;
+                    const ids = [...Array(s).keys()].map(i => i + page);
+                    const slides = ids.map(id => document.querySelector(`#slide_${id}`));
+                    slides.forEach(slide => {
+                        slide.style.animationPlayState = 'running';
+                        document.querySelectorAll(`#${slide.id} *`).forEach(el => {
+                            el.style.animationPlayState = 'running';
+                        });
+                    });
+                }
                 page = total_pages - 1;
             }
             showSlide();

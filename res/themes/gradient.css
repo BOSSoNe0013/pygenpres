@@ -1,0 +1,113 @@
+.gradient.simple_title {
+    background:linear-gradient(0.25turn, var(--slide-bg-color) 0%, hsl(from var(--slide-bg-color-alt) h s 10%) 100%);
+}
+.gradient.simple_title .bg-2 {
+    background:linear-gradient(
+        0.375turn,
+        hsl(from var(--slide-bg-color-alt) h s 50% / 0.025) 0 50%,
+        color-mix(in srgb, var(--slide-bg-color-alt) 30%, var(--slide-bg-color)) 50% 100%
+    );
+}
+.gradient.simple_title .bg-2::after,
+.gradient.simple_title .bg-2::before,
+.gradient.text_image .content::before,
+.gradient.image_text .content::after {
+    content: var(--slide-accent-color-str);
+    color: var(--slide-accent-color);
+    position: absolute;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    z-index: +1;
+}
+.gradient .content::after,
+.gradient .bg-2::after {
+    top: 50px;
+    right: -16px;
+    rotate: 90deg;
+}
+.gradient .content::before,
+.gradient .bg-2::before {
+    bottom: 50px;
+    left: -16px;
+    rotate: -90deg;
+}
+.gradient h1.title {
+    text-transform: uppercase;
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+}
+.gradient.simple_title h1.title {
+    font-size: clamp(6rem, calc(2.8rem + 1.5vh), 8rem);
+}
+.gradient p.subtitle {
+    font-weight: 700;
+    text-shadow: 0 0 10px hsl(from var(--slide-text-color) h s 5%);
+}
+.gradient.image_text .content,
+.gradient.text_image .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    max-height: 100vh;
+}
+.gradient.image_text .content > div,
+.gradient.text_image .content > div {
+    top: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.gradient.text_image .content > div {
+    background: linear-gradient(0.3turn, var(--slide-bg-color) 0%, var(--slide-bg-color-alt) 66%, transparent 66%);
+}
+.gradient.image_text .content > div {
+    background: linear-gradient(0.7turn, var(--slide-bg-color) 0%, var(--slide-bg-color-alt) 66%, transparent 66%);
+}
+.gradient.image_text .content > header,
+.gradient.text_image .content > header {
+    position: absolute;
+    z-index: +1;
+    top: 20%;
+    max-width: 66%;
+}
+.gradient.text_image .content > header {
+    left: 4rem;
+}
+.gradient.image_text .content > header {
+    right: 4rem;
+}
+.gradient.image_text .content > div > div,
+.gradient.text_image .content > div > div {
+    position: absolute;
+    top: 33%;
+    max-height: 50%;
+    max-width: 50%;
+}
+.gradient.text_image .content > div > div {
+    left: 4rem;
+   justify-content:flex-start;
+}
+.gradient.image_text .content > div > div {
+    right: 4rem;
+   justify-content:flex-end;
+}
+.gradient.image_text .content > div > img,
+.gradient.text_image .content > div > img {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+.gradient.text_image .content > div > img {
+    right: 0;
+    left: 10%;
+}
+.gradient.image_text .content > div > img {
+    left: 0;
+    right: 10%;
+}

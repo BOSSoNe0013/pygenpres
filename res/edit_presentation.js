@@ -289,7 +289,7 @@ function renderSlideForm(data) {
     }
     w2ui.slide_form.fields = [
         { field: 'id', type: 'text', hidden: 'hidden' },
-        { field: 'title', type: 'text', html: { span: -1, label: 'Name' } },
+        { field: 'title', type: 'text', html: { span: -1, label: 'Name', group: 'Slide info', groupCollapsible: true } },
         { field: 'description', type: 'textarea', html: { span: -1, label: 'Description' } },
         {
             field: 'font_family',
@@ -306,7 +306,7 @@ function renderSlideForm(data) {
                     { id: 'Source Code Pro', text: 'Source Code Pro' },
                 ]
             },
-            html: { span: -1, label: 'Font family'}
+            html: { span: -1, label: 'Font family', group: 'General', groupCollapsible: true}
         },
         {
             field: 'header_alignment',
@@ -320,7 +320,8 @@ function renderSlideForm(data) {
             },
             html: { span: -1, label: 'Header alignment'}
         },
-        { field: 'background_color', type: 'color', html: { span: -1, label: 'Background color' } },
+        { field: 'accent_color', type: 'color', html: { span: -1, label: 'Accent color' } },
+        { field: 'background_color', type: 'color', html: { span: -1, label: 'Background color', group: 'Background', groupCollapsible: true } },
         { field: 'background_color_alt', type: 'color', html: { span: -1, label: 'Alternate background color' } },
         { field: 'background_image', type: 'file', options: { max: 1, maxItemWidth: 160 }, html: { span: -1, label: 'Background image', style: 'height: 86px;' } },
         { field: 'transition', type: 'list', options: { url: '/tr',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Transition', groupCollapsible: true } },
@@ -334,6 +335,7 @@ function renderSlideForm(data) {
         description: data.description,
         font_family: data.font_family,
         header_alignment: data.header_alignment,
+        accent_color: data.accent_color.replace('#', '').toUpperCase(),
         background_color: data.background_color.replace('#', '').toUpperCase(),
         background_color_alt: data.background_color_alt.replace('#', '').toUpperCase(),
         background_image: data.background_image,
@@ -369,17 +371,20 @@ function renderSlideForm(data) {
             type = 'toggle';
         }
         w2ui.slide_form.fields.push({
-            field: field.name,
+            field: 't_' + field.name,
             type: type,
             options: options,
             html: { span: -1, label: field.name.split('_').join(' '), style: style }
         });
-        w2ui.slide_form.record[field.name] = value;
+        w2ui.slide_form.record['t_' + field.name] = value;
     });
     w2ui.slide_form.formHTML = w2ui.slide_form.generateHTML();
     w2ui.slide_form.render('#layout_right_box_panel_main .w2ui-panel-content');
+    w2ui.slide_form.toggleGroup('Slide info', false);
+    w2ui.slide_form.toggleGroup('General', false);
+    w2ui.slide_form.toggleGroup('Background', false);
     w2ui.slide_form.toggleGroup('Transition', false);
-    w2ui.slide_form.toggleGroup('Template', false);
+    w2ui.slide_form.toggleGroup('Template', true);
 };
 function loadSlide(slideId) {
     console.log('Load slide', slideId);

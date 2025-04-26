@@ -76,6 +76,8 @@ async def save_presentation_changes(changes: dict, presentations_dir: str) -> Pr
                     slide.background_color = f"#{field_value}" if not field_value.startswith("#") else field_value
                 elif field_name == "background_color_alt":
                     slide.background_color_alt = f"#{field_value}" if not field_value.startswith("#") else field_value
+                elif field_name == "accent_color":
+                    slide.accent_color = f"#{field_value}" if not field_value.startswith("#") else field_value
                 elif field_name == "background_image":
                     slide.background_image = field_value
                 elif field_name == "transition":
@@ -86,7 +88,8 @@ async def save_presentation_changes(changes: dict, presentations_dir: str) -> Pr
                     slide.theme = field_value
                 elif field_name == "template":
                     slide.template = Templates(field_value["id"]).new_instance()
-                elif field_name in (f.name for f in slide.template.fields):
+                elif field_name in (f't_{f.name}' for f in slide.template.fields):
+                    field_name = '_'.join(field_name.split('_')[1:])
                     field_index = [f.name for f in slide.template.fields].index(field_name)
                     if field_name.endswith("image") and isinstance(field_value, dict):
                         slide.template.fields[field_index].content = Image(**field_value)
