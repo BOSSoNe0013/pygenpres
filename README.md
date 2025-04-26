@@ -10,11 +10,11 @@ PyGenPres is a Python application for generating presentations programmatically.
 ## Installation
 Clone the repository then cd into the project directory, create a python virtual environment and install requirements.
 ``` bash
-git clone {git_url}
+git clone https://github.com/BOSSoNe0013/pygenpres.git
 ```
 Create a virtual environment and install requirements (not needed if you want to run app with Docker).
 ``` bash
-cd {project_name}
+cd pygenpres
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
