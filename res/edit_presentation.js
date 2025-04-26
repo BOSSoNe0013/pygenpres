@@ -17,7 +17,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **/
 
-import {  w2ui, w2utils, w2layout, w2toolbar, w2sidebar, w2form, w2confirm, query } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js';
+import {
+    w2ui,
+    w2utils,
+    w2layout,
+    w2toolbar,
+    w2sidebar,
+    w2form,
+    w2confirm,
+    query
+} from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js';
 window.w2ui = w2ui;
 window.w2utils = w2utils;
 const presId = '$presentation_id';
@@ -27,8 +36,21 @@ let slides = [
     $slide_items
 ];
 let sbNodes = [];
+function storeConfig(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+};
+function getConfig(key) {
+    const storedValue = localStorage.getItem(key);
+    if (storedValue !== null) {
+        return JSON.parse(storedValue); // Convert the JSON string back into an object or array
+    }
+    return null; // Or return a default value, or throw an error, depending on your needs.
+};
+function delConfig(key) {
+    localStorage.removeItem(key);
+};
 function useSystemTheme() {
-    localStorage.removeItem('theme');
+    delConfig('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const theme = prefersDark ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
@@ -36,7 +58,7 @@ function useSystemTheme() {
 function loadTheme() {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const systemTheme = prefersDark ? 'dark' : 'light';
-    const theme = localStorage.getItem('theme') || systemTheme;
+    const theme = getConfig('theme') || systemTheme;
     document.documentElement.setAttribute('data-theme', theme);
 };
 loadTheme();
@@ -148,7 +170,7 @@ let toolbar = new w2toolbar({
             id: 'theme',
             icon(item) {return item.get(item.selected)?.icon},
             text(item) {return item.get(item.selected)?.text},
-            selected: localStorage.getItem('theme') || 'system',
+            selected: getConfig('theme') || 'system',
             items: [
                 { id: 'system', text: 'System', icon: 'fa fa-circle-half-stroke'},
                 { id: 'light', text: 'Light', icon: 'fa fa-sun'},
@@ -204,11 +226,11 @@ toolbar.on('click', event => {
         window.open(`/p/${presId}.html`, 'Print', 'width=1280, height=720').print();
     }
     else if (event.target === 'theme:light') {
-        localStorage.setItem('theme', 'light');
+        storeConfig('theme', 'light');
         document.documentElement.setAttribute('data-theme', 'light');
     }
     else if (event.target === 'theme:dark') {
-        localStorage.setItem('theme', 'dark');
+        storeConfig('theme', 'dark');
         document.documentElement.setAttribute('data-theme', 'dark');
     }
     else if (event.target === 'theme:system') {
@@ -260,7 +282,10 @@ let slideForm = new w2form({
                 size: entry.size
             };
         }
-        const value = field.endsWith('color') ? `#${event.detail.value.current}` : field.endsWith('image') ? image_data : field.endsWith('video') ? video_data : event.detail.value.current;
+        const value = field.endsWith('color') ?
+            `#${event.detail.value.current}` : field.endsWith('image') ?
+                image_data : field.endsWith('video') ?
+                    video_data : event.detail.value.current;
         const data = {
             id: presId,
             changes: [
@@ -282,15 +307,38 @@ let slideForm = new w2form({
         });
     },
 });
+w2ui.slide_form.on('*', event => {
+    console.info(event);
+});
 function renderSlideForm(data) {
     console.log('renderSlideForm', data);
     if (typeof data.detail === 'string') {
         return;
     }
     w2ui.slide_form.fields = [
-        { field: 'id', type: 'text', hidden: 'hidden' },
-        { field: 'title', type: 'text', html: { span: -1, label: 'Name', group: 'Slide info', groupCollapsible: true } },
-        { field: 'description', type: 'textarea', html: { span: -1, label: 'Description' } },
+        {
+            field: 'id',
+            type: 'text',
+            hidden: 'hidden'
+        },
+        {
+            field: 'title',
+            type: 'text',
+            html: {
+                span: -1,
+                label: 'Name',
+                group: 'Slide info',
+                groupCollapsible: true
+            }
+        },
+        {
+            field: 'description',
+            type: 'textarea',
+            html: {
+                span: -1,
+                label: 'Description'
+            }
+        },
         {
             field: 'font_family',
             type: 'list',
@@ -321,13 +369,91 @@ function renderSlideForm(data) {
             html: { span: -1, label: 'Header alignment'}
         },
         { field: 'accent_color', type: 'color', html: { span: -1, label: 'Accent color' } },
-        { field: 'background_color', type: 'color', html: { span: -1, label: 'Background color', group: 'Background', groupCollapsible: true } },
-        { field: 'background_color_alt', type: 'color', html: { span: -1, label: 'Alternate background color' } },
-        { field: 'background_image', type: 'file', options: { max: 1, maxItemWidth: 160 }, html: { span: -1, label: 'Background image', style: 'height: 86px;' } },
-        { field: 'transition', type: 'list', options: { url: '/tr',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Transition', groupCollapsible: true } },
-        { field: 'duration', type: 'float', options: { min: 0, max: 2, step: 0.1, suffix: 's', keyboard: false }, html: { span: -1, label: 'Duration' } },
-        { field: 'template', type: 'list', options: { url: '/t',  minLength: 0 }, html: { span: -1, label: 'Model', group: 'Template', groupCollapsible: true } },
-        { field: 'theme', type: 'combo', options: { url: '/th',  minLength: 0 }, html: { span: -1, label: 'Theme' } },
+        {
+            field: 'background_color',
+            type: 'color',
+            html: {
+                span: -1,
+                label: 'Background color',
+                group: 'Background',
+                groupCollapsible: true
+            }
+        },
+        {
+            field: 'background_color_alt',
+            type: 'color',
+            html: {
+                span: -1, label: 'Alternate background color'
+            }
+        },
+        {
+            field: 'background_image',
+            type: 'file',
+            options: {
+                max: 1,
+                maxItemWidth: 160
+            },
+            html: {
+                span: -1,
+                label: 'Background image',
+                style: 'height: 86px;'
+            }
+        },
+        {
+            field: 'transition',
+            type: 'list',
+            options: {
+                url: '/tr',
+                minLength: 0
+            },
+            html: {
+                span: -1,
+                label: 'Model',
+                group: 'Transition',
+                groupCollapsible: true
+            }
+        },
+        {
+            field: 'duration',
+            type: 'float',
+            options: {
+                min: 0,
+                max: 2,
+                step: 0.1,
+                suffix: 's',
+                keyboard: false
+            },
+            html: {
+                span: -1,
+                label: 'Duration'
+            }
+        },
+        {
+            field: 'template',
+            type: 'list',
+            options: {
+                url: '/t',
+                minLength: 0
+            },
+            html: {
+                span: -1,
+                label: 'Model',
+                group: 'Template',
+                groupCollapsible: true
+            }
+        },
+        {
+            field: 'theme',
+            type: 'combo',
+            options: {
+                url: '/th',
+                minLength: 0
+            },
+            html: {
+                span: -1,
+                label: 'Theme'
+            }
+        },
     ];
     w2ui.slide_form.record = {
         id: data.id,
