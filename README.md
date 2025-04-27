@@ -1,6 +1,8 @@
 # <img src="app_icon.png" width="32" height="32" alt="PyGenPres"> PyGenPres
 PyGenPres is a Python application for generating presentations programmatically.
 
+<img src="screenshot.png" width="400" alt="PyGenPres">
+
 ## Features
 *   Create slides with text, images, and videos.
 *   Customize slide layouts and themes.
