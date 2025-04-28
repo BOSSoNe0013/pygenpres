@@ -41,17 +41,12 @@ class Fadeout(Transition):
 0% {
     opacity: 1;
 }
-0.1% {
-    position: fixed;
-}
 99.9% {
-    position: fixed;
     opacity: 0;
     top: 0;
 }
 100% {
     opacity: 0;
-    position: absolute;
     top: -100%;
 }
 """

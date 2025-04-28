@@ -4,6 +4,10 @@
 .gradient.simple_title {
     background:linear-gradient(0.25turn, var(--slide-bg-color) 0%, hsl(from var(--slide-bg-color-alt) h s 10%) 100%);
 }
+.gradient.text_image,
+.gradient.image_text {
+    padding: 0;
+}
 .gradient.video .bg-2,
 .gradient.iframe .bg-2,
 .gradient.three_text_columns .bg-2,
@@ -62,25 +66,40 @@
 }
 .gradient.image_text .content,
 .gradient.text_image .content {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     max-height: 100vh;
+    width: 100%;
 }
 .gradient.image_text .content > div,
 .gradient.text_image .content > div {
+    isolation: isolate;
+    display: flex;
+    position: relative;
     top: 0;
-    position: absolute;
     bottom: 0;
     right: 0;
     left: 0;
 }
-.gradient.text_image .content > div {
+.gradient.image_text .content > div::after,
+.gradient.text_image .content > div::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.gradient.text_image .content > div::after {
     background: linear-gradient(0.3turn, var(--slide-bg-color) 0%, var(--slide-bg-color-alt) 66%, transparent 66%);
 }
-.gradient.image_text .content > div {
+.gradient.image_text .content > div::after {
     background: linear-gradient(0.7turn, var(--slide-bg-color) 0%, var(--slide-bg-color-alt) 66%, transparent 66%);
 }
 .gradient.image_text .content > header,
@@ -99,6 +118,7 @@
 .gradient.image_text .content > div > div,
 .gradient.text_image .content > div > div {
     position: absolute;
+    z-index: 2;
     top: 33%;
     max-height: 50%;
     max-width: 50%;
@@ -113,17 +133,16 @@
 }
 .gradient.image_text .content > div > img,
 .gradient.text_image .content > div > img {
-    z-index: -1;
-    position: absolute;
+    z-index: 0;
+    position: relative;
     top: 0;
     bottom: 0;
     height: 100svh;
+    width: auto !important;
 }
 .gradient.text_image .content > div > img {
-    right: 0;
-    left: 10%;
+    right: -25%;
 }
 .gradient.image_text .content > div > img {
-    left: 0;
-    right: 10%;
+    left: -25%;
 }

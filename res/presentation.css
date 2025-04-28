@@ -23,10 +23,7 @@
 
     }
     slide {
-        position: initial !important;
-    }
-    video {
-        display: none;
+        position: relative !important;
     }
 }
 * {

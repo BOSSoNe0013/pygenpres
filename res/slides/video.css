@@ -21,3 +21,9 @@ div.video-$id > video {
     width: 100%;
     max-height: 60vh;
 }
+@media print {
+    div.video-$id > video {
+        width: 40svw;
+        max-height: 40svh;
+    }
+}
