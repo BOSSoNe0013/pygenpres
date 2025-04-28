@@ -1,11 +1,12 @@
 h1.video-$id {
-    font-size: clamp(2rem, calc(1.8rem + 1.5vh), 3rem);
+    font-size: clamp(2rem, 5cqi, 5rem);
+    line-height: 1;
     margin-bottom: 0.2rem;
     color: var(--slide-title-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.video-$id {
-    font-size: clamp(1rem, calc(0.8rem + 1.5vh), 2rem);
+    font-size: clamp(1rem, 3cqi, 3rem);
     color: var(--slide-text-color);
     max-width: 800px;
     margin: 0 auto;

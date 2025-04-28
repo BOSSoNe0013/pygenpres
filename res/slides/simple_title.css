@@ -1,12 +1,13 @@
 h1.simple-title-$id {
-    font-size: clamp(3rem, calc(2.8rem + 1.5vh), 5rem);
+    font-size: clamp(3rem, 6cqi, 6rem);
+    line-height: 1;
     text-align: var(--header-alignment);
     margin-bottom: 1rem;
     color: var(--slide-title-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.simple-title-$id {
-    font-size: clamp(1.5rem, calc(1.3rem + 1.5vh), 2.5rem);
+    font-size: clamp(1.5rem, 3cqi, 2.5rem);
     color: var(--slide-text-color);
     text-align: var(--header-alignment);
     margin: 0 auto;

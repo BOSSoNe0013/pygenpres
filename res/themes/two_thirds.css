@@ -140,7 +140,7 @@
     margin: 0 0;
 }
 .two_thirds .title {
-    font-size: clamp(4rem, calc(3.8rem + 1.5svh), 6rem);
+    font-size: clamp(4rem, 8cqi, 6rem);
     line-height: 1;
 }
 .two_thirds .subtitle {

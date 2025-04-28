@@ -2,14 +2,14 @@
     --slide-image: url($image);
 }
 h1.image-text-$id {
-    font-size: clamp(2rem, calc(1.8rem + 1.5vh), 3rem);
+    font-size: clamp(2rem, 4cqi, 5rem);
     text-align: var(--header-alignment);
     margin-bottom: 0.2rem;
     color: var(--slide-title-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.image-text-$id {
-    font-size: clamp(1rem, calc(0.8rem + 1.5vh), 2rem);
+    font-size: clamp(1rem, 3cqi, 3rem);
     color: var(--slide-text-color);
     text-align: var(--header-alignment);
     margin: 0;

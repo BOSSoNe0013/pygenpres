@@ -44,6 +44,7 @@
     --button-color: hsl(from var(--bg-color) h s 96%);
     --button-color-hover: hsl(from var(--bg-color) h s 92%);
     accent-color: var(--accent-color);
+    caret-color: var(--accent-color);
 }
 :root[data-theme="light"] {
     color-scheme: light;

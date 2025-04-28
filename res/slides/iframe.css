@@ -1,5 +1,5 @@
 h1.iframe-$id {
-    font-size: clamp(2rem, calc(1.8rem + 1.5vh), 3rem);
+    font-size: clamp(2rem, 3cqi, 3rem);
     margin-bottom: 0.2rem;
     color: var(--slide-title-text-color);
     text-shadow: 0 0 10px #000;
@@ -11,7 +11,7 @@ div.iframe-$id {
     background-color: #000000;
 }
 div.iframe-$id > iframe {
-    width: 75vw;
+    width: 100%;
     height: 75vh;
     border: none;
 }

@@ -64,7 +64,7 @@
     margin-bottom: 0.3rem;
 }
 .gradient.simple_title h1.title {
-    font-size: clamp(6rem, calc(2.8rem + 1.5vh), 8rem);
+    font-size: clamp(6rem, 8cqi, 8rem);
 }
 .gradient p.subtitle {
     font-weight: 700;

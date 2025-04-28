@@ -85,9 +85,13 @@ footer {
     right: 0;
 }
 #presentation-container {
+    container-type: inline-size;
+    container-name: main;
     position: absolute;
 }
 slide {
+    container-type: inline-size;
+    container-name: slide;
     height: 100svh;
     display: flex;
     align-items: center;
@@ -192,6 +196,8 @@ slide td {
     animation-delay: 0.4s !important;
 }
 .content {
+    container-type: inline-size;
+    container-name: slide-content;
     max-height: 95svh;
     position: relative;
     z-index: 3;
