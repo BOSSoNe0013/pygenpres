@@ -84,6 +84,9 @@ footer {
     left: 0;
     right: 0;
 }
+#presentation-container {
+    position: absolute;
+}
 slide {
     height: 100svh;
     display: flex;

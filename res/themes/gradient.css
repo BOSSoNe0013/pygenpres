@@ -18,6 +18,12 @@
         color-mix(in srgb, var(--slide-bg-color-alt) 30%, var(--slide-bg-color)) 50% 100%
     );
 }
+.gradient.text_image .bg-1,
+.gradient.image_text .bg-1,
+.gradient.text_image .bg-2,
+.gradient.image_text .bg-2 {
+    z-index: 4;
+}
 .gradient.simple_title .bg-2::after,
 .gradient.simple_title .bg-2::before,
 .gradient.three_text_columns .bg-2::after,
@@ -26,8 +32,8 @@
 .gradient.video .bg-2::before,
 .gradient.iframe .bg-2::after,
 .gradient.iframe .bg-2::before,
-.gradient.text_image .content::before,
-.gradient.image_text .content::after {
+.gradient.text_image .bg-2::before,
+.gradient.image_text .bg-2::after {
     content: var(--slide-accent-color-str);
     color: var(--slide-accent-color);
     position: absolute;
@@ -36,13 +42,13 @@
     text-transform: uppercase;
     z-index: +1;
 }
-.gradient .content::after,
+.gradient .bg-2::after,
 .gradient .bg-2::after {
     top: 50px;
     right: -16px;
     rotate: 90deg;
 }
-.gradient .content::before,
+.gradient .bg-2::before,
 .gradient .bg-2::before {
     bottom: 50px;
     left: -16px;

@@ -3,6 +3,7 @@ img[src=""] {
 }
 .content {
     min-width: calc(80% - 20svh);
+    overflow: hidden;
 }
 #slide_$slide_position {
     --slide-bg-color: $background_color;
