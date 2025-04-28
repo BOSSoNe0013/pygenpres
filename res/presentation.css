@@ -25,6 +25,9 @@
     slide {
         position: relative !important;
     }
+    #pages-counter {
+        display: none;
+    }
 }
 * {
     margin: 0;

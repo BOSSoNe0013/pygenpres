@@ -223,7 +223,8 @@ toolbar.on('click', event => {
             });
     }
     else if (event.target === 'menu:dl-pdf') {
-        window.open(`/p/${presId}.html`, 'Print', 'width=1280, height=720').print();
+        let popup = window.open(`/p/${presId}.html`, 'Print', 'width=1280, height=720');
+        setTimeout(() => { popup.print();}, 10000);
     }
     else if (event.target === 'theme:light') {
         storeConfig('theme', 'light');
