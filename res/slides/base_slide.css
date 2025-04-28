@@ -1,5 +1,8 @@
 img[src=""] {
-    display: none;
+    visibility: hidden;
+}
+.content {
+    min-width: calc(80% - 20svh);
 }
 #slide_$slide_position {
     --slide-bg-color: $background_color;
