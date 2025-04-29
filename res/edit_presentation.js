@@ -39,12 +39,16 @@ let sbNodes = [];
 function storeConfig(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 };
-function getConfig(key) {
+function getConfig(key, default_value = null) {
     const storedValue = localStorage.getItem(key);
     if (storedValue !== null) {
-        return JSON.parse(storedValue); // Convert the JSON string back into an object or array
+        try {
+            return JSON.parse(storedValue); // Convert the JSON string back into an object or array
+        } catch {
+            return default_value;
+        }
     }
-    return null; // Or return a default value, or throw an error, depending on your needs.
+    return default_value;
 };
 function delConfig(key) {
     localStorage.removeItem(key);
@@ -63,7 +67,6 @@ function loadTheme() {
 };
 loadTheme();
 function genSbNodes() {
-    console.log('genSbNodes', slides);
     if (slides.length > 0) {
         sbNodes = [...slides];
     }
@@ -110,7 +113,6 @@ right_bottom_toolbar.on('click', event => {
 w2confirm('Are you sure?')
     .yes(() => {
         w2utils.lock('body', 'Removing slide...', true);
-        console.log(event.detail.item.slide_id);
         const slideId = event.detail.item.slide_id;
         const url = `/s/${presId}/${slideId}.json`;
         const options = {
@@ -190,7 +192,7 @@ function updatePresentation(data, callback) {
     fetch(url, options)
         .then(resp => resp.json())
         .then(json => {
-            console.log(json);
+            console.log('updatedPresentation', json);
             if (typeof callback === 'function') {
                 callback();
             }
@@ -307,9 +309,6 @@ let slideForm = new w2form({
             loadSlide(slideId);
         });
     },
-});
-w2ui.slide_form.on('*', event => {
-    console.info(event);
 });
 function renderSlideForm(data) {
     console.log('renderSlideForm', data);
@@ -507,11 +506,25 @@ function renderSlideForm(data) {
     });
     w2ui.slide_form.formHTML = w2ui.slide_form.generateHTML();
     w2ui.slide_form.render('#layout_right_box_panel_main .w2ui-panel-content');
-    w2ui.slide_form.toggleGroup('Slide info', false);
-    w2ui.slide_form.toggleGroup('General', false);
-    w2ui.slide_form.toggleGroup('Background', false);
-    w2ui.slide_form.toggleGroup('Transition', false);
-    w2ui.slide_form.toggleGroup('Template', true);
+
+    let expanded_groups = getConfig('expanded-groups', ['Template']);
+    w2ui.slide_form.toggleGroup('Slide info', expanded_groups.includes('Slide info'));
+    w2ui.slide_form.toggleGroup('General', expanded_groups.includes('General'));
+    w2ui.slide_form.toggleGroup('Background', expanded_groups.includes('Background'));
+    w2ui.slide_form.toggleGroup('Transition', expanded_groups.includes('Transition'));
+    w2ui.slide_form.toggleGroup('Template', expanded_groups.includes('Template'));
+
+    document.querySelectorAll('.w2ui-group-title').forEach(elem => {
+        elem.addEventListener('click', event => {
+            if (elem.firstChild.classList.contains('w2ui-icon-collapse')){
+                expanded_groups.push(elem.textContent);
+            }
+            else {
+                expanded_groups.pop(elem.textContent);
+            }
+            storeConfig('expanded-groups', expanded_groups);
+        })
+    });
 };
 function loadSlide(slideId) {
     console.log('Load slide', slideId);
@@ -541,7 +554,6 @@ function loadSlide(slideId) {
             w2ui.left.refresh();
         });
 };
-console.log(sbNodes);
 let leftSidebar = new w2sidebar({
     name: 'left',
     reorder: true,
