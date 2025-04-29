@@ -37,21 +37,30 @@ let slides = [
 ];
 let sbNodes = [];
 function storeConfig(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch {
+        console.error('Could not store config:', key);
+    }
 };
 function getConfig(key, default_value = null) {
-    const storedValue = localStorage.getItem(key);
-    if (storedValue !== null) {
-        try {
-            return JSON.parse(storedValue); // Convert the JSON string back into an object or array
-        } catch {
-            return default_value;
+    try {
+        const storedValue = localStorage.getItem(key);
+        if (storedValue !== null) {
+                return JSON.parse(storedValue); // Convert the JSON string back into an object or array
         }
+        return default_value;
+    } catch {
+        console.error('Could not get config:', key);
+        return default_value;
     }
-    return default_value;
 };
 function delConfig(key) {
-    localStorage.removeItem(key);
+    try {
+        localStorage.removeItem(key);
+    } catch {
+        console.error('Could not delete config:', key);
+    }
 };
 function useSystemTheme() {
     delConfig('theme');
