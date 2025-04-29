@@ -1,7 +1,11 @@
 # <img src="app_icon.png" width="32" height="32" alt="PyGenPres"> PyGenPres
-PyGenPres is a Python application for creating HTML presentations with templates and stylable elements.
+PyGenPres is a self-hosted web application that allows you to create, edit, and view HTML presentations through your 
+browser, using built-in templates and styling controls.
 
-<img src="screenshot.png" width="400" alt="PyGenPres">
+<img src="screenshot.png" width="640" alt="PyGenPres">
+
+
+!["PyGenPres presentation example"](pygenpres.webp)
 
 ## Features
 *   Create slides with text, images, and videos.
