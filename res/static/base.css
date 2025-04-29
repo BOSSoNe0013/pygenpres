@@ -266,6 +266,17 @@ input[type=checkbox].w2ui-toggle:checked+div {
     background-color: var(--bg-color);
     border-color: var(--border-color);
 }
+.w2ui-popup,
+.w2ui-popup .w2ui-popup-title,
+.w2ui-popup .w2ui-popup-body,
+.w2ui-popup .w2ui-popup-buttons {
+    color: var(--fg-color);
+    background-color: var(--bg-color);
+    border-color: var(--border-color);
+}
+w2ui-popup {
+    box-shadow: 0 0 25px var(--shadow-color);
+}
 h1, h2, h3, h4, h5, h6 {
     margin: 0.2rem 0;
 }
