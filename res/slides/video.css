@@ -8,7 +8,6 @@ h1.video-$id {
 p.video-$id {
     font-size: clamp(1rem, 3cqi, 3rem);
     color: var(--slide-text-color);
-    max-width: 800px;
     margin: 0 auto;
     margin-bottom: 3rem;
 }

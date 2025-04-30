@@ -1,0 +1,68 @@
+.off_the_grid .bg-1 {
+    background-color: var(--slide-bg-color);
+}
+.off_the_grid .bg-2 {
+    background: linear-gradient(0deg, var(--slide-bg-color-alt) 1px, #0000 1px 45px) 50% 50% / 45px 45px, linear-gradient(90deg, var(--slide-bg-color-alt) 1px, #0000 1px 45px) 50% 50% / 45px 45px;
+    mask: linear-gradient(#fff, #0000 66%);
+}
+.off_the_grid .content {
+    min-height: 50svh;
+    overflow: visible;
+}
+.off_the_grid .content > header {
+    margin: auto auto 2rem auto;
+}
+.off_the_grid .title,
+.off_the_grid .subtitle {
+    text-shadow: 0 0 1px var(--slide-bg-color-alt);
+    margin: 0 0;
+    text-transform: uppercase;
+}
+.off_the_grid .title {
+    width: fit-content;
+    font-size: clamp(4rem, 8cqi, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    border-bottom: 2px solid var(--slide-accent-color);
+}
+.off_the_grid header.center .title {
+    margin: 0 auto;
+}
+.off_the_grid .content::after {
+    content: '';
+    background: linear-gradient(90deg, transparent 20%, var(--slide-accent-color) 40% 60%, transparent 80%);
+    display: block;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 3.8rem;
+}
+.off_the_grid .subtitle {
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+.off_the_grid .content > div {
+    justify-content: end;
+    align-items: start;
+}
+.off_the_grid .content > div > div {
+    background-color: var(--slide-bg-color);
+    border: 1px solid var(--slide-bg-color-alt);
+    outline: 1px dashed var(--slide-bg-color-alt);
+    outline-offset: -0.5rem;
+    padding: 1.5rem;
+    box-shadow: 2px 2px 4px hsl(from var(--slide-bg-color) h s 15%);
+    min-height: calc(100% - 1rem);
+}
+.off_the_grid .content > div > img {
+    display: block;
+    background-color: var(--slide-bg-color);
+    border: 1px solid var(--slide-bg-color-alt);
+    outline: 1px dashed var(--slide-bg-color-alt);
+    outline-offset: -0.5rem;
+    padding: 1.5rem;
+    width: auto;
+    box-shadow: 2px 2px 4px hsl(from var(--slide-bg-color) h s 15%);
+}

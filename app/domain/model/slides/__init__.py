@@ -107,6 +107,7 @@ class Slide(ModelObject):
         }
         if not values.get('title'):
             values['title'] = self.title
+        values['header_alignment'] = self.header_alignment
         class_list = [self.template.name.lower().replace(' ', '_')]
         if self.theme:
             class_list.append(self.theme)
@@ -118,6 +119,7 @@ class Slide(ModelObject):
         return Template(self.__html_template__).safe_substitute({
             'slide_position': self.position,
             'slide_content': content,
+            'header_alignment': self.header_alignment,
             'class_list': ' '.join(class_list)
         })
 

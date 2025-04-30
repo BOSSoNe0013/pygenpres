@@ -107,7 +107,7 @@ slide td {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.2 !important;
+    opacity: 0.2;
 }
 .bg-2 {
     transform: translateZ(-10px);

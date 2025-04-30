@@ -5,6 +5,9 @@ img[src=""] {
     min-width: calc(80% - 20svh);
     overflow: hidden;
 }
+.content > header {
+    max-width: 66svw;
+}
 #slide_$slide_position {
     --slide-bg-color: $background_color;
     --slide-bg-color-alt: $background_color_alt;
@@ -24,9 +27,6 @@ img[src=""] {
 #slide_$slide_position .bg-1 {
     --i: $slide_position;
     background-image: var(--slide-bg-image);
-}
-#slide_$slide_position .content img {
-    width: 100%;
 }
 #slide_$slide_position thead {
     background-color: var(--slide-bg-color);
