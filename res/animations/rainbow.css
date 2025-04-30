@@ -25,6 +25,14 @@
 .rainbow-text {
     color: var(--rainbow-color) !important;
 }
+.rainbow-text-gradient {
+    background: linear-gradient(0.25turn, var(--rainbow-color),
+        hsl(from var(--rainbow-color) calc(var(--rainbow-hue) + 40deg) s l),
+        hsl(from var(--rainbow-color) calc(var(--rainbow-hue) + 80deg) s l)) !important;
+    text-shadow: none !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
 .rainbow-text-shadow {
     text-shadow: 0 0 10px var(--rainbow-color) !important;
 }
