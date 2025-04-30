@@ -26,7 +26,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse, JSONResponse
 
-from .domain.model import TemplateRecords, TransitionRecords, PresentationRecords, ErrorResponse, ThemeRecords
+from .domain.model import TemplateRecords, TransitionRecords, PresentationRecords, ErrorResponse, ThemeRecords, \
+    FXRecords
 from .domain.api.edit_presentation import edit_presentation
 from .domain.api.presentation import remove_slide_from_presentation, get_presentation, add_slide_to_presentation
 from .domain.api.presentations import get_presentations
@@ -34,6 +35,7 @@ from .domain.api.root import get_root
 from .domain.api.store_presentation import store_presentation, save_presentation_changes
 from .domain.api.templates import get_templates
 from .domain.api.transitions import get_transitions
+from .domain.model.fx import FXResponse
 from .domain.model.presentation import PresentationResponse
 from .domain.model.slides import SlideResponse
 from .features.themes import Themes
@@ -91,6 +93,13 @@ async def themes():
     Returns a list of available themes.
     """
     return await Themes.list_themes()
+
+@app.get("/fx", response_model=FXRecords)
+async def fx():
+    """
+    Returns a list of available effects.
+    """
+    return await FXResponse.list_fx()
 
 @app.get("/p/{id}.html", response_class=HTMLResponse, include_in_schema=False)
 async def run(id: str):

@@ -27,6 +27,7 @@ from uuid import uuid4
 
 from pydantic import BaseModel
 
+from app.domain.model.fx import FXResponse
 from app.domain.model.templates.templates import Templates
 from app.domain.model import ModelObject
 from app.domain.model.file import Image, Video
@@ -42,6 +43,9 @@ class SlideId(str):
 
 
 class SlideResponse(BaseModel):
+    """
+    Represents the response model for a slide.
+    """
     id: str
     title: str
     template: SlideTemplateResponse
@@ -102,9 +106,23 @@ class Slide(ModelObject):
         return html_template
 
     def get_html(self, hidden: bool = True) -> str:
+        """
+        Generates the HTML representation of the slide.
+
+        Args:
+            hidden (bool): Whether the slide should be initially hidden (default: True).
+
+        Returns:
+            str: The HTML string representing the slide.
+        """
         values = {
             field.name: field.get_html() for field in self.template.fields
         }
+        for field in self.template.fields:
+            if field.extra_class:
+                values[f'{field.name}_extra_class'] = f' {FXResponse.get_fx(field.extra_class)}'
+            else:
+                values[f'{field.name}_extra_class'] = ''
         if not values.get('title'):
             values['title'] = self.title
         values['header_alignment'] = self.header_alignment
@@ -194,11 +212,22 @@ class Slide(ModelObject):
             else:
                 f[name] = field.get('content')
         t = Templates(t_name).new_instance(**f)
+        for field in fields:
+            extra_class = field.get('extra_class')
+            if extra_class:
+                name = field.get('name')
+                t.fields[t.fields.index(next(f for f in t.fields if f.name == name))].extra_class = extra_class
         p = super().from_dict(d, infer_missing=infer_missing)
         p.template = t
         return p
 
     def to_response(self) -> SlideResponse:
+        """
+        Converts the Slide object to a SlideResponse object.
+
+        Returns:
+            SlideResponse: The SlideResponse object representing the slide.
+        """
         return SlideResponse(
             id=self.id,
             title=self.title,

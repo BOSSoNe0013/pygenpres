@@ -97,6 +97,15 @@ class ThemeRecords(Records):
     type: str = 'themes'
 
 
+class FXRecords(Records):
+    """
+    Represents a collection of effects records.
+
+    This class inherits from `Records` and sets the `type` attribute to 'fx'.
+    """
+    type: str = 'fx'
+
+
 class ModelObject(DataClassJsonMixin):
     """
     Base class for model objects, providing utility methods for attribute access and manipulation.
