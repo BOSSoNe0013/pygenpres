@@ -56,6 +56,7 @@ class TemplateFieldResponse(BaseModel):
     type: TemplateFieldType
     name: str
     content: Optional[Union[str, Image, Video, bool]] = None
+    extra_class: Optional[str] = None
 
 
 @dataclass
@@ -63,6 +64,7 @@ class TemplateField(ModelObject):
     type: TemplateFieldType
     name: str
     content: Optional[Union[str, Image, Video, bool]] = None
+    extra_class: Optional[str] = None
     """
     Represents a field within a slide template.
 
@@ -70,6 +72,7 @@ class TemplateField(ModelObject):
         type (TemplateFieldType): The type of the field (e.g., text, markdown, image).
         name (str): The name of the field.
         content (Optional[Union[str, Image, Video, bool]]): The content of the field.
+        extra_class (Optional[str]): Additional CSS class for styling.
     """
 
     def get_html(self) -> str:
@@ -100,7 +103,8 @@ class TemplateField(ModelObject):
         return TemplateFieldResponse(
             type=self.type,
             name=self.name,
-            content=self.content
+            content=self.content,
+            extra_class=self.extra_class
         )
 
 
