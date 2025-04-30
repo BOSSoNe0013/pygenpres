@@ -106,6 +106,14 @@
 .two_thirds.image_text .bg-2 {
     background: linear-gradient(0.75turn,var(--slide-bg-color-alt) 0% var(--tt-gradient-position), color(from var(--slide-bg-color) srgb r g b / .75) var(--tt-gradient-position) 100%);
 }
+.two_thirds .bg-2::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 99;
+    background: linear-gradient(0deg, #ffffff22 1px, #0000 1px 45px) 50% 50% / 45px 45px, linear-gradient(90deg, #ffffff22 1px, #0000 1px 45px) 50% 50% / 45px 45px;
+    mask: radial-gradient(#0000 60%, #fff 100%);
+}
 .two_thirds .bg-2::after {
     content: '';
     display: block;

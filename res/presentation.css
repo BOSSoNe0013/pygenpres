@@ -88,6 +88,7 @@ footer {
     container-type: inline-size;
     container-name: main;
     position: absolute;
+    overflow: hidden;
 }
 slide {
     container-type: inline-size;
