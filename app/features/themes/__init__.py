@@ -23,8 +23,9 @@ class Themes:
         records = []
         files = list_files(cls.themes_path, ['.css'])
         for file in files:
-            file_name = file.split('/')[-1].split('.')[0]
-            records.append(Record(id=file_name, text=file_name))
+            file_id = file.split('/')[-1].split('.')[0]
+            file_name = ' '.join([word.capitalize() for word in file_id.split('_')])
+            records.append(Record(id=file_id, text=file_name))
         return ThemeRecords(status='success', total=len(files),records=records)
 
     @classmethod

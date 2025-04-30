@@ -74,6 +74,12 @@ function loadTheme() {
     const theme = getConfig('theme') || systemTheme;
     document.documentElement.setAttribute('data-theme', theme);
 };
+function capitalize(word) {
+    if (typeof word !== 'string' || word.length === 0) {
+        return word;
+    }
+    return word.charAt(0).toUpperCase() + word.slice(1);
+};
 loadTheme();
 function genSbNodes() {
     if (slides.length > 0) {
@@ -297,7 +303,8 @@ let slideForm = new w2form({
         const value = field.endsWith('color') ?
             `#${event.detail.value.current}` : field.endsWith('image') ?
                 image_data : field.endsWith('video') ?
-                    video_data : event.detail.value.current;
+                    video_data : field == 'theme' ?
+                        event.detail.value.current.toLowerCase().replaceAll(' ', '_') : event.detail.value.current;
         const data = {
             id: presId,
             changes: [
@@ -477,7 +484,7 @@ function renderSlideForm(data) {
         transition: { id: data.transition.name.toLowerCase().replaceAll(' ', '_'), text: data.transition.name },
         duration: data.transition.duration,
         template: { id: data.template.name.toLowerCase().replaceAll(' ', '_'), text: data.template.name },
-        theme: data.theme,
+        theme: { id: data.theme, text: data.theme.split('_').map(word => capitalize(word)).join(' ') },
     };
     data.template.fields.forEach(field => {
         let type = 'text';
