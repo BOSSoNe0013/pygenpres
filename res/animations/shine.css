@@ -47,16 +47,25 @@
         width: calc(100% + 8px);
         height: calc(100% + 8px);
         position: absolute;
-        top: -4px;
         z-index: -1;
+        top: -4px;
         left: -4px;
+    }
+    &::after {
+        border-radius: 4px;
+        display: block;
+        content: '';
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background-color: var(--slide-bg-color);
     }
 }
 .shine-text {
     background: linear-gradient(
         45deg,
         var(--elem-text-color) calc(var(--shine-position) - 80px),
-        color(from hsl(from var(--elem-text-color) h s 90%) srgb r g b) var(--shine-position),
+        color(from hsl(from var(--elem-text-color) h s 95%) srgb r g b) var(--shine-position),
         var(--elem-text-color) calc(var(--shine-position) + 80px)
     );
     text-shadow: none !important;
