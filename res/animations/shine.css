@@ -24,7 +24,7 @@
     background: linear-gradient(
         45deg,
         var(--slide-bg-color) 0% calc(var(--shine-position) - 50%),
-        color(from hsl(from var(--slide-bg-color) h s 90%) srgb r g b / .25) var(--shine-position),
+        color(from hsl(from var(--slide-bg-color) h s 90%) srgb r g b / .75) var(--shine-position),
         var(--slide-bg-color) calc(var(--shine-position) + 50%) 110%
     );
 }
@@ -33,22 +33,33 @@
     box-shadow: none !important;
     opacity: 1 !important;
     border: none !important;
+    &::before {
+        border-radius: 4px;
+        display: block;
+        content: '';
+        background: linear-gradient(
+            45deg,
+            var(--slide-bg-color) 0% calc(var(--shine-position) - 50%),
+            color(from hsl(from var(--slide-bg-color) h s 90%) srgb r g b / .75) var(--shine-position),
+            var(--slide-bg-color) calc(var(--shine-position) + 50%) 110%
+        );
+        box-shadow: 2px 2px 4px hsl(from var(--slide-bg-color) h s 15%);
+        width: calc(100% + 8px);
+        height: calc(100% + 8px);
+        position: absolute;
+        top: -4px;
+        z-index: -1;
+        left: -4px;
+    }
 }
-.shine-border::after {
-    border-radius: 4px;
-    display: block;
-    content: '';
+.shine-text {
     background: linear-gradient(
         45deg,
-        var(--slide-bg-color) 0% calc(var(--shine-position) - 50%),
-        color(from hsl(from var(--slide-bg-color) h s 90%) srgb r g b / .75) var(--shine-position),
-        var(--slide-bg-color) calc(var(--shine-position) + 50%) 110%
+        var(--elem-text-color) calc(var(--shine-position) - 80px),
+        color(from hsl(from var(--elem-text-color) h s 90%) srgb r g b) var(--shine-position),
+        var(--elem-text-color) calc(var(--shine-position) + 80px)
     );
-    box-shadow: 2px 2px 4px hsl(from var(--slide-bg-color) h s 15%);
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
-    position: absolute;
-    top: -4px;
-    z-index: -1;
-    left: -4px;
+    text-shadow: none !important;
+    background-clip: text !important;
+    color: transparent !important;
 }

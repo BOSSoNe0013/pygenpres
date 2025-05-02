@@ -6,17 +6,20 @@ h1.image-text-$id {
     text-align: var(--header-alignment);
     margin-bottom: 0.2rem;
     color: var(--slide-title-text-color);
+    --elem-text-color: var(--slide-title-text-color);
     text-shadow: 0 0 10px #000;
 }
 p.image-text-$id {
     font-size: clamp(1rem, 3cqi, 3rem);
     color: var(--slide-text-color);
+    --elem-text-color: var(--slide-text-color);
     text-align: var(--header-alignment);
     margin: 0;
     margin-bottom: 3rem;
 }
 div.text-image-$id {
     color: var(--slide-text-color);
+    --elem-text-color: var(--slide-text-color);
 }
 div.image-text-$id {
     display: grid;
@@ -35,6 +38,7 @@ div.image-text-$id > div {
     align-items: flex-start;
     text-align: left;
     color: var(--slide-text-color);
+    --elem-text-color: var(--slide-text-color);
     background-color: var(--slide-bg-color);
     border-radius: 4px;
     opacity: 0.8;

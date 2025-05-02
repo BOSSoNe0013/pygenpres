@@ -35,7 +35,7 @@ from .domain.api.root import get_root
 from .domain.api.store_presentation import store_presentation, save_presentation_changes
 from .domain.api.templates import get_templates
 from .domain.api.transitions import get_transitions
-from .domain.model.fx import FXResponse
+from .domain.model.fx import FXResponse, FXTargetType
 from .domain.model.presentation import PresentationResponse
 from .domain.model.slides import SlideResponse
 from .features.themes import Themes
@@ -58,13 +58,13 @@ if not os.path.exists(presentations_dir):
     os.makedirs(presentations_dir)
 
 
-
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def root():
     """
     Returns the root HTML page.
     """
     return await get_root()
+
 
 @app.get("/p", response_model=PresentationRecords)
 async def presentations():
@@ -73,12 +73,14 @@ async def presentations():
     """
     return await get_presentations(presentations_dir)
 
+
 @app.get("/t", response_model=TemplateRecords)
 async def templates():
     """
     Returns a list of available templates.
     """
     return await get_templates()
+
 
 @app.get("/tr", response_model=TransitionRecords)
 async def transitions():
@@ -87,6 +89,7 @@ async def transitions():
     """
     return await get_transitions()
 
+
 @app.get("/th", response_model=ThemeRecords)
 async def themes():
     """
@@ -94,12 +97,16 @@ async def themes():
     """
     return await Themes.list_themes()
 
+
 @app.get("/fx", response_model=FXRecords)
-async def fx():
+async def fx(target: FXTargetType = None):
     """
     Returns a list of available effects.
+    Args:
+        target: The target type of the effects (optional).
     """
-    return await FXResponse.list_fx()
+    return await FXResponse.list_fx(target_type=target)
+
 
 @app.get("/p/{id}.html", response_class=HTMLResponse, include_in_schema=False)
 async def run(id: str):
@@ -115,6 +122,7 @@ async def run(id: str):
 
     return await presentation.get_html()
 
+
 @app.get("/p/{id}.json", response_model=PresentationResponse)
 async def get_json_presentation(id: str):
     """
@@ -129,9 +137,11 @@ async def get_json_presentation(id: str):
 
     return presentation.to_response()
 
+
 @app.get("/new", response_class=HTMLResponse, include_in_schema=False)
 async def new():
     return await edit()
+
 
 @app.get("/s/{id}/{sid}.html", response_class=HTMLResponse, include_in_schema=False)
 async def get_html_slide(id: str, sid: str):
@@ -173,6 +183,7 @@ footer {{
 <footer>{Template(presentation.get_footer()).safe_substitute({'slide_position': slide.position + 1})}</footer>"""
     return content
 
+
 @app.get("/s/{id}/{sid}.json", response_model=SlideResponse)
 async def get_json_slide(id: str, sid: str):
     """
@@ -192,6 +203,7 @@ async def get_json_slide(id: str, sid: str):
 
     slide = slides[0]
     return slide.to_response()
+
 
 @app.get(
     "/s/{id}/add",
@@ -216,6 +228,7 @@ async def add_slide(id: str, position: Union[int, None] = None):
         return presentation.to_response()
     return JSONResponse(status_code=400, content={'message': 'Could not add slide'})
 
+
 @app.delete(
     "/s/{id}/{sid}.json",
     response_model=PresentationResponse,
@@ -239,6 +252,7 @@ async def remove_slide(id: str, sid: str):
         return presentation.to_response()
     return JSONResponse(status_code=400, content={'message': 'Could not delete slide'})
 
+
 @app.get("/edit/{id}", response_class=HTMLResponse, include_in_schema=False)
 async def edit(id: Union[str, None] = None):
     """
@@ -248,6 +262,7 @@ async def edit(id: Union[str, None] = None):
         id: The ID of the presentation to edit.
     """
     return await edit_presentation(id=id, path=presentations_dir)
+
 
 @app.post("/save", response_model=PresentationResponse, responses={400: {"model": ErrorResponse}})
 async def save_presentation(changes: dict):
@@ -262,7 +277,8 @@ async def save_presentation(changes: dict):
         return JSONResponse(status_code=400, content={'message': 'Could not save presentation'})
     except Exception as e:
         print(e)
-        return {'error': f'{e}'}
+        return JSONResponse(status_code=400, content={'error': f'{e}'})
+
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():

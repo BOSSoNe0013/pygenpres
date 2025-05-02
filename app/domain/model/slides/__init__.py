@@ -27,7 +27,6 @@ from uuid import uuid4
 
 from pydantic import BaseModel
 
-from app.domain.model.fx import FXResponse
 from app.domain.model.templates.templates import Templates
 from app.domain.model import ModelObject
 from app.domain.model.file import Image, Video
@@ -119,8 +118,8 @@ class Slide(ModelObject):
             field.name: field.get_html() for field in self.template.fields
         }
         for field in self.template.fields:
-            if field.extra_class:
-                values[f'{field.name}_extra_class'] = f' {FXResponse.get_fx(field.extra_class)}'
+            if field.fx:
+                values[f'{field.name}_extra_class'] = f' {field.fx['classes']}'
             else:
                 values[f'{field.name}_extra_class'] = ''
         if not values.get('title'):
@@ -213,10 +212,10 @@ class Slide(ModelObject):
                 f[name] = field.get('content')
         t = Templates(t_name).new_instance(**f)
         for field in fields:
-            extra_class = field.get('extra_class')
-            if extra_class:
+            fx = field.get('fx')
+            if fx:
                 name = field.get('name')
-                t.fields[t.fields.index(next(f for f in t.fields if f.name == name))].extra_class = extra_class
+                t.fields[t.fields.index(next(f for f in t.fields if f.name == name))].fx = fx
         p = super().from_dict(d, infer_missing=infer_missing)
         p.template = t
         return p

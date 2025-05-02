@@ -9,7 +9,7 @@
     }
 }
 .rainbow {
-    --rainbow-color: hsl(from var(--slide-bg-color) var(--rainbow-hue) s l);
+    --rainbow-color: hsl(from var(--slide-bg-color) var(--rainbow-hue) 100% l);
     animation: rainbow 10s steps(360) infinite alternate;
 }
 .rainbow-bg {
@@ -23,9 +23,11 @@
     background: linear-gradient(0.25turn, hsl(from var(--rainbow-color) h s 10%), hsl(from var(--rainbow-color) h s 40%), hsl(from var(--rainbow-color) h s 10%)) !important;
 }
 .rainbow-text {
+    --rainbow-color: hsl(from var(--elem-text-color) var(--rainbow-hue) s l);
     color: var(--rainbow-color) !important;
 }
 .rainbow-text-gradient {
+    --rainbow-color: hsl(from var(--elem-text-color) var(--rainbow-hue) s l);
     background: linear-gradient(0.25turn, var(--rainbow-color),
         hsl(from var(--rainbow-color) calc(var(--rainbow-hue) + 40deg) s l),
         hsl(from var(--rainbow-color) calc(var(--rainbow-hue) + 80deg) s l)) !important;

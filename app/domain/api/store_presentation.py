@@ -20,6 +20,7 @@
 
 import os
 
+from app.domain.model.fx import FXResponse
 from app.domain.model.templates.templates import Templates
 from app.domain.model.transitions.transitions import Transitions
 from app.domain.model.presentation import Presentation
@@ -97,6 +98,13 @@ async def save_presentation_changes(changes: dict, presentations_dir: str) -> Pr
                         slide.template.fields[field_index].content = Video(**field_value)
                     else:
                         slide.template.fields[field_index].content = field_value
+                elif field_name in (f'fx_{f.name}' for f in slide.template.fields):
+                    field_name = '_'.join(field_name.split('_')[1:])
+                    field_index = [f.name for f in slide.template.fields].index(field_name)
+                    fx = None
+                    if field_value:
+                        fx = FXResponse.get_fx(field_value)
+                    slide.template.fields[field_index].fx = fx
                 else:
                     raise ValueError(f'Unknown field: {field_name}')
             presentation.update_slide(slide)

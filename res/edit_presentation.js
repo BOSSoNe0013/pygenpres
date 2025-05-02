@@ -277,11 +277,12 @@ let slideForm = new w2form({
     record: {},
     fields: [],
     onChange(event) {
+        console.log('onChange', event.detail);
         w2utils.lock('body', 'Saving...', true);
         const slideId = this.record.id;
         const field = event.detail.field;
         let image_data = null;
-        if (field.endsWith('image') && event.detail.value.current.length > 0) {
+        if (!field.startsWith('fx_') && field.endsWith('image') && event.detail.value.current.length > 0) {
             let entry = event.detail.value.current.at(0);
             image_data = {
                 type: entry.type,
@@ -291,7 +292,7 @@ let slideForm = new w2form({
             };
         }
         let video_data = null;
-        if (field.endsWith('video') && event.detail.value.current.length > 0) {
+        if (!field.startsWith('fx_') && field.endsWith('video') && event.detail.value.current.length > 0) {
             let entry = event.detail.value.current.at(0);
             video_data = {
                 type: entry.type,
@@ -300,11 +301,17 @@ let slideForm = new w2form({
                 size: entry.size
             };
         }
+        let fx_value = null;
+        if (field.startsWith('fx_') && event.detail.value.current.length > 0) {
+            console.info('fx item', this.get(field).w2field.selected);
+            fx_value = this.get(field).w2field.selected.id;
+        };
         const value = field.endsWith('color') ?
-            `#${event.detail.value.current}` : field.endsWith('image') ?
-                image_data : field.endsWith('video') ?
+            `#${event.detail.value.current}` : !field.startsWith('fx_') && field.endsWith('image') ?
+                image_data : !field.startsWith('fx_') && field.endsWith('video') ?
                     video_data : field == 'theme' ?
-                        event.detail.value.current.toLowerCase().replaceAll(' ', '_') : event.detail.value.current;
+                        event.detail.value.current.toLowerCase().replaceAll(' ', '_') : field.startsWith('fx_') ?
+                            fx_value : event.detail.value.current;
         const data = {
             id: presId,
             changes: [
@@ -519,6 +526,23 @@ function renderSlideForm(data) {
             html: { span: -1, label: field.name.split('_').join(' '), style: style }
         });
         w2ui.slide_form.record['t_' + field.name] = value;
+        if (['text', 'markdown', 'image', 'video', 'iframe'].includes(field.type)) {
+            const url = field.type === 'text' ? `/fx` : `/fx?target=element`;
+            w2ui.slide_form.fields.push({
+                field: 'fx_' + field.name,
+                type: 'combo',
+                options: {
+                    url: url,
+                    minLength: 0
+                },
+                html: {
+                    span: -1,
+                    label: field.name + ' fx'
+                }
+            });
+            const record = field.fx !== null ? {id: field.fx.id, text: field.fx.name} : '';
+            w2ui.slide_form.record['fx_' + field.name] = record;
+        }
     });
     w2ui.slide_form.formHTML = w2ui.slide_form.generateHTML();
     w2ui.slide_form.render('#layout_right_box_panel_main .w2ui-panel-content');
