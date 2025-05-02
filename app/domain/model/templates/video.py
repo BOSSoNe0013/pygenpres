@@ -45,8 +45,8 @@ class Video(SlideTemplate):
         self.description = "A video slide"
         self.fields = [
             TemplateField(TemplateFieldType.TEXT, name=f"title", content=self.title),
-            TemplateField(TemplateFieldType.TEXT, name=f"subtitle", content=self.subtitle),
             TemplateField(TemplateFieldType.COLOR, name=f"title_text_color", content=self.title_text_color),
+            TemplateField(TemplateFieldType.TEXT, name=f"subtitle", content=self.subtitle),
             TemplateField(TemplateFieldType.COLOR, name=f"text_color", content=self.text_color),
             TemplateField(TemplateFieldType.VIDEO, name=f"video", content=self.video),
             TemplateField(TemplateFieldType.BOOL, name=f"controls", content=self.controls),

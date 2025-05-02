@@ -88,6 +88,8 @@ class RainbowFX(FX):
                                           name='Rainbow background gradient', target_type=FXTargetType.ELEMENT),
             'rainbow-border': FXItem(id='rainbow-border', classes='rainbow rainbow-border', name='Rainbow border',
                                      target_type=FXTargetType.ELEMENT),
+            'rainbow-border-gradient': FXItem(id='rainbow-border-gradient', classes='rainbow rainbow-border-gradient',
+                                              name='Rainbow border gradient', target_type=FXTargetType.ELEMENT),
             'rainbow-text': FXItem(id='rainbow-text', classes='rainbow rainbow-text', name='Rainbow text',
                                    target_type=FXTargetType.TEXT),
             'rainbow-text-gradient': FXItem(id='rainbow-text-gradient', classes='rainbow rainbow-text-gradient',
