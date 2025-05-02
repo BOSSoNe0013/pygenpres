@@ -16,13 +16,14 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-
+import os
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from pydantic import BaseModel
 
 from app.domain.model import ModelObject, FXRecords, Record
+from app.utils.decorators import classproperty
 
 
 @dataclass
@@ -96,11 +97,17 @@ class ShineFX(FX):
             'shine-border': FXItem(id='shine-border', classes='shine shine-border', name='Shine border'),
         }
 
-class FXResponse(BaseModel):
-    items: list[Record] = field(default_factory=list)
+class FXResponse:
 
-    @classmethod
-    async def list_fx(cls) -> FXRecords:
+    @staticmethod
+    def fx_path() -> str:
+        """
+        Returns the path to the directory containing effects css files.
+        """
+        return os.path.join(Path.cwd(), 'res', 'animations')
+
+    @staticmethod
+    async def list_fx() -> FXRecords:
         """
         Asynchronously retrieves a list of all available visual effects.
 
@@ -110,34 +117,34 @@ class FXResponse(BaseModel):
         Returns:
             FXRecords: An object containing the status, total count, and list of effect records.
         """
-        records = cls()
+        records = []
         rainbow_fx = RainbowFX()
         shine_fx = ShineFX()
-        records.items.extend([item.to_record() for item in rainbow_fx.items.values()])
-        records.items.extend([item.to_record() for item in shine_fx.items.values()])
-        return FXRecords(status='success', total=len(records.items),records=records.items)
+        records.extend([item.to_record() for item in rainbow_fx.items.values()])
+        records.extend([item.to_record() for item in shine_fx.items.values()])
+        return FXRecords(status='success', total=len(records),records=records)
 
     @staticmethod
-    def get_fx(id: str) -> str:
+    def get_fx(fx_id: str) -> str:
         """
         Retrieves the CSS classes for a specific visual effect item.
 
         Args:
-            id (str): The ID of the effect item to retrieve.
+            fx_id (str): The ID of the effect item to retrieve.
 
         Returns:
             str: The CSS classes associated with the effect item, or an empty string if the ID is not found.
         """
-        match(id.split('-')[0]):
+        match(fx_id.split('-')[0]):
             case 'rainbow':
                 rainbow_fx = RainbowFX()
-                if id not in rainbow_fx.items:
+                if fx_id not in rainbow_fx.items:
                     return ''
-                return rainbow_fx.items[id].classes
+                return rainbow_fx.items[fx_id].classes
             case 'shine':
                 shine_fx = ShineFX()
-                if id not in shine_fx.items:
+                if fx_id not in shine_fx.items:
                     return ''
-                return shine_fx.items[id].classes
+                return shine_fx.items[fx_id].classes
             case _:
                 return ''

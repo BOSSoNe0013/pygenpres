@@ -146,6 +146,10 @@ async def get_html_slide(id: str, sid: str):
     if not presentation:
         raise HTTPException(status_code=400, detail='Presentation not found')
 
+    with open(os.path.join(FXResponse.fx_path(), 'rainbow.css'), 'r') as animations_file:
+        animation_css = animations_file.read()
+    with open(os.path.join(FXResponse.fx_path(), 'shine.css'), 'r') as animations_file:
+        animation_css += animations_file.read()
     slide = [s for s in presentation.slides if s.id == sid][0]
     theme = '' if not slide.theme else await Themes.get_theme(slide.theme)
     content = f"""<style>{Template(slide.get_style()).safe_substitute({'font_family': presentation.font_family})}
@@ -163,6 +167,7 @@ footer {{
     font-size: 0.7rem
 }}
 {theme}
+{animation_css}
 </style>
 {slide.get_html(hidden=False)}
 <footer>{Template(presentation.get_footer()).safe_substitute({'slide_position': slide.position + 1})}</footer>"""
