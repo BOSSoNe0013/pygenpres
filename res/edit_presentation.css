@@ -39,7 +39,7 @@ div.no_slide {
 }
 slide {
     line-height: 1.6;
-    height: 92vh;
+    height: calc(100% - 4rem);
     height: -webkit-fill-available;
     display: flex;
     align-items: center;

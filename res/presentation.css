@@ -91,6 +91,7 @@ footer {
     overflow: hidden;
 }
 slide {
+    interpolate-size: allow-keywords;
     container-type: inline-size;
     container-name: slide;
     height: 100svh;

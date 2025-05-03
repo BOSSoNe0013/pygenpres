@@ -19,6 +19,7 @@
 
 @charset "UTF-8";
 :root {
+    interpolate-size: allow-keywords;
     color-scheme: light dark;
     --color-white: #ffffff;
     --color-black: #000000;
