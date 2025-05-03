@@ -6,7 +6,7 @@
 }
 .gradient.text_image,
 .gradient.image_text {
-    height: 100%;
+    height: 100svh;
     padding: 0;
 }
 .gradient.video .bg-2,

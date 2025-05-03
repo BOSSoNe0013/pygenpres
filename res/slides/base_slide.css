@@ -1,13 +1,3 @@
-img[src=""] {
-    visibility: hidden;
-}
-.content {
-    min-width: calc(80% - 20svh);
-    overflow: hidden;
-}
-.content > header {
-    max-width: 66svw;
-}
 #slide_$slide_position {
     --slide-bg-color: $background_color;
     --slide-bg-color-alt: $background_color_alt;

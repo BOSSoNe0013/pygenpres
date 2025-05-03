@@ -119,6 +119,14 @@ slide td {
     position: relative;
     z-index: 3;
     padding: 4px 8px;
+    min-width: calc(95% - 20svh);
+    overflow: hidden;
+}
+.content > header {
+    max-width: 66svw;
+}
+img[src=""] {
+    visibility: hidden;
 }
 #layout_main_panel_right > .w2ui-layout {
     position: absolute;
