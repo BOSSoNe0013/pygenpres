@@ -37,6 +37,9 @@ div.no_slide {
     margin: 0;
     text-align: center;
 }
+slide * {
+    box-sizing: border-box;
+}
 slide {
     line-height: 1.6;
     height: calc(100% - 4rem);

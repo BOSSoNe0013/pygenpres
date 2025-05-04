@@ -1,0 +1,50 @@
+.glass {
+}
+.glass .bg-1 {
+    opacity: 1;
+}
+.glass .bg-2 {
+    opacity: 0.2;
+    background-color: var(--slide-bg-color-alt);
+}
+.glass .content header h1.title,
+.glass .content header p.subtitle {
+    background-clip: text !important;
+    color: transparent !important;
+    text-shadow: none;
+    margin: 0;
+}
+.glass .content header h1.title {
+    background-color: hsl(from var(--slide-title-text-color) h s l / 0.5);
+    text-shadow: 0 0 1px hsl(from var(--slide-title-text-color) h s 80% / 0.25);
+    -webkit-text-stroke: 1px hsl(from var(--slide-title-text-color) h s 80% / 0.5);
+}
+.glass .content header p.subtitle {
+    background-color: hsl(from var(--slide-text-color) h s l / 0.5);
+    text-shadow: 0 0 1px hsl(from var(--slide-text-color) h s 80% / 0.25);
+    -webkit-text-stroke: 1px hsl(from var(--slide-text-color) h s 80% / 0.5);
+}
+.glass .content header,
+.glass .content > div > img,
+.glass .content > div > div {
+    backdrop-filter: blur(10px);
+    background-color: hsl(from var(--slide-bg-color) h s l / 0.35);
+    border-radius: 16px;
+    border: 2px solid hsl(from var(--slide-bg-color) h s 80% / 0.5);
+    border-bottom-color: hsl(from var(--slide-bg-color) h s 90% / 0.75);
+    border-right-color: hsl(from var(--slide-bg-color) h s 90% / 0.75);
+    box-shadow: 2px 3px 4px hsl(from var(--slide-bg-color) h s 80% / 0.5),
+    -1px -1px 4px hsl(from var(--slide-bg-color) h s 90% / 0.5);
+    font-weight: 600;
+}
+.glass .content header {
+    margin-bottom: 2rem;
+}
+.glass .content header,
+.glass .content > div > img {
+    padding: 1rem;
+}
+.iframe.glass .content header {
+    padding: 0.2rem 1rem;
+    margin-bottom: 0.5rem;
+}

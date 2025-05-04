@@ -110,7 +110,11 @@ slide {
 slide.no-cursor {
     cursor: none;
 }
-ul, ol {
+slide * {
+    box-sizing: border-box;
+}
+slide ul,
+slide ol {
     list-style-position: inside;
     margin: 0.2rem 0;
 }
