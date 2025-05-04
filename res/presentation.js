@@ -43,6 +43,17 @@ function scrollToSlide() {
     });
     document.documentElement.focus();
 };
+let cursorTimeout;
+function hideCursor(elem) {
+    elem.classList.add('no-cursor');
+};
+function showCursor(elem) {
+    elem.classList.remove('no-cursor');
+    clearTimeout(cursorTimeout);
+    cursorTimeout = setTimeout(() => {
+        hideCursor(elem);
+    }, 1000);
+};
 document.addEventListener("animationend", (event) => {
     console.log(event);
     document.querySelector('#presentation-container').classList.remove('first-load');
@@ -64,6 +75,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             showSlide();
         }
+    });
+    document.querySelectorAll('slide').forEach(slide => {
+        slide.addEventListener('mousemove', function(e) {
+            showCursor(slide);
+        });
+        slide.addEventListener('click', function() {
+            page += 1;
+            if (page >= total_pages) {
+                page = 0;
+            }
+            showSlide();
+        });
     });
     var touch_moved = false;
     document.addEventListener('touchstart', function(e) {

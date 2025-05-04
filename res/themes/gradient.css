@@ -73,6 +73,7 @@
 }
 .gradient.image_text .content,
 .gradient.text_image .content {
+    display: initial;
     position: relative;
     top: 0;
     left: 0;
@@ -113,7 +114,7 @@
 .gradient.text_image .content > header {
     position: absolute;
     z-index: +1;
-    top: 20%;
+    top: calc(33% - 8rem);
     max-width: 66%;
 }
 .gradient.text_image .content > header {
@@ -126,7 +127,7 @@
 .gradient.text_image .content > div > div {
     position: absolute;
     z-index: 2;
-    top: 33%;
+    top: calc(33% + 1rem);
     max-height: 50%;
     max-width: 50%;
 }
@@ -145,7 +146,8 @@
     top: 0;
     bottom: 0;
     height: 100svh;
-    width: auto !important;
+    width: 100%;
+    object-fit: cover;
 }
 .gradient.text_image .content > div > img {
     right: -25%;

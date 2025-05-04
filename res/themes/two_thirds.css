@@ -77,6 +77,7 @@
 .two_thirds {
     background-color: var(--slide-bg-color-alt) !important;
     align-items: flex-start;
+    --tt-image-size: min(40svw, 40svh);
 }
 .two_thirds {
     animation-duration: 1.5s;
@@ -117,9 +118,9 @@
 .two_thirds .bg-2::after {
     content: '';
     display: block;
-    width: 40svh;
-    height: 40svh;
-    border-radius: 40svh;
+    width: var(--tt-image-size);
+    height: var(--tt-image-size);
+    border-radius: 50%;
     background-color: var(--slide-bg-color);
     background-position: center;
     background-repeat: no-repeat;
@@ -127,11 +128,11 @@
     background-image: var(--slide-bg-image);
     border: 8px solid var(--slide-bg-color-alt);
     position: absolute;
-    top: calc(50% - 8px - 20svh);
-    right: calc(20% - 20svh + 8px + var(--tt-image-position));
+    top: calc(50% - 8px - var(--tt-image-size) / 2);
+    right: calc(20% - var(--tt-image-size) / 2 + 8px + var(--tt-image-position));
 }
 .two_thirds.image_text .bg-2::after {
-    left: calc(20% - 20svh + 8px + var(--tt-image-position));
+    left: calc(20% - var(--tt-image-size) / 2 + 8px + var(--tt-image-position));
 }
 .two_thirds.text_image .bg-2::after,
 .two_thirds.image_text .bg-2::after {
@@ -156,8 +157,8 @@
     margin-bottom: 1rem;
 }
 .two_thirds .content {
-    width: calc(80% - 20svh - 24px);
-    min-width: calc(80% - 20svh);
+    width: calc(80% - var(--tt-image-size) / 2 - 24px);
+    min-width: calc(80% - var(--tt-image-size) / 2);
     border-left: 4px solid var(--slide-bg-color);
     display: flex;
     flex-direction: column;

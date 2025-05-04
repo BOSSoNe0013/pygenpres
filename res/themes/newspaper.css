@@ -23,6 +23,8 @@
 }
 .newspaper .content {
     flex-grow: 1;
+    justify-content: flex-start;
+    width: 100%;
 }
 .newspaper .content > div {
     display: flex;

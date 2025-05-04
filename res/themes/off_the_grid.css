@@ -8,6 +8,7 @@
 .off_the_grid .content {
     min-height: 50svh;
     overflow: visible;
+    margin-top: -6rem;
 }
 .off_the_grid .content > header {
     margin: auto auto 2rem auto;
@@ -36,7 +37,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    margin-top: 3.8rem;
+    bottom: -3rem;
 }
 .off_the_grid .subtitle {
     line-height: 1.3;
