@@ -222,6 +222,12 @@ slide td {
 .content > header {
     max-width: 66svw;
 }
+.content > header.right {
+    justify-self: flex-end;
+}
+.content > header.left {
+    justify-self: flex-start;
+}
 img[src=""] {
     visibility: hidden;
 }
