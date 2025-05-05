@@ -32,6 +32,23 @@ window.w2utils = w2utils;
 const presId = '$presentation_id';
 const presTitle = '$presentation_title';
 const presFooter = '$presentation_footer';
+const fontFamilies = [
+    { id: 'Bebas Neue', text: 'Bebas Neue', style:"font-family: 'Bebas Neue';" },
+    { id: 'Cookie', text: 'Cookie', style:"font-family: 'Cookie';" },
+    { id: 'Indie Flower', text: 'Indie Flower', style:"font-family: 'Indie Flower';" },
+    { id: 'Inter', text: 'Inter', style:"font-family: 'Inter';" },
+    { id: 'Montserrat', text: 'Montserrat', style:"font-family: 'Montserrat';" },
+    { id: 'Open Sans', text: 'Open Sans', style:"font-family: 'Open Sans';" },
+    { id: 'Parisienne', text: 'Parisienne', style:"font-family: 'Parisienne';" },
+    { id: 'Permanent Marker', text: 'Permanent Marker', style:"font-family: 'Permanent Marker';" },
+    { id: 'Playfair Display', text: 'Playfair Display', style:"font-family: 'Playfair Display';" },
+    { id: 'Poppins', text: 'Poppins', style:"font-family: 'Poppins';" },
+    { id: 'Roboto', text: 'Roboto', style:"font-family: 'Roboto';" },
+    { id: 'Roboto Serif', text: 'Roboto Serif', style:"font-family: 'Roboto Serif';" },
+    { id: 'Special Gothic', text: 'Special Gothic', style:"font-family: 'Special Gothic';" },
+    { id: 'Source Code Pro', text: 'Source Code Pro', style:"font-family: 'source Code Pro';" },
+    { id: 'Winky Rough', text: 'Winky Rough', style:"font-family: 'Winky Rough';" },
+];
 let slides = [
     $slide_items
 ];
@@ -378,17 +395,7 @@ function renderSlideForm(data) {
             field: 'header_font_family',
             type: 'list',
             options: {
-                items: [
-                    { id: 'Roboto', text: 'Roboto' },
-                    { id: 'Montserrat', text: 'Montserrat' },
-                    { id: 'Open Sans', text: 'Open Sans' },
-                    { id: 'Special Gothic', text: 'Special Gothic' },
-                    { id: 'Inter', text: 'Inter' },
-                    { id: 'Winky Rough', text: 'Winky Rough' },
-                    { id: 'Poppins', text: 'Poppins' },
-                    { id: 'Source Code Pro', text: 'Source Code Pro' },
-                    { id: 'Bebas Neue', text: 'Bebas Neue' },
-                ]
+                items: fontFamilies
             },
             html: { span: -1, label: 'Header font family'}
         },
@@ -396,17 +403,7 @@ function renderSlideForm(data) {
             field: 'font_family',
             type: 'list',
             options: {
-                items: [
-                    { id: 'Roboto', text: 'Roboto' },
-                    { id: 'Montserrat', text: 'Montserrat' },
-                    { id: 'Open Sans', text: 'Open Sans' },
-                    { id: 'Special Gothic', text: 'Special Gothic' },
-                    { id: 'Inter', text: 'Inter' },
-                    { id: 'Winky Rough', text: 'Winky Rough' },
-                    { id: 'Poppins', text: 'Poppins' },
-                    { id: 'Source Code Pro', text: 'Source Code Pro' },
-                    { id: 'Bebas Neue', text: 'Bebas Neue' },
-                ]
+                items: fontFamilies
             },
             html: { span: -1, label: 'Font family'}
         },
