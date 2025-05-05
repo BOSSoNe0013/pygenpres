@@ -255,14 +255,17 @@ class Presentation(ModelObject):
             str: The complete HTML code for the presentation.
         """
         #load all templates and generate html
+        slide_fonts = [[slide.font_family, slide.header_font_family] for slide in self._slides]
+        font_families = {font.replace(' ', '+') for fonts in slide_fonts for font in fonts}
+        font_link_template = '<link href="https://fonts.googleapis.com/css2?family=$font_family:wght@300;400;700&display=swap" rel="stylesheet">'
+        font_links = '\n'.join([Template(font_link_template).safe_substitute({'font_family': font}) for font in font_families])
         style = await self._load_style()
         html = Template(self.__html_template__).safe_substitute({
             'style': style,
             'script': self._load_scripts(),
             'slides': ''.join([slide.get_html() for slide in self._slides]),
             'title': self.title,
-            'header_font_family': self.header_font_family.replace(' ', '+'),
-            'font_family': self.font_family.replace(' ', '+'),
+            'font_links': font_links,
             'footer': self.get_footer()
         })
         return "".join([s for s in html.strip().splitlines(True) if s.strip()])
