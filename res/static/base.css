@@ -239,7 +239,8 @@ input::placeholder {
     color: var(--fg-color-disabled);
 }
 .w2ui-field .button-clear-input {
-    translate: calc(-100% - 4px) 0;
+    position: absolute;
+    translate: calc(-100% - 4px) calc(50% - 4px);
 }
 .w2ui-field:has(input:placeholder-shown) .button-clear-input {
     display: none;
