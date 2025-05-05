@@ -223,10 +223,10 @@ slide td {
     max-width: 66svw;
 }
 .content > header.right {
-    justify-self: flex-end;
+    align-self: flex-end;
 }
 .content > header.left {
-    justify-self: flex-start;
+    align-self: flex-start;
 }
 img[src=""] {
     visibility: hidden;

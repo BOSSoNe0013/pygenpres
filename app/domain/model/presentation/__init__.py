@@ -42,6 +42,7 @@ class PresentationResponse(BaseModel):
     id: str
     title: str
     footer: str = ""
+    header_font_family: str = "Roboto"
     font_family: str = "Roboto"
     style: list[str] = field(default_factory=list)
     scripts: list[str] = field(default_factory=list)
@@ -65,6 +66,7 @@ class Presentation(ModelObject):
         default_factory=lambda: PresentationId(str(uuid4())))
     title: str = ""
     footer: str = ""
+    header_font_family: str = "Roboto"
     font_family: str = "Roboto"
     style: list[str] = field(default_factory=list)
     scripts: list[str] = field(default_factory=list)
@@ -196,7 +198,13 @@ class Presentation(ModelObject):
         #load css template
         css_values = {
             'style': ''.join(self.style),
-            'slides_style': Template(''.join([slide.get_style() for slide in self._slides])).safe_substitute({'font_family': self.font_family}),
+            'slides_style': Template(''.join([slide.get_style() for slide in self._slides])).safe_substitute(
+                {
+                    'header_font_family': self.header_font_family,
+                    'font_family': self.font_family
+                }
+            ),
+            'header_font_family': self.header_font_family,
             'font_family': self.font_family
         }
         with open(os.path.join(self._templates_path, 'presentation.css'), 'r') as css_file:
@@ -253,6 +261,7 @@ class Presentation(ModelObject):
             'script': self._load_scripts(),
             'slides': ''.join([slide.get_html() for slide in self._slides]),
             'title': self.title,
+            'header_font_family': self.header_font_family.replace(' ', '+'),
             'font_family': self.font_family.replace(' ', '+'),
             'footer': self.get_footer()
         })
@@ -263,6 +272,7 @@ class Presentation(ModelObject):
             id=self.id,
             title=self.title,
             footer=self.footer,
+            header_font_family=self.header_font_family,
             font_family=self.font_family,
             style=self.style,
             scripts=self.scripts,

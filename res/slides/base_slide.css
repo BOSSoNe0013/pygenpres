@@ -14,6 +14,9 @@
 #presentation-container #slide_$slide_position {
     animation-play-state: paused;
 }
+#slide_$slide_position .content header {
+    font-family: '$header_font_family', sans-serif;
+}
 #slide_$slide_position .bg-1 {
     --i: $slide_position;
     background-image: var(--slide-bg-image);

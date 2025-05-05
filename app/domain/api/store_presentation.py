@@ -68,6 +68,9 @@ async def save_presentation_changes(changes: dict, presentations_dir: str) -> Pr
                     slide.title = field_value
                 elif field_name == "description":
                     slide.description = field_value
+                elif field_name == "header_font_family":
+                    presentation.header_font_family = field_value["id"]
+                    slide.header_font_family = field_value["id"]
                 elif field_name == "font_family":
                     presentation.font_family = field_value["id"]
                     slide.font_family = field_value["id"]

@@ -19,7 +19,7 @@
     background: linear-gradient(0.25turn, hsl(from var(--rainbow-color) h s 10%), hsl(from var(--rainbow-color) h s 40%), hsl(from var(--rainbow-color) h s 10%)) !important;
 }
 .rainbow-text {
-    --rainbow-color: hsl(from var(--elem-text-color) var(--rainbow-hue) s l);
+    --rainbow-color: hsl(from var(--elem-text-color) var(--rainbow-hue) 100% 50%);
     color: var(--rainbow-color) !important;
 }
 .rainbow-text-gradient {

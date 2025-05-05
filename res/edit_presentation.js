@@ -363,6 +363,36 @@ function renderSlideForm(data) {
             }
         },
         {
+            field: 'header_alignment',
+            type: 'list',
+            options: {
+                items: [
+                    { id: 'left', text: 'Left' },
+                    { id: 'center', text: 'Center' },
+                    { id: 'right', text: 'Right' },
+                ]
+            },
+            html: { span: -1, label: 'Header alignment', group: 'General', groupCollapsible: true}
+        },
+        {
+            field: 'header_font_family',
+            type: 'list',
+            options: {
+                items: [
+                    { id: 'Roboto', text: 'Roboto' },
+                    { id: 'Montserrat', text: 'Montserrat' },
+                    { id: 'Open Sans', text: 'Open Sans' },
+                    { id: 'Special Gothic', text: 'Special Gothic' },
+                    { id: 'Inter', text: 'Inter' },
+                    { id: 'Winky Rough', text: 'Winky Rough' },
+                    { id: 'Poppins', text: 'Poppins' },
+                    { id: 'Source Code Pro', text: 'Source Code Pro' },
+                    { id: 'Bebas Neue', text: 'Bebas Neue' },
+                ]
+            },
+            html: { span: -1, label: 'Header font family'}
+        },
+        {
             field: 'font_family',
             type: 'list',
             options: {
@@ -375,21 +405,10 @@ function renderSlideForm(data) {
                     { id: 'Winky Rough', text: 'Winky Rough' },
                     { id: 'Poppins', text: 'Poppins' },
                     { id: 'Source Code Pro', text: 'Source Code Pro' },
+                    { id: 'Bebas Neue', text: 'Bebas Neue' },
                 ]
             },
-            html: { span: -1, label: 'Font family', group: 'General', groupCollapsible: true}
-        },
-        {
-            field: 'header_alignment',
-            type: 'list',
-            options: {
-                items: [
-                    { id: 'left', text: 'Left' },
-                    { id: 'center', text: 'Center' },
-                    { id: 'right', text: 'Right' },
-                ]
-            },
-            html: { span: -1, label: 'Header alignment'}
+            html: { span: -1, label: 'Font family'}
         },
         { field: 'accent_color', type: 'color', html: { span: -1, label: 'Accent color' } },
         {
@@ -482,6 +501,7 @@ function renderSlideForm(data) {
         id: data.id,
         title: data.title,
         description: data.description,
+        header_font_family: data.header_font_family,
         font_family: data.font_family,
         header_alignment: data.header_alignment,
         accent_color: data.accent_color.replace('#', '').toUpperCase(),
@@ -537,7 +557,9 @@ function renderSlideForm(data) {
                 },
                 html: {
                     span: -1,
-                    label: field.name + ' fx'
+                    label: field.name + ' fx',
+                    attr: 'data-type="fx" placeholder="Select fx"',
+                    text: `<button type="button" class="button-clear-input" data-target="fx_${field.name}">X</button>`
                 }
             });
             const record = field.fx !== null ? {id: field.fx.id, text: field.fx.name} : '';
@@ -564,6 +586,20 @@ function renderSlideForm(data) {
             }
             storeConfig('expanded-groups', expanded_groups);
         })
+    });
+    document.querySelectorAll('.button-clear-input').forEach(button => {
+        button.addEventListener('click', event => {
+            const target = event.target.getAttribute('data-target');
+            console.log('target', target);
+            const target_input = document.getElementById(target);
+            if (target_input !== null) {
+                console.info(target_input.value);
+                target_input.focus();
+                target_input.value = '';
+                target_input.blur();
+                target_input.dispatchEvent(new Event('change'));
+            }
+        });
     });
 };
 function loadSlide(slideId) {

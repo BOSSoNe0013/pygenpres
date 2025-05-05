@@ -55,6 +55,7 @@ class SlideResponse(BaseModel):
     background_color: str = "#ffffff"
     background_color_alt: str = "#000000"
     accent_color: str = "#ff8f00"
+    header_font_family: str = "Roboto"
     font_family: str = "Roboto"
     header_alignment: str = "center"
     position: int = 0
@@ -79,6 +80,7 @@ class Slide(ModelObject):
     background_color: str = "#ffffff"
     background_color_alt: str = "#000000"
     accent_color: str = "#ff8f00"
+    header_font_family: str = "Roboto"
     font_family: str = "Roboto"
     header_alignment: str = "center"
     theme: str = ""
@@ -165,6 +167,7 @@ class Slide(ModelObject):
             'title_text_color': templates_values['title_text_color'] if 'title_text_color' in templates_values else '#000000',
             'text_color': templates_values['text_color'] if 'text_color' in templates_values else '#000000',
             'accent_color': self.accent_color,
+            'header_font_family': self.header_font_family,
             'font_family': self.font_family,
             'header_alignment': self.header_alignment,
             'slide_position': self.position,
@@ -238,6 +241,7 @@ class Slide(ModelObject):
             background_color=self.background_color,
             background_color_alt=self.background_color_alt,
             accent_color=self.accent_color,
+            header_font_family=self.header_font_family,
             font_family=self.font_family,
             header_alignment=self.header_alignment,
             position=self.position
