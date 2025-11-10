@@ -37,6 +37,7 @@ const fontFamilies = [
     { id: 'Cookie', text: 'Cookie', style:"font-family: 'Cookie';" },
     { id: 'Indie Flower', text: 'Indie Flower', style:"font-family: 'Indie Flower';" },
     { id: 'Inter', text: 'Inter', style:"font-family: 'Inter';" },
+    { id: 'Limelight', text: 'Limelight', style:"font-family: 'Limelight';" },
     { id: 'Montserrat', text: 'Montserrat', style:"font-family: 'Montserrat';" },
     { id: 'Open Sans', text: 'Open Sans', style:"font-family: 'Open Sans';" },
     { id: 'Parisienne', text: 'Parisienne', style:"font-family: 'Parisienne';" },

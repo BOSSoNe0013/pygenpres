@@ -1,0 +1,20 @@
+{
+    "name": "PyGenPres",
+    "short_name": "PyGenPres",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#fbfbfb",
+    "theme_color": "#fbfbfb",
+    "icons": [
+        {
+        "src": "/static/favicon.ico",
+        "sizes": "64x64",
+        "type": "image/x-icon"
+        },
+        {
+            "src": "/static/icon_512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
