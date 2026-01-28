@@ -28,7 +28,7 @@ async def get_root() -> str:
     """
     return """<html>
     <head>
-        <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.css" />
+        <link rel="stylesheet" type="text/css" href="/static/w2ui-2.0.min.css" />
         <link rel="stylesheet" type="text/css" href="/static/base.css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     </head>
@@ -36,7 +36,7 @@ async def get_root() -> str:
         <main id="content"></main>
     </body>
     <script type="module">
-    import { w2form, query } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js'
+    import { w2form, query } from '/static/w2ui-2.0.es6.min.js'
     function loadTheme() {
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const systemTheme = prefersDark ? 'dark' : 'light';

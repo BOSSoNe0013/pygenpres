@@ -26,7 +26,7 @@ import {
     w2form,
     w2confirm,
     query
-} from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js';
+} from '/static/w2ui-2.0.es6.min.js';
 window.w2ui = w2ui;
 window.w2utils = w2utils;
 const presId = '$presentation_id';
