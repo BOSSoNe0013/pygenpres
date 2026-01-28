@@ -26,7 +26,7 @@ import {
     w2form,
     w2confirm,
     query
-} from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js';
+} from '/static/w2ui.es6.min.js';
 window.w2ui = w2ui;
 window.w2utils = w2utils;
 const presId = '$presentation_id';
@@ -174,14 +174,14 @@ let toolbar = new w2toolbar({
             icon: 'fa fa-home',
         },
         { 
-            type: 'input', 
+            type: 'input',
             id: 'title', 
             placeholder: 'Enter title', 
             value: presTitle,
             input: { style: 'width: 25vw;min-width: 320px;' },
         },
         { 
-            type: 'input', 
+            type: 'input',
             id: 'footer', 
             placeholder: 'Enter footer text', 
             value: presFooter,
@@ -544,6 +544,7 @@ function renderSlideForm(data) {
             html: { span: -1, label: field.name.split('_').join(' '), style: style }
         });
         w2ui.slide_form.record['t_' + field.name] = value;
+        console.log(field.name, value);
         if (['text', 'markdown', 'image', 'video', 'iframe'].includes(field.type)) {
             const url = field.type === 'text' ? `/fx` : `/fx?target=element`;
             w2ui.slide_form.fields.push({
